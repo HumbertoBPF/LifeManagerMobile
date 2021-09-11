@@ -19,10 +19,12 @@ public class ListResourcesAdapter extends RecyclerView.Adapter<ListResourcesAdap
 
     private List<String> resourcesNames;
     private Context context;
+    private OnClickListener onClickListener;
 
-    public ListResourcesAdapter(Context context, List<String> resourcesNames) {
+    public ListResourcesAdapter(Context context, List<String> resourcesNames, OnClickListener onClickListener) {
         this.context = context;
         this.resourcesNames = resourcesNames;
+        this.onClickListener = onClickListener;
     }
 
     @NonNull
@@ -52,6 +54,12 @@ public class ListResourcesAdapter extends RecyclerView.Adapter<ListResourcesAdap
             super(itemView);
             resourceName = itemView.findViewById(R.id.resource_name);
             backgroundCardView = itemView.findViewById(R.id.background_card_view);
+            itemView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    onClickListener.onItemClickListener(resourceName.getText().toString());
+                }
+            });
         }
 
         public void bind(String resourceNameString) {
@@ -62,6 +70,10 @@ public class ListResourcesAdapter extends RecyclerView.Adapter<ListResourcesAdap
             backgroundCardView.setCardBackgroundColor(Color.parseColor(rgbColorString));
         }
 
+    }
+
+    public interface OnClickListener{
+        void onItemClickListener(String category);
     }
 
 }

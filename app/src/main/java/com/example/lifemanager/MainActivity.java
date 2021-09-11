@@ -15,6 +15,9 @@ import androidx.constraintlayout.widget.ConstraintSet;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.lifemanager.activities.AppSettingsActivity;
+import com.example.lifemanager.activities.FinancesActivity;
+import com.example.lifemanager.activities.StudiesActivity;
+import com.example.lifemanager.activities.TasksActivity;
 import com.example.lifemanager.dao.RoomSettingDAO;
 import com.example.lifemanager.model.Setting;
 import com.example.lifemanager.recycler_view.ListResourcesAdapter;
@@ -111,7 +114,18 @@ public class MainActivity extends AppCompatActivity {
 
     private void configureAdapter() {
         resourcesNames.addAll(Arrays.asList(getResources().getStringArray(R.array.categories)));
-        resourcesList.setAdapter(new ListResourcesAdapter(this, resourcesNames));
+        resourcesList.setAdapter(new ListResourcesAdapter(this, resourcesNames, new ListResourcesAdapter.OnClickListener() {
+            @Override
+            public void onItemClickListener(String category) {
+                if (category.equals(getResources().getStringArray(R.array.categories)[0])){
+                    startActivity(new Intent(getApplicationContext(), FinancesActivity.class));
+                }else if (category.equals(getResources().getStringArray(R.array.categories)[1])){
+                    startActivity(new Intent(getApplicationContext(), StudiesActivity.class));
+                }else if (category.equals(getResources().getStringArray(R.array.categories)[2])){
+                    startActivity(new Intent(getApplicationContext(), TasksActivity.class));
+                }
+            }
+        }));
     }
 
     private void getScreenDimensions() {
