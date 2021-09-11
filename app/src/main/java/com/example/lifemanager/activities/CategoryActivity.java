@@ -1,5 +1,6 @@
 package com.example.lifemanager.activities;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -15,6 +16,7 @@ public class CategoryActivity extends AppCompatActivity {
     protected String titleAppbar = null;
     protected String titleIconAppbar = null;
     private MenuItem addItem;
+    protected Class<?> formAddClass;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -34,7 +36,7 @@ public class CategoryActivity extends AppCompatActivity {
     @Override
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
         if (item.getItemId() == R.id.action_add) {
-            Util.showToast(this, "Add");
+            startActivity(new Intent(this,formAddClass));
             return true;
         }
         return super.onOptionsItemSelected(item);

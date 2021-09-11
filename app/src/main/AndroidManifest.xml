@@ -10,6 +10,18 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.LifeManager">
         <activity
+            android:name=".activities.AddResourceActivity"
+            android:exported="true" />
+        <activity
+            android:name=".activities.AddFinanceActivity"
+            android:exported="true" />
+        <activity
+            android:name=".activities.AddStudyActivity"
+            android:exported="true" />
+        <activity
+            android:name=".activities.AddTaskActivity"
+            android:exported="true" />
+        <activity
             android:name=".activities.CategoryActivity"
             android:exported="true" />
         <activity

@@ -2,6 +2,9 @@ package com.example.lifemanager.activities;
 
 import android.os.Bundle;
 import android.view.Menu;
+import android.view.MenuItem;
+
+import androidx.annotation.NonNull;
 
 import com.example.lifemanager.R;
 
@@ -17,5 +20,11 @@ public class FinancesActivity extends CategoryActivity {
     public boolean onPrepareOptionsMenu(Menu menu) {
         titleIconAppbar = "Add finance";
         return super.onPrepareOptionsMenu(menu);
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
+        formAddClass = AddFinanceActivity.class;
+        return super.onOptionsItemSelected(item);
     }
 }
