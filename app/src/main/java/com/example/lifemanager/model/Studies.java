@@ -1,6 +1,7 @@
 package com.example.lifemanager.model;
 
 import androidx.room.Entity;
+import androidx.room.Ignore;
 import androidx.room.PrimaryKey;
 
 import com.example.lifemanager.enums.Category;
@@ -20,6 +21,7 @@ public class Studies {
 
     }
 
+    @Ignore
     public Studies(String name, String linkCourse, Category category, Integer position, Boolean status) {
         super();
         this.name = name;
@@ -29,6 +31,7 @@ public class Studies {
         this.status = status;
     }
 
+    @Ignore
     public Studies(Long id, String name, String linkCourse, Category category, Integer position, Boolean status) {
         this.id = id;
         this.name = name;
