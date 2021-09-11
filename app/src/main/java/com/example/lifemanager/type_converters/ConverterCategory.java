@@ -1,4 +1,4 @@
-package com.example.lifemanager.converters;
+package com.example.lifemanager.type_converters;
 
 import static com.example.lifemanager.enums.Category.BACKEND;
 import static com.example.lifemanager.enums.Category.DATA_SCIENCE;
