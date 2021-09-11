@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <item
+        android:id="@+id/action_syncro"
+        android:icon="@drawable/ic_syncro"
+        android:title="@string/title_syncro_icon"
+        app:showAsAction="always"/>
+
+    <item
+        android:id="@+id/action_settings"
+        android:icon="@drawable/ic_settings"
+        android:title="@string/title_settings_icon"
+        app:showAsAction="always"/>
+
+</menu>

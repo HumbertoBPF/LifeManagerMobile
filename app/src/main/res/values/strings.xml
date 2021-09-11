@@ -1,0 +1,18 @@
+<resources>
+    <string name="app_name">Life Manager</string>
+    <string name="color_finances_item">#cd120e</string>
+    <string name="color_studies_item">#f6c71c</string>
+    <string name="color_tasks_item">#3399ff</string>
+    <string-array name="categories">
+        <item>Finances</item>
+        <item>Studies</item>
+        <item>Tasks</item>
+    </string-array>
+    <string name="title_syncro_icon">Syncro</string>
+    <string name="title_settings_icon">Settings</string>
+    <string name="greeting_morning">Good morning,\u0020</string>
+    <string name="greeting_afternoon">Good afternoon,\u0020</string>
+    <string name="greeting_evening">Good evening,\u0020</string>
+    <string name="hint_setting_input_username">Username</string>
+    <string name="text_save_settings_button">Save settings</string>
+</resources>
