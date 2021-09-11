@@ -1,17 +1,21 @@
 package com.example.lifemanager.activities;
 
-import androidx.appcompat.app.AppCompatActivity;
-
 import android.os.Bundle;
+import android.view.Menu;
 
 import com.example.lifemanager.R;
 
-public class FinancesActivity extends AppCompatActivity {
+public class FinancesActivity extends CategoryActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        titleAppbar = getResources().getStringArray(R.array.categories)[0];
         super.onCreate(savedInstanceState);
-        setTitle(getResources().getStringArray(R.array.categories)[0]);
-        setContentView(R.layout.activity_finances);
+    }
+
+    @Override
+    public boolean onPrepareOptionsMenu(Menu menu) {
+        titleIconAppbar = "Add finance";
+        return super.onPrepareOptionsMenu(menu);
     }
 }

@@ -1,17 +1,21 @@
 package com.example.lifemanager.activities;
 
-import androidx.appcompat.app.AppCompatActivity;
-
 import android.os.Bundle;
+import android.view.Menu;
 
 import com.example.lifemanager.R;
 
-public class StudiesActivity extends AppCompatActivity {
+public class StudiesActivity extends CategoryActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        titleAppbar = getResources().getStringArray(R.array.categories)[1];
         super.onCreate(savedInstanceState);
-        setTitle(getResources().getStringArray(R.array.categories)[1]);
-        setContentView(R.layout.activity_studies);
+    }
+
+    @Override
+    public boolean onPrepareOptionsMenu(Menu menu) {
+        titleIconAppbar = "Add study";
+        return super.onPrepareOptionsMenu(menu);
     }
 }
