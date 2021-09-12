@@ -6,6 +6,7 @@ import androidx.room.Dao;
 import androidx.room.Insert;
 import androidx.room.OnConflictStrategy;
 import androidx.room.Query;
+import androidx.room.Update;
 
 import com.example.lifemanager.model.Setting;
 
@@ -20,7 +21,7 @@ public interface RoomSettingDAO {
     @Insert
     void save(Setting setting);
 
-    @Insert(onConflict = OnConflictStrategy.REPLACE)
+    @Update
     void update(Setting setting);
 
 }

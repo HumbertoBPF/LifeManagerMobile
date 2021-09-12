@@ -31,9 +31,17 @@ public class AppSettingsActivity extends AppCompatActivity {
 
         roomSettingDAO = LifeManagerDatabase.getInstance(getApplicationContext()).getRoomSettingDAO();
         getLayoutViews();
-
+        fillUsernameSetting();
         configureButtonSaveSettings();
+    }
 
+    private void fillUsernameSetting() {
+        List<Setting> usernameSetting = roomSettingDAO.getUsernameSetting();
+        if (usernameSetting != null){
+            if (!usernameSetting.isEmpty()){
+                inputUsername.setText(usernameSetting.get(0).getValue());
+            }
+        }
     }
 
     private void configureButtonSaveSettings() {
