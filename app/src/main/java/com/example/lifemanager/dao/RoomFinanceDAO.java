@@ -4,6 +4,7 @@ import androidx.room.Dao;
 import androidx.room.Delete;
 import androidx.room.Insert;
 import androidx.room.Query;
+import androidx.room.Update;
 
 import com.example.lifemanager.model.Finance;
 
@@ -20,6 +21,9 @@ public interface RoomFinanceDAO {
 
     @Insert
     void save(Finance finance);
+
+    @Update
+    void update(Finance finance);
 
     @Delete
     void delete(Finance finance);

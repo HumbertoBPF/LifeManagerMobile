@@ -9,11 +9,12 @@ import androidx.room.PrimaryKey;
 import com.example.lifemanager.enums.Sector;
 import com.example.lifemanager.enums.TypeFinance;
 
+import java.io.Serializable;
 import java.math.BigDecimal;
 import java.util.Calendar;
 
 @Entity
-public class Finance {
+public class Finance implements Serializable {
 
     @PrimaryKey(autoGenerate = true)
     private Long id;

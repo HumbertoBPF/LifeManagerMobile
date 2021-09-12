@@ -1,5 +1,6 @@
 package com.example.lifemanager.activities;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -11,7 +12,6 @@ import com.example.lifemanager.dao.RoomFinanceDAO;
 import com.example.lifemanager.model.Finance;
 import com.example.lifemanager.recycler_view.ListFinancesAdapter;
 import com.example.lifemanager.roomConfig.LifeManagerDatabase;
-import com.example.lifemanager.tools.Util;
 
 import java.util.List;
 
@@ -33,10 +33,13 @@ public class FinancesActivity extends CategoryActivity {
     @Override
     public boolean onContextItemSelected(@NonNull MenuItem item) {
         Long chosenId = adapter.getChosenId();
-        Util.showToast(getApplicationContext(),chosenId+"");
+        Finance finance = roomFinanceDAO.getFinanceById(chosenId);
         if (item.getTitle().equals("Remove")){
-            Finance finance = roomFinanceDAO.getFinanceById(chosenId);
             roomFinanceDAO.delete(finance);
+        }else {
+            Intent intent = new Intent(this,AddFinanceActivity.class);
+            intent.putExtra("finance",finance);
+            startActivity(intent);
         }
         configureAdapter();
         return super.onContextItemSelected(item);
