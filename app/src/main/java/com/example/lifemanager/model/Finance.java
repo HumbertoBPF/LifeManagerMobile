@@ -8,7 +8,6 @@ import com.example.lifemanager.enums.Sector;
 import com.example.lifemanager.enums.TypeFinance;
 
 import java.math.BigDecimal;
-import java.time.LocalDate;
 import java.util.Calendar;
 
 @Entity

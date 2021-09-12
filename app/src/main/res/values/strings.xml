@@ -25,4 +25,11 @@
         <item>Languages</item>
         <item>Other</item>
     </string-array>
+    <string-array name="sector_finance">
+        <item>Food</item>
+        <item>Trips</item>
+        <item>Transport</item>
+        <item>Housing</item>
+        <item>Other</item>
+    </string-array>
 </resources>

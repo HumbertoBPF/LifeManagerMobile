@@ -15,7 +15,8 @@
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        android:layout_margin="5dp"/>
+        android:layout_margin="5dp"
+        android:visibility="gone"/>
 
     <EditText
         android:id="@+id/studies_form_link_course"
@@ -26,7 +27,8 @@
         app:layout_constraintTop_toBottomOf="@id/studies_form_name"
         app:layout_constraintStart_toStartOf="@id/studies_form_name"
         app:layout_constraintEnd_toEndOf="@id/studies_form_name"
-        android:layout_marginVertical="5dp"/>
+        android:layout_marginVertical="5dp"
+        android:visibility="gone"/>
 
     <EditText
         android:id="@+id/studies_form_position"
@@ -37,41 +39,308 @@
         app:layout_constraintTop_toBottomOf="@id/studies_form_link_course"
         app:layout_constraintStart_toStartOf="@id/studies_form_name"
         app:layout_constraintEnd_toEndOf="@id/studies_form_name"
-        android:layout_marginVertical="5dp"/>
+        android:layout_marginVertical="5dp"
+        android:visibility="gone"/>
+
+    <TextView
+        android:id="@+id/studies_form_status_label"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toBottomOf="@id/studies_form_position"
+        app:layout_constraintStart_toStartOf="@id/studies_form_name"
+        app:layout_constraintEnd_toEndOf="@id/studies_form_name"
+        app:layout_constraintHorizontal_bias="0.0"
+        android:textSize="16sp"
+        android:textStyle="bold"
+        android:text="Status"
+        android:visibility="gone"/>
 
     <RadioGroup
         android:id="@+id/studies_form_status"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:orientation="vertical"
-        app:layout_constraintTop_toBottomOf="@id/studies_form_position"
+        app:layout_constraintTop_toBottomOf="@id/studies_form_status_label"
         app:layout_constraintStart_toStartOf="@id/studies_form_name"
         app:layout_constraintEnd_toEndOf="@id/studies_form_name"
-        android:layout_marginVertical="5dp">
+        android:layout_marginVertical="5dp"
+        android:visibility="gone">
 
         <RadioButton
-            android:id="@+id/studies_form_status_true"
+            android:id="@+id/studies_form_status_concluded"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Concluded"/>
+            android:text="Concluded"
+            android:visibility="gone"/>
 
         <RadioButton
-            android:id="@+id/studies_form_status_false"
+            android:id="@+id/studies_form_status_pending"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Pending"/>
+            android:text="Pending"
+            android:visibility="gone"/>
 
     </RadioGroup>
+
+    <TextView
+        android:id="@+id/studies_form_category_label"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toBottomOf="@id/studies_form_status"
+        app:layout_constraintStart_toStartOf="@id/studies_form_name"
+        app:layout_constraintEnd_toEndOf="@id/studies_form_name"
+        app:layout_constraintHorizontal_bias="0.0"
+        android:textSize="16sp"
+        android:textStyle="bold"
+        android:text="Category"
+        android:visibility="gone"/>
 
     <Spinner
         android:id="@+id/studies_form_category"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:background="@drawable/border_spinner"
-        app:layout_constraintTop_toBottomOf="@id/studies_form_status"
+        app:layout_constraintTop_toBottomOf="@id/studies_form_category_label"
         app:layout_constraintStart_toStartOf="@id/studies_form_name"
         app:layout_constraintEnd_toEndOf="@id/studies_form_name"
         android:paddingVertical="7dp"
-        android:layout_marginVertical="5dp"/>
+        android:layout_marginVertical="5dp"
+        android:visibility="gone"/>
+
+    <EditText
+        android:id="@+id/finance_form_date"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:inputType="date"
+        android:hint="Date"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:layout_margin="5dp"
+        android:visibility="gone"/>
+
+    <EditText
+        android:id="@+id/finance_form_value"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:inputType="numberDecimal"
+        android:hint="Value"
+        app:layout_constraintTop_toBottomOf="@id/finance_form_date"
+        app:layout_constraintStart_toStartOf="@id/finance_form_date"
+        app:layout_constraintEnd_toEndOf="@id/finance_form_date"
+        android:layout_marginVertical="5dp"
+        android:visibility="gone"/>
+
+    <TextView
+        android:id="@+id/finance_form_type_label"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toBottomOf="@id/finance_form_value"
+        app:layout_constraintStart_toStartOf="@id/finance_form_date"
+        app:layout_constraintEnd_toEndOf="@id/finance_form_date"
+        app:layout_constraintHorizontal_bias="0.0"
+        android:textSize="16sp"
+        android:textStyle="bold"
+        android:text="Type"
+        android:visibility="gone"/>
+
+    <RadioGroup
+        android:id="@+id/finance_form_type"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        app:layout_constraintTop_toBottomOf="@id/finance_form_type_label"
+        app:layout_constraintStart_toStartOf="@id/finance_form_date"
+        app:layout_constraintEnd_toEndOf="@id/finance_form_date"
+        android:layout_marginVertical="5dp"
+        android:visibility="gone">
+
+        <RadioButton
+            android:id="@+id/finance_form_income"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Income"
+            android:visibility="gone"/>
+
+        <RadioButton
+            android:id="@+id/finance_form_expense"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Expense"
+            android:visibility="gone"/>
+
+    </RadioGroup>
+
+    <TextView
+        android:id="@+id/finance_form_sector_label"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toBottomOf="@id/finance_form_type"
+        app:layout_constraintStart_toStartOf="@id/finance_form_date"
+        app:layout_constraintEnd_toEndOf="@id/finance_form_date"
+        app:layout_constraintHorizontal_bias="0.0"
+        android:textSize="16sp"
+        android:textStyle="bold"
+        android:text="Sector"
+        android:visibility="gone"/>
+
+    <Spinner
+        android:id="@+id/finance_form_sector"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:background="@drawable/border_spinner"
+        app:layout_constraintTop_toBottomOf="@id/finance_form_sector_label"
+        app:layout_constraintStart_toStartOf="@id/finance_form_date"
+        app:layout_constraintEnd_toEndOf="@id/finance_form_date"
+        android:paddingVertical="7dp"
+        android:layout_marginVertical="5dp"
+        android:visibility="gone"/>
+
+    <EditText
+        android:id="@+id/task_form_subject"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:inputType="text"
+        android:hint="Subject"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:layout_margin="5dp"
+        android:visibility="gone"/>
+
+    <EditText
+        android:id="@+id/task_form_name"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:inputType="text"
+        android:hint="Name"
+        app:layout_constraintTop_toBottomOf="@id/task_form_subject"
+        app:layout_constraintStart_toStartOf="@id/task_form_subject"
+        app:layout_constraintEnd_toEndOf="@id/task_form_subject"
+        android:layout_marginVertical="5dp"
+        android:visibility="gone"/>
+
+    <EditText
+        android:id="@+id/task_form_description"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:inputType="text"
+        android:hint="Description"
+        app:layout_constraintTop_toBottomOf="@id/task_form_name"
+        app:layout_constraintStart_toStartOf="@id/task_form_subject"
+        app:layout_constraintEnd_toEndOf="@id/task_form_subject"
+        android:layout_marginVertical="5dp"
+        android:visibility="gone"/>
+
+    <TextView
+        android:id="@+id/task_form_status_label"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toBottomOf="@id/task_form_description"
+        app:layout_constraintStart_toStartOf="@id/task_form_subject"
+        app:layout_constraintEnd_toEndOf="@id/task_form_subject"
+        app:layout_constraintHorizontal_bias="0.0"
+        android:textSize="16sp"
+        android:textStyle="bold"
+        android:text="Status"
+        android:visibility="gone"/>
+
+    <RadioGroup
+        android:id="@+id/task_form_status"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        app:layout_constraintTop_toBottomOf="@id/task_form_status_label"
+        app:layout_constraintStart_toStartOf="@id/task_form_subject"
+        app:layout_constraintEnd_toEndOf="@id/task_form_subject"
+        android:layout_marginVertical="5dp"
+        android:visibility="gone">
+
+        <RadioButton
+            android:id="@+id/task_form_status_concluded"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Concluded"
+            android:visibility="gone"/>
+
+        <RadioButton
+            android:id="@+id/task_form_status_pending"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Pending"
+            android:visibility="gone"/>
+
+    </RadioGroup>
+
+    <TextView
+        android:id="@+id/task_form_priority_label"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toBottomOf="@id/task_form_status"
+        app:layout_constraintStart_toStartOf="@id/task_form_subject"
+        app:layout_constraintEnd_toEndOf="@id/task_form_subject"
+        app:layout_constraintHorizontal_bias="0.0"
+        android:textSize="16sp"
+        android:textStyle="bold"
+        android:text="Priority"
+        android:visibility="gone"/>
+
+    <RadioGroup
+        android:id="@+id/task_form_priority"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        app:layout_constraintTop_toBottomOf="@id/task_form_priority_label"
+        app:layout_constraintStart_toStartOf="@id/task_form_subject"
+        app:layout_constraintEnd_toEndOf="@id/task_form_subject"
+        android:layout_marginVertical="5dp"
+        android:visibility="gone">
+
+        <RadioButton
+            android:id="@+id/task_form_status_high"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="High"
+            android:visibility="gone"/>
+
+        <RadioButton
+            android:id="@+id/task_form_status_medium"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Medium"
+            android:visibility="gone"/>
+
+        <RadioButton
+            android:id="@+id/task_form_status_low"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Low"
+            android:visibility="gone"/>
+
+    </RadioGroup>
+
+    <EditText
+        android:id="@+id/task_form_deadline"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:inputType="date"
+        android:hint="Deadline"
+        app:layout_constraintTop_toBottomOf="@id/task_form_priority"
+        app:layout_constraintStart_toStartOf="@id/task_form_subject"
+        app:layout_constraintEnd_toEndOf="@id/task_form_subject"
+        android:layout_marginVertical="5dp"
+        android:visibility="gone"/>
+
+    <EditText
+        android:id="@+id/task_form_due_date"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:inputType="date"
+        android:hint="Due date"
+        app:layout_constraintTop_toBottomOf="@id/task_form_deadline"
+        app:layout_constraintStart_toStartOf="@id/task_form_subject"
+        app:layout_constraintEnd_toEndOf="@id/task_form_subject"
+        android:layout_marginVertical="5dp"
+        android:visibility="gone"/>
 
 </androidx.constraintlayout.widget.ConstraintLayout>
