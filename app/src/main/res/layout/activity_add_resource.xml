@@ -6,12 +6,14 @@
     android:layout_height="match_parent"
     tools:context=".activities.AddResourceActivity">
 
+    <!--                    FORM STUDIES                    -->
+
     <EditText
         android:id="@+id/studies_form_name"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:inputType="text"
-        android:hint="Name"
+        android:hint="@string/form_name_hint"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
@@ -23,7 +25,7 @@
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:inputType="text"
-        android:hint="Link of the course"
+        android:hint="@string/form_link_course_hint"
         app:layout_constraintTop_toBottomOf="@id/studies_form_name"
         app:layout_constraintStart_toStartOf="@id/studies_form_name"
         app:layout_constraintEnd_toEndOf="@id/studies_form_name"
@@ -35,7 +37,7 @@
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:inputType="number"
-        android:hint="Position"
+        android:hint="@string/form_position_hint"
         app:layout_constraintTop_toBottomOf="@id/studies_form_link_course"
         app:layout_constraintStart_toStartOf="@id/studies_form_name"
         app:layout_constraintEnd_toEndOf="@id/studies_form_name"
@@ -52,7 +54,7 @@
         app:layout_constraintHorizontal_bias="0.0"
         android:textSize="16sp"
         android:textStyle="bold"
-        android:text="Status"
+        android:text="@string/form_status_label"
         android:visibility="gone"/>
 
     <RadioGroup
@@ -70,14 +72,16 @@
             android:id="@+id/studies_form_status_concluded"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Concluded"
+            android:checked="false"
+            android:text="@string/form_status_radio_button_concluded"
             android:visibility="gone"/>
 
         <RadioButton
             android:id="@+id/studies_form_status_pending"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Pending"
+            android:checked="true"
+            android:text="@string/form_status_radio_button_pending"
             android:visibility="gone"/>
 
     </RadioGroup>
@@ -92,7 +96,7 @@
         app:layout_constraintHorizontal_bias="0.0"
         android:textSize="16sp"
         android:textStyle="bold"
-        android:text="Category"
+        android:text="@string/form_category_label"
         android:visibility="gone"/>
 
     <Spinner
@@ -107,12 +111,15 @@
         android:layout_marginVertical="5dp"
         android:visibility="gone"/>
 
+    <!--                    FORM FINANCES                    -->
+
     <EditText
         android:id="@+id/finance_form_date"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:inputType="date"
-        android:hint="Date"
+        android:maxLength="8"
+        android:hint="@string/form_date_hint"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
@@ -124,7 +131,7 @@
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:inputType="numberDecimal"
-        android:hint="Value"
+        android:hint="@string/form_value_hint"
         app:layout_constraintTop_toBottomOf="@id/finance_form_date"
         app:layout_constraintStart_toStartOf="@id/finance_form_date"
         app:layout_constraintEnd_toEndOf="@id/finance_form_date"
@@ -141,7 +148,7 @@
         app:layout_constraintHorizontal_bias="0.0"
         android:textSize="16sp"
         android:textStyle="bold"
-        android:text="Type"
+        android:text="@string/form_type_label"
         android:visibility="gone"/>
 
     <RadioGroup
@@ -159,14 +166,16 @@
             android:id="@+id/finance_form_income"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Income"
+            android:checked="false"
+            android:text="@string/form_type_radio_button_income"
             android:visibility="gone"/>
 
         <RadioButton
             android:id="@+id/finance_form_expense"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Expense"
+            android:checked="true"
+            android:text="@string/form_type_radio_button_expense"
             android:visibility="gone"/>
 
     </RadioGroup>
@@ -181,7 +190,7 @@
         app:layout_constraintHorizontal_bias="0.0"
         android:textSize="16sp"
         android:textStyle="bold"
-        android:text="Sector"
+        android:text="@string/form_sector_label"
         android:visibility="gone"/>
 
     <Spinner
@@ -196,24 +205,26 @@
         android:layout_marginVertical="5dp"
         android:visibility="gone"/>
 
+    <!--                    FORM TASKS                    -->
+
     <EditText
         android:id="@+id/task_form_subject"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:inputType="text"
-        android:hint="Subject"
+        android:hint="@string/form_subject_hint"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         android:layout_margin="5dp"
         android:visibility="gone"/>
-
+    
     <EditText
         android:id="@+id/task_form_name"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:inputType="text"
-        android:hint="Name"
+        android:hint="@string/form_name_hint"
         app:layout_constraintTop_toBottomOf="@id/task_form_subject"
         app:layout_constraintStart_toStartOf="@id/task_form_subject"
         app:layout_constraintEnd_toEndOf="@id/task_form_subject"
@@ -225,7 +236,7 @@
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:inputType="text"
-        android:hint="Description"
+        android:hint="@string/form_description_hint"
         app:layout_constraintTop_toBottomOf="@id/task_form_name"
         app:layout_constraintStart_toStartOf="@id/task_form_subject"
         app:layout_constraintEnd_toEndOf="@id/task_form_subject"
@@ -242,7 +253,7 @@
         app:layout_constraintHorizontal_bias="0.0"
         android:textSize="16sp"
         android:textStyle="bold"
-        android:text="Status"
+        android:text="@string/form_status_label"
         android:visibility="gone"/>
 
     <RadioGroup
@@ -260,14 +271,16 @@
             android:id="@+id/task_form_status_concluded"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Concluded"
+            android:checked="false"
+            android:text="@string/form_status_radio_button_concluded"
             android:visibility="gone"/>
 
         <RadioButton
             android:id="@+id/task_form_status_pending"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Pending"
+            android:checked="true"
+            android:text="@string/form_status_radio_button_pending"
             android:visibility="gone"/>
 
     </RadioGroup>
@@ -282,7 +295,7 @@
         app:layout_constraintHorizontal_bias="0.0"
         android:textSize="16sp"
         android:textStyle="bold"
-        android:text="Priority"
+        android:text="@string/form_priority_label"
         android:visibility="gone"/>
 
     <RadioGroup
@@ -300,21 +313,24 @@
             android:id="@+id/task_form_status_high"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="High"
+            android:checked="false"
+            android:text="@string/form_priority_radio_button_high"
             android:visibility="gone"/>
 
         <RadioButton
             android:id="@+id/task_form_status_medium"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Medium"
+            android:checked="true"
+            android:text="@string/form_priority_radio_button_medium"
             android:visibility="gone"/>
 
         <RadioButton
             android:id="@+id/task_form_status_low"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Low"
+            android:checked="false"
+            android:text="@string/form_priority_radio_button_low"
             android:visibility="gone"/>
 
     </RadioGroup>
@@ -324,7 +340,8 @@
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:inputType="date"
-        android:hint="Deadline"
+        android:maxLength="8"
+        android:hint="@string/form_deadline_hint"
         app:layout_constraintTop_toBottomOf="@id/task_form_priority"
         app:layout_constraintStart_toStartOf="@id/task_form_subject"
         app:layout_constraintEnd_toEndOf="@id/task_form_subject"
@@ -336,7 +353,8 @@
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:inputType="date"
-        android:hint="Due date"
+        android:maxLength="8"
+        android:hint="@string/form_due_date_hint"
         app:layout_constraintTop_toBottomOf="@id/task_form_deadline"
         app:layout_constraintStart_toStartOf="@id/task_form_subject"
         app:layout_constraintEnd_toEndOf="@id/task_form_subject"

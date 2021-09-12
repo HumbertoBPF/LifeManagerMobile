@@ -18,7 +18,7 @@ public class TasksActivity extends CategoryActivity {
 
     @Override
     public boolean onPrepareOptionsMenu(Menu menu) {
-        titleIconAppbar = "Add task";
+        titleIconAppbar = getResources().getString(R.string.title_appbar_task_form);
         return super.onPrepareOptionsMenu(menu);
     }
 

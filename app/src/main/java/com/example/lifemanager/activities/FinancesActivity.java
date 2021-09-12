@@ -18,7 +18,7 @@ public class FinancesActivity extends CategoryActivity {
 
     @Override
     public boolean onPrepareOptionsMenu(Menu menu) {
-        titleIconAppbar = "Add finance";
+        titleIconAppbar = getResources().getString(R.string.title_appbar_finance_form);
         return super.onPrepareOptionsMenu(menu);
     }
 

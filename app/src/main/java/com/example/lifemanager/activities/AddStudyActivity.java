@@ -3,12 +3,18 @@ package com.example.lifemanager.activities;
 import android.os.Bundle;
 import android.view.View;
 
+import com.example.lifemanager.R;
+
 public class AddStudyActivity extends AddResourceActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        titleAppbar = "Add study";
+        titleAppbar = getResources().getString(R.string.title_appbar_studies_form);
         super.onCreate(savedInstanceState);
+        makeStudiesFormVisible();
+    }
+
+    private void makeStudiesFormVisible() {
         studiesFormName.setVisibility(View.VISIBLE);
         studiesFormLinkCourse.setVisibility(View.VISIBLE);
         studiesFormPosition.setVisibility(View.VISIBLE);

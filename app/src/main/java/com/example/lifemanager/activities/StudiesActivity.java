@@ -19,7 +19,7 @@ public class StudiesActivity extends CategoryActivity {
 
     @Override
     public boolean onPrepareOptionsMenu(Menu menu) {
-        titleIconAppbar = "Add study";
+        titleIconAppbar = getResources().getString(R.string.title_appbar_studies_form);
         return super.onPrepareOptionsMenu(menu);
     }
 

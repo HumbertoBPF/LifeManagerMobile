@@ -32,4 +32,28 @@
         <item>Housing</item>
         <item>Other</item>
     </string-array>
+    <string name="title_appbar_task_form">Add task</string>
+    <string name="title_appbar_studies_form">Add study</string>
+    <string name="title_appbar_finance_form">Add finance</string>
+    <string name="form_name_hint">Name</string>
+    <string name="form_link_course_hint">Link of the course</string>
+    <string name="form_position_hint">Position</string>
+    <string name="form_date_hint">Date</string>
+    <string name="form_value_hint">Value</string>
+    <string name="form_subject_hint">Subject</string>
+    <string name="form_description_hint">Description</string>
+    <string name="form_deadline_hint">Deadline</string>
+    <string name="form_due_date_hint">Due date</string>
+    <string name="form_status_label">Status</string>
+    <string name="form_status_radio_button_concluded">Concluded</string>
+    <string name="form_status_radio_button_pending">Pending</string>
+    <string name="form_priority_label">Priority</string>
+    <string name="form_priority_radio_button_high">High</string>
+    <string name="form_priority_radio_button_medium">Medium</string>
+    <string name="form_priority_radio_button_low">Low</string>
+    <string name="form_category_label">Category</string>
+    <string name="form_sector_label">Sector</string>
+    <string name="form_type_label">Type</string>
+    <string name="form_type_radio_button_income">Income</string>
+    <string name="form_type_radio_button_expense">Expense</string>
 </resources>

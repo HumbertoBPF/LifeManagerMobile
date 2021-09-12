@@ -3,12 +3,18 @@ package com.example.lifemanager.activities;
 import android.os.Bundle;
 import android.view.View;
 
+import com.example.lifemanager.R;
+
 public class AddTaskActivity extends AddResourceActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        titleAppbar = "Add task";
+        titleAppbar = getResources().getString(R.string.title_appbar_task_form);
         super.onCreate(savedInstanceState);
+        makeTaskFormVisible();
+    }
+
+    private void makeTaskFormVisible() {
         taskFormSubject.setVisibility(View.VISIBLE);
         taskFormName.setVisibility(View.VISIBLE);
         taskFormDescription.setVisibility(View.VISIBLE);
