@@ -24,5 +24,6 @@ public class AddStudyActivity extends AddResourceActivity {
         studiesFormPending.setVisibility(View.VISIBLE);
         studiesFormCategorySpinnerLabel.setVisibility(View.VISIBLE);
         studiesFormCategorySpinner.setVisibility(View.VISIBLE);
+        studiesFormButtonSubmit.setVisibility(View.VISIBLE);
     }
 }

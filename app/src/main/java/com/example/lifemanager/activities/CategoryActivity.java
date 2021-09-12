@@ -7,6 +7,7 @@ import android.view.MenuItem;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.lifemanager.R;
 import com.example.lifemanager.tools.Util;
@@ -17,6 +18,7 @@ public class CategoryActivity extends AppCompatActivity {
     protected String titleIconAppbar = null;
     private MenuItem addItem;
     protected Class<?> formAddClass;
+    protected RecyclerView recyclerViewResources;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -25,6 +27,7 @@ public class CategoryActivity extends AppCompatActivity {
             setTitle(titleAppbar);
         }
         setContentView(R.layout.activity_category);
+        recyclerViewResources = findViewById(R.id.recycler_view_resources);
     }
 
     @Override

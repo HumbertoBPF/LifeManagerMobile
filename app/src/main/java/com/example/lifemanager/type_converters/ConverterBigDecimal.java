@@ -7,13 +7,13 @@ import java.math.BigDecimal;
 public class ConverterBigDecimal {
 
     @TypeConverter
-    public BigDecimal forBigDecimal(Long value){
+    public BigDecimal forBigDecimal(Double value){
         return BigDecimal.valueOf(value);
     }
 
     @TypeConverter
-    public Long forLong(BigDecimal value){
-        return value.longValue();
+    public Double forDouble(BigDecimal value){
+        return value.doubleValue();
     }
 
 }

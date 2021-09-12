@@ -1,5 +1,7 @@
 package com.example.lifemanager.model;
 
+import static com.example.lifemanager.model.Constants.formatter;
+
 import androidx.room.Entity;
 import androidx.room.Ignore;
 import androidx.room.PrimaryKey;
@@ -108,4 +110,17 @@ public class Finance {
         this.typeFinance = typeFinance;
     }
 
+    @Override
+    public String toString() {
+        return "Finance{" +
+                "id=" + id +
+                ", name='" + name + '\'' +
+                ", date=" + formatter.format(date.getTime()) +
+                ", month=" + month +
+                ", year=" + year +
+                ", value=" + value +
+                ", sector=" + sector +
+                ", typeFinance=" + typeFinance +
+                '}';
+    }
 }

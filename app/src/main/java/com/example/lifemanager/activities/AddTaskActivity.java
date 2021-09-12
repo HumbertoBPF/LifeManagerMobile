@@ -29,5 +29,6 @@ public class AddTaskActivity extends AddResourceActivity {
         taskFormLow.setVisibility(View.VISIBLE);
         taskFormDeadline.setVisibility(View.VISIBLE);
         taskFormDueDate.setVisibility(View.VISIBLE);
+        taskFormButtonSubmit.setVisibility(View.VISIBLE);
     }
 }

@@ -1,7 +1,10 @@
 package com.example.lifemanager.activities;
 
 import android.os.Bundle;
+import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
@@ -12,7 +15,9 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.lifemanager.R;
 
-public class AddResourceActivity extends AppCompatActivity {
+public class AddResourceActivity extends AppCompatActivity implements AdapterView.OnItemSelectedListener{
+
+    protected String spinnerValue;
 
     protected EditText studiesFormName;
     protected EditText studiesFormLinkCourse;
@@ -23,7 +28,9 @@ public class AddResourceActivity extends AppCompatActivity {
     protected RadioButton studiesFormPending;
     protected TextView studiesFormCategorySpinnerLabel;
     protected Spinner studiesFormCategorySpinner;
+    protected Button studiesFormButtonSubmit;
 
+    protected EditText financeFormName;
     protected EditText financeFormDate;
     protected EditText financeFormValue;
     protected TextView financeFormTypeLabel;
@@ -32,6 +39,7 @@ public class AddResourceActivity extends AppCompatActivity {
     protected RadioButton financeFormTypeExpense;
     protected TextView financeFormSectorSpinnerLabel;
     protected Spinner financeFormSectorSpinner;
+    protected Button financeFormButtonSubmit;
 
     protected EditText taskFormSubject;
     protected EditText taskFormName;
@@ -47,6 +55,7 @@ public class AddResourceActivity extends AppCompatActivity {
     protected RadioButton taskFormLow;
     protected EditText taskFormDeadline;
     protected EditText taskFormDueDate;
+    protected Button taskFormButtonSubmit;
 
     protected String titleAppbar = null;
 
@@ -69,6 +78,7 @@ public class AddResourceActivity extends AppCompatActivity {
                 arrayResourceId, android.R.layout.simple_spinner_item);
         adapterCategoryStudy.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         spinner.setAdapter(adapterCategoryStudy);
+        spinner.setOnItemSelectedListener(this);
     }
 
     private void getLayoutViews() {
@@ -81,7 +91,9 @@ public class AddResourceActivity extends AppCompatActivity {
         studiesFormPending = findViewById(R.id.studies_form_status_pending);
         studiesFormCategorySpinnerLabel = findViewById(R.id.studies_form_category_label);
         studiesFormCategorySpinner = findViewById(R.id.studies_form_category);
+        studiesFormButtonSubmit = findViewById(R.id.studies_form_button_submit);
 
+        financeFormName = findViewById(R.id.finance_form_name);
         financeFormDate = findViewById(R.id.finance_form_date);
         financeFormValue = findViewById(R.id.finance_form_value);
         financeFormTypeLabel = findViewById(R.id.finance_form_type_label);
@@ -90,6 +102,7 @@ public class AddResourceActivity extends AppCompatActivity {
         financeFormTypeExpense = findViewById(R.id.finance_form_expense);
         financeFormSectorSpinnerLabel = findViewById(R.id.finance_form_sector_label);
         financeFormSectorSpinner = findViewById(R.id.finance_form_sector);
+        financeFormButtonSubmit = findViewById(R.id.finance_form_button_submit);
 
         taskFormSubject = findViewById(R.id.task_form_subject);
         taskFormName = findViewById(R.id.task_form_name);
@@ -105,6 +118,16 @@ public class AddResourceActivity extends AppCompatActivity {
         taskFormLow = findViewById(R.id.task_form_status_low);
         taskFormDeadline = findViewById(R.id.task_form_deadline);
         taskFormDueDate = findViewById(R.id.task_form_due_date);
+        taskFormButtonSubmit = findViewById(R.id.task_form_button_submit);
     }
 
+    @Override
+    public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+        spinnerValue = (String) parent.getItemAtPosition(position);
+    }
+
+    @Override
+    public void onNothingSelected(AdapterView<?> parent) {
+
+    }
 }

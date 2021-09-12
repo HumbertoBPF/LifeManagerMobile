@@ -15,6 +15,9 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         android:layout_margin="5dp"
+        app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+        app:spanCount="1"
+        android:orientation="vertical"
         />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

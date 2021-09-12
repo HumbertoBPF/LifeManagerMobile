@@ -111,7 +111,30 @@
         android:layout_marginVertical="5dp"
         android:visibility="gone"/>
 
+    <Button
+        android:id="@+id/studies_form_button_submit"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/title_appbar_studies_form"
+        app:layout_constraintTop_toBottomOf="@id/studies_form_category"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:layout_marginVertical="5dp"
+        android:visibility="gone"/>
+
     <!--                    FORM FINANCES                    -->
+
+    <EditText
+        android:id="@+id/finance_form_name"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:inputType="text"
+        android:hint="@string/form_name_hint"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:layout_margin="5dp"
+        android:visibility="gone"/>
 
     <EditText
         android:id="@+id/finance_form_date"
@@ -120,10 +143,10 @@
         android:inputType="date"
         android:maxLength="8"
         android:hint="@string/form_date_hint"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        android:layout_margin="5dp"
+        app:layout_constraintTop_toBottomOf="@id/finance_form_name"
+        app:layout_constraintStart_toStartOf="@id/finance_form_name"
+        app:layout_constraintEnd_toEndOf="@id/finance_form_name"
+        android:layout_marginVertical="5dp"
         android:visibility="gone"/>
 
     <EditText
@@ -205,6 +228,17 @@
         android:layout_marginVertical="5dp"
         android:visibility="gone"/>
 
+    <Button
+        android:id="@+id/finance_form_button_submit"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/title_appbar_finance_form"
+        app:layout_constraintTop_toBottomOf="@id/finance_form_sector"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:layout_marginVertical="5dp"
+        android:visibility="gone"/>
+
     <!--                    FORM TASKS                    -->
 
     <EditText
@@ -218,7 +252,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         android:layout_margin="5dp"
         android:visibility="gone"/>
-    
+
     <EditText
         android:id="@+id/task_form_name"
         android:layout_width="0dp"
@@ -360,5 +394,17 @@
         app:layout_constraintEnd_toEndOf="@id/task_form_subject"
         android:layout_marginVertical="5dp"
         android:visibility="gone"/>
+
+    <Button
+        android:id="@+id/task_form_button_submit"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/title_appbar_task_form"
+        app:layout_constraintTop_toBottomOf="@id/task_form_due_date"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:layout_marginVertical="5dp"
+        android:visibility="gone"/>
+
 
 </androidx.constraintlayout.widget.ConstraintLayout>
