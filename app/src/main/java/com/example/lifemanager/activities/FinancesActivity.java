@@ -1,11 +1,8 @@
 package com.example.lifemanager.activities;
 
 import android.os.Bundle;
-import android.view.ContextMenu;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.view.View;
-import android.widget.AdapterView;
 
 import androidx.annotation.NonNull;
 
@@ -37,6 +34,11 @@ public class FinancesActivity extends CategoryActivity {
     public boolean onContextItemSelected(@NonNull MenuItem item) {
         Long chosenId = adapter.getChosenId();
         Util.showToast(getApplicationContext(),chosenId+"");
+        if (item.getTitle().equals("Remove")){
+            Finance finance = roomFinanceDAO.getFinanceById(chosenId);
+            roomFinanceDAO.delete(finance);
+        }
+        configureAdapter();
         return super.onContextItemSelected(item);
     }
 
