@@ -3,6 +3,7 @@ package com.example.lifemanager.recycler_view;
 import static com.example.lifemanager.model.Constants.formatter;
 
 import android.content.Context;
+import android.view.ContextMenu;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -20,6 +21,15 @@ public class ListFinancesAdapter extends RecyclerView.Adapter<ListFinancesAdapte
 
     private Context context;
     private List<Finance> finances;
+    private Long chosenId;
+
+    public Long getChosenId() {
+        return chosenId;
+    }
+
+    public void setChosenId(Long chosenId) {
+        this.chosenId = chosenId;
+    }
 
     public ListFinancesAdapter(Context context, List<Finance> finances) {
         this.context = context;
@@ -42,7 +52,7 @@ public class ListFinancesAdapter extends RecyclerView.Adapter<ListFinancesAdapte
     @Override
     public int getItemCount() { return finances.size(); }
 
-    class FinanceViewHolder extends RecyclerView.ViewHolder{
+    class FinanceViewHolder extends RecyclerView.ViewHolder implements View.OnCreateContextMenuListener {
 
         private TextView financeItemName;
         private TextView financeItemValue;
@@ -53,6 +63,14 @@ public class ListFinancesAdapter extends RecyclerView.Adapter<ListFinancesAdapte
             financeItemName = itemView.findViewById(R.id.finance_item_name);
             financeItemValue = itemView.findViewById(R.id.finance_item_value);
             financeItemDate = itemView.findViewById(R.id.finance_item_date);
+            itemView.setOnCreateContextMenuListener(this);
+            itemView.setOnLongClickListener(new View.OnLongClickListener() {
+                @Override
+                public boolean onLongClick(View view) {
+                    setChosenId(finances.get(getPosition()).getId());
+                    return false;
+                }
+            });
         }
 
         public void bind(Finance finance){
@@ -61,5 +79,10 @@ public class ListFinancesAdapter extends RecyclerView.Adapter<ListFinancesAdapte
             financeItemDate.setText(formatter.format(finance.getDate().getTime()));
         }
 
+        @Override
+        public void onCreateContextMenu(ContextMenu contextMenu, View view, ContextMenu.ContextMenuInfo contextMenuInfo) {
+            contextMenu.add("Update");
+            contextMenu.add("Remove");
+        }
     }
 }

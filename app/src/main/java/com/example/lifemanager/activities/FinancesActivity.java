@@ -1,8 +1,11 @@
 package com.example.lifemanager.activities;
 
 import android.os.Bundle;
+import android.view.ContextMenu;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.AdapterView;
 
 import androidx.annotation.NonNull;
 
@@ -11,6 +14,7 @@ import com.example.lifemanager.dao.RoomFinanceDAO;
 import com.example.lifemanager.model.Finance;
 import com.example.lifemanager.recycler_view.ListFinancesAdapter;
 import com.example.lifemanager.roomConfig.LifeManagerDatabase;
+import com.example.lifemanager.tools.Util;
 
 import java.util.List;
 
@@ -26,6 +30,14 @@ public class FinancesActivity extends CategoryActivity {
         super.onCreate(savedInstanceState);
         roomFinanceDAO = LifeManagerDatabase.getInstance(this).getRoomFinanceDAO();
         configureAdapter();
+        registerForContextMenu(recyclerViewResources);
+    }
+
+    @Override
+    public boolean onContextItemSelected(@NonNull MenuItem item) {
+        Long chosenId = adapter.getChosenId();
+        Util.showToast(getApplicationContext(),chosenId+"");
+        return super.onContextItemSelected(item);
     }
 
     private void configureAdapter() {
