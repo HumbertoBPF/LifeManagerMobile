@@ -26,7 +26,7 @@ public class AppSettingsActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setTitle("Settings");
+        setTitle(getResources().getString(R.string.title_appbar_settings));
         setContentView(R.layout.activity_app_settings);
 
         roomSettingDAO = LifeManagerDatabase.getInstance(getApplicationContext()).getRoomSettingDAO();

@@ -5,7 +5,6 @@ import static com.example.lifemanager.model.Constants.formatter;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
-import android.widget.ArrayAdapter;
 
 import com.example.lifemanager.R;
 import com.example.lifemanager.dao.RoomFinanceDAO;

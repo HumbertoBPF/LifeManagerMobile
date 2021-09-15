@@ -21,6 +21,7 @@ public class ListFinancesAdapter extends RecyclerView.Adapter<ListFinancesAdapte
 
     private Context context;
     private List<Finance> finances;
+    private OnClickListener onClickListener;
     private Long chosenId;
 
     public Long getChosenId() {
@@ -31,9 +32,10 @@ public class ListFinancesAdapter extends RecyclerView.Adapter<ListFinancesAdapte
         this.chosenId = chosenId;
     }
 
-    public ListFinancesAdapter(Context context, List<Finance> finances) {
+    public ListFinancesAdapter(Context context, List<Finance> finances, OnClickListener onClickListener) {
         this.context = context;
         this.finances = finances;
+        this.onClickListener = onClickListener;
     }
 
     @NonNull
@@ -71,6 +73,13 @@ public class ListFinancesAdapter extends RecyclerView.Adapter<ListFinancesAdapte
                     return false;
                 }
             });
+            itemView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    Finance finance = finances.get(getPosition());
+                    onClickListener.onItemClickListener(finance);
+                }
+            });
         }
 
         public void bind(Finance finance){
@@ -84,5 +93,11 @@ public class ListFinancesAdapter extends RecyclerView.Adapter<ListFinancesAdapte
             contextMenu.add("Update");
             contextMenu.add("Remove");
         }
+
     }
+
+    public interface OnClickListener{
+        void onItemClickListener(Finance finance);
+    }
+
 }

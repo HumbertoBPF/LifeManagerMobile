@@ -47,7 +47,14 @@ public class FinancesActivity extends CategoryActivity {
 
     private void configureAdapter() {
         finances = roomFinanceDAO.getAllFinances();
-        adapter = new ListFinancesAdapter(this, finances);
+        adapter = new ListFinancesAdapter(this, finances, new ListFinancesAdapter.OnClickListener() {
+            @Override
+            public void onItemClickListener(Finance finance) {
+                Intent intent = new Intent(getApplicationContext(), DetailedFinanceActivity.class);
+                intent.putExtra("finance",finance);
+                startActivity(intent);
+            }
+        });
         recyclerViewResources.setAdapter(adapter);
     }
 

@@ -6,8 +6,10 @@ import androidx.room.PrimaryKey;
 
 import com.example.lifemanager.enums.Category;
 
+import java.io.Serializable;
+
 @Entity
-public class Studies {
+public class Studies implements Serializable {
 
     @PrimaryKey(autoGenerate = true)
     private Long id;

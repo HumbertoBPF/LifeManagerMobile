@@ -6,10 +6,11 @@ import androidx.room.PrimaryKey;
 
 import com.example.lifemanager.enums.Priority;
 
+import java.io.Serializable;
 import java.util.Calendar;
 
 @Entity
-public class Task {
+public class Task implements Serializable {
 
     @PrimaryKey(autoGenerate = true)
     private Long id;
