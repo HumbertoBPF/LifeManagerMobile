@@ -9,7 +9,7 @@ import com.example.lifemanager.R;
 
 public class DetailedResourceActivity extends AppCompatActivity {
 
-    protected String titleAppBar;
+    protected String titleAppBar = null;
 
     protected TextView financeDetailName;
     protected TextView financeDetailDate;
@@ -36,7 +36,9 @@ public class DetailedResourceActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setTitle(titleAppBar);
+        if (titleAppBar != null){
+            setTitle(titleAppBar);
+        }
         setContentView(R.layout.activity_detailed_resource);
         getLayoutViews();
     }
