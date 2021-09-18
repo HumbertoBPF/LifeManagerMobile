@@ -39,6 +39,11 @@ public class AddFinanceActivity extends AddResourceActivity {
             fillForm(finance);
         }
 
+        configureFinanceFormButton();
+
+    }
+
+    private void configureFinanceFormButton() {
         financeFormButtonSubmit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -61,7 +66,6 @@ public class AddFinanceActivity extends AddResourceActivity {
                 finish();
             }
         });
-
     }
 
     private void fillForm(Finance finance) {
