@@ -54,13 +54,19 @@ public class AddTaskActivity extends AddResourceActivity {
                 }
                 Calendar deadline = formatFromDateStringToCalendar(taskFormDeadline.getText().toString());
                 Calendar dueDate = formatFromDateStringToCalendar(taskFormDueDate.getText().toString());
-                roomTaskDAO.save(new Task(subject,name,description,status,priority,deadline,dueDate));
+                if (idToUpdate == null){
+                    roomTaskDAO.save(new Task(subject,name,description,status,priority,deadline,dueDate));
+                }else{
+                    roomTaskDAO.update(
+                            new Task(idToUpdate,subject,name,description,status,priority,deadline,dueDate));
+                }
                 finish();
             }
         });
     }
 
     private void fillForm(Task task) {
+        idToUpdate = task.getId();
         taskFormSubject.setText(task.getSubject());
         taskFormName.setText(task.getName());
         taskFormDescription.setText(task.getDescription());
