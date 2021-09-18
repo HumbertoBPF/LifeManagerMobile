@@ -95,7 +95,6 @@ public class ListStudiesAdapter extends RecyclerView.Adapter<ListStudiesAdapter.
             return "Pending";
         }
 
-
         @Override
         public void onCreateContextMenu(ContextMenu contextMenu, View view, ContextMenu.ContextMenuInfo contextMenuInfo) {
             contextMenu.add("Update");

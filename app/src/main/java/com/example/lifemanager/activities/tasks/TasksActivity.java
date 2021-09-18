@@ -1,5 +1,6 @@
 package com.example.lifemanager.activities.tasks;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -12,6 +13,7 @@ import com.example.lifemanager.dao.RoomTaskDAO;
 import com.example.lifemanager.model.Task;
 import com.example.lifemanager.recycler_view.ListTasksAdapter;
 import com.example.lifemanager.roomConfig.LifeManagerDatabase;
+import com.example.lifemanager.tools.Util;
 
 import java.util.List;
 
@@ -28,11 +30,32 @@ public class TasksActivity extends CategoryActivity {
         super.onCreate(savedInstanceState);
         roomTaskDAO = LifeManagerDatabase.getInstance(this).getRoomTaskDAO();
         configureAdapter();
+        registerForContextMenu(recyclerViewResources);
+    }
+
+    @Override
+    public boolean onContextItemSelected(@NonNull MenuItem item) {
+        Long chosenId = adapter.getChosenId();
+        Task task = roomTaskDAO.getTaskById(chosenId);
+        if (item.getTitle().equals("Remove")){
+            roomTaskDAO.delete(task);
+        }else {
+            Intent intent = new Intent(this, AddTaskActivity.class);
+            intent.putExtra("task",task);
+            startActivity(intent);
+        }
+        configureAdapter();
+        return super.onContextItemSelected(item);
     }
 
     private void configureAdapter() {
         tasks = roomTaskDAO.getAllTasks();
-        adapter = new ListTasksAdapter(this, tasks);
+        adapter = new ListTasksAdapter(this, tasks, new ListTasksAdapter.OnClickListener() {
+            @Override
+            public void onItemClickListener(Task task) {
+                Util.showToast(getApplicationContext(),"Show details");
+            }
+        });
         recyclerViewResources.setAdapter(adapter);
     }
 

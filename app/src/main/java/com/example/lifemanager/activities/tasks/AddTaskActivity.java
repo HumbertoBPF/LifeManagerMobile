@@ -1,7 +1,9 @@
 package com.example.lifemanager.activities.tasks;
 
+import static com.example.lifemanager.model.Constants.formatter;
 import static com.example.lifemanager.tools.Util.formatFromDateStringToCalendar;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 
@@ -11,7 +13,6 @@ import com.example.lifemanager.dao.RoomTaskDAO;
 import com.example.lifemanager.enums.Priority;
 import com.example.lifemanager.model.Task;
 import com.example.lifemanager.roomConfig.LifeManagerDatabase;
-import com.example.lifemanager.tools.Util;
 
 import java.util.Calendar;
 
@@ -27,6 +28,17 @@ public class AddTaskActivity extends AddResourceActivity {
         roomTaskDAO = LifeManagerDatabase.getInstance(this).getRoomTaskDAO();
         makeTaskFormVisible();
 
+        Intent intent = getIntent();
+        Task task = (Task) intent.getSerializableExtra("task");
+        if (task != null){
+            fillForm(task);
+        }
+
+        configureTaskFormButton();
+
+    }
+
+    private void configureTaskFormButton() {
         taskFormButtonSubmit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -46,7 +58,24 @@ public class AddTaskActivity extends AddResourceActivity {
                 finish();
             }
         });
+    }
 
+    private void fillForm(Task task) {
+        taskFormSubject.setText(task.getSubject());
+        taskFormName.setText(task.getName());
+        taskFormDescription.setText(task.getDescription());
+        taskFormStatus.check(R.id.task_form_status_pending);
+        if (task.isStatus()){
+            taskFormStatus.check(R.id.task_form_status_concluded);
+        }
+        taskFormPriority.check(R.id.task_form_status_high);
+        if (task.getPriority().equals(Priority.MEDIUM)){
+            taskFormPriority.check(R.id.task_form_status_medium);
+        }else if (task.getPriority().equals(Priority.LOW)){
+            taskFormPriority.check(R.id.task_form_status_low);
+        }
+        taskFormDeadline.setText(formatter.format(task.getDeadline().getTime()).replace("-",""));
+        taskFormDueDate.setText(formatter.format(task.getDueDate().getTime()).replace("-",""));
     }
 
     private void makeTaskFormVisible() {

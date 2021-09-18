@@ -3,6 +3,7 @@ package com.example.lifemanager.recycler_view;
 import static com.example.lifemanager.model.Constants.formatter;
 
 import android.content.Context;
+import android.view.ContextMenu;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -20,10 +21,21 @@ public class ListTasksAdapter extends RecyclerView.Adapter<ListTasksAdapter.Task
 
     private Context context;
     private List<Task> tasks;
+    private OnClickListener onClickListener;
+    private Long chosenId;
 
-    public ListTasksAdapter(Context context, List<Task> tasks) {
+    public Long getChosenId() {
+        return chosenId;
+    }
+
+    public void setChosenId(Long chosenId) {
+        this.chosenId = chosenId;
+    }
+
+    public ListTasksAdapter(Context context, List<Task> tasks, OnClickListener onClickListener) {
         this.context = context;
         this.tasks = tasks;
+        this.onClickListener = onClickListener;
     }
 
     @NonNull
@@ -44,7 +56,7 @@ public class ListTasksAdapter extends RecyclerView.Adapter<ListTasksAdapter.Task
         return tasks.size();
     }
 
-    class TaskViewHolder extends RecyclerView.ViewHolder{
+    class TaskViewHolder extends RecyclerView.ViewHolder implements View.OnCreateContextMenuListener {
 
         private TextView subject;
         private TextView name;
@@ -55,6 +67,21 @@ public class ListTasksAdapter extends RecyclerView.Adapter<ListTasksAdapter.Task
             subject = itemView.findViewById(R.id.task_item_subject);
             name = itemView.findViewById(R.id.task_item_name);
             dueDate = itemView.findViewById(R.id.task_item_due_date);
+            itemView.setOnCreateContextMenuListener(this);
+            itemView.setOnLongClickListener(new View.OnLongClickListener() {
+                @Override
+                public boolean onLongClick(View view) {
+                    setChosenId(tasks.get(getPosition()).getId());
+                    return false;
+                }
+            });
+            itemView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    Task task = tasks.get(getPosition());
+                    onClickListener.onItemClickListener(task);
+                }
+            });
         }
 
         public void bind(Task task){
@@ -63,6 +90,16 @@ public class ListTasksAdapter extends RecyclerView.Adapter<ListTasksAdapter.Task
             dueDate.setText(formatter.format(task.getDueDate().getTime()));
         }
 
+        @Override
+        public void onCreateContextMenu(ContextMenu contextMenu, View view, ContextMenu.ContextMenuInfo contextMenuInfo) {
+            contextMenu.add("Update");
+            contextMenu.add("Remove");
+        }
+
+    }
+
+    public interface OnClickListener{
+        void onItemClickListener(Task task);
     }
 
 }
