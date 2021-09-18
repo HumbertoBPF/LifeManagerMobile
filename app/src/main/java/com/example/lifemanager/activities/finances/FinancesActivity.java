@@ -1,4 +1,4 @@
-package com.example.lifemanager.activities;
+package com.example.lifemanager.activities.finances;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -8,6 +8,7 @@ import android.view.MenuItem;
 import androidx.annotation.NonNull;
 
 import com.example.lifemanager.R;
+import com.example.lifemanager.activities.CategoryActivity;
 import com.example.lifemanager.dao.RoomFinanceDAO;
 import com.example.lifemanager.model.Finance;
 import com.example.lifemanager.recycler_view.ListFinancesAdapter;
@@ -24,6 +25,7 @@ public class FinancesActivity extends CategoryActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         titleAppbar = getResources().getStringArray(R.array.categories)[0];
+        colorAppbar = getResources().getColor(R.color.color_finances_item);
         super.onCreate(savedInstanceState);
         roomFinanceDAO = LifeManagerDatabase.getInstance(this).getRoomFinanceDAO();
         configureAdapter();

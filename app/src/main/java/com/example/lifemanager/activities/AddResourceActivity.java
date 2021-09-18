@@ -1,5 +1,8 @@
 package com.example.lifemanager.activities;
 
+import static com.example.lifemanager.tools.Util.setActionBarColor;
+import static com.example.lifemanager.tools.Util.setActionBarTitle;
+
 import android.os.Bundle;
 import android.view.View;
 import android.widget.AdapterView;
@@ -58,13 +61,13 @@ public class AddResourceActivity extends AppCompatActivity implements AdapterVie
     protected Button taskFormButtonSubmit;
 
     protected String titleAppbar = null;
+    protected Integer colorAppbar = null;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        if (titleAppbar != null){
-            setTitle(titleAppbar);
-        }
+        setActionBarTitle(this, titleAppbar);
+        setActionBarColor(this,colorAppbar);
         setContentView(R.layout.activity_add_resource);
 
         getLayoutViews();

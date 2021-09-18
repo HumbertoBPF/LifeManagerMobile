@@ -1,4 +1,4 @@
-package com.example.lifemanager.activities;
+package com.example.lifemanager.activities.finances;
 
 import static com.example.lifemanager.model.Constants.formatter;
 
@@ -7,6 +7,7 @@ import android.os.Bundle;
 import android.view.View;
 
 import com.example.lifemanager.R;
+import com.example.lifemanager.activities.AddResourceActivity;
 import com.example.lifemanager.dao.RoomFinanceDAO;
 import com.example.lifemanager.enums.Sector;
 import com.example.lifemanager.enums.TypeFinance;
@@ -27,6 +28,7 @@ public class AddFinanceActivity extends AddResourceActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         titleAppbar = getResources().getString(R.string.title_appbar_finance_form);
+        colorAppbar = getResources().getColor(R.color.color_finances_item);
         super.onCreate(savedInstanceState);
         roomFinanceDAO = LifeManagerDatabase.getInstance(this).getRoomFinanceDAO();
         makeFinanceFormVisible();

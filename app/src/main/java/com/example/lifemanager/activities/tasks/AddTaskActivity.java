@@ -1,15 +1,17 @@
-package com.example.lifemanager.activities;
+package com.example.lifemanager.activities.tasks;
 
 import android.os.Bundle;
 import android.view.View;
 
 import com.example.lifemanager.R;
+import com.example.lifemanager.activities.AddResourceActivity;
 
 public class AddTaskActivity extends AddResourceActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         titleAppbar = getResources().getString(R.string.title_appbar_task_form);
+        colorAppbar = getResources().getColor(R.color.color_tasks_item);
         super.onCreate(savedInstanceState);
         makeTaskFormVisible();
     }

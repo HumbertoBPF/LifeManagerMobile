@@ -1,7 +1,6 @@
 package com.example.lifemanager.recycler_view;
 
 import android.content.Context;
-import android.graphics.Color;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -65,9 +64,9 @@ public class ListResourcesAdapter extends RecyclerView.Adapter<ListResourcesAdap
         public void bind(String resourceNameString) {
             resourceName.setText(resourceNameString);
             int idColorResource = context.getResources().getIdentifier("color_"+
-                    resourceNameString.toLowerCase()+"_item","string", context.getPackageName());
-            String rgbColorString = context.getResources().getString(idColorResource);
-            backgroundCardView.setCardBackgroundColor(Color.parseColor(rgbColorString));
+                    resourceNameString.toLowerCase()+"_item","color", context.getPackageName());
+            int color = context.getResources().getColor(idColorResource);
+            backgroundCardView.setCardBackgroundColor(color);
         }
 
     }

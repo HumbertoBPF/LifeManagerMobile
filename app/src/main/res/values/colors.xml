@@ -9,4 +9,7 @@
     <color name="white">#FFFFFFFF</color>
     <color name="dark_gray">#3D3D3D</color>
     <color name="light_gray">#8C8C8C</color>
+    <color name="color_finances_item">#cd120e</color>
+    <color name="color_studies_item">#f6c71c</color>
+    <color name="color_tasks_item">#3399ff</color>
 </resources>

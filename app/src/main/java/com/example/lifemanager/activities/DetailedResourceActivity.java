@@ -1,5 +1,8 @@
 package com.example.lifemanager.activities;
 
+import static com.example.lifemanager.tools.Util.setActionBarColor;
+import static com.example.lifemanager.tools.Util.setActionBarTitle;
+
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.os.Bundle;
@@ -10,6 +13,7 @@ import com.example.lifemanager.R;
 public class DetailedResourceActivity extends AppCompatActivity {
 
     protected String titleAppBar = null;
+    protected Integer colorAppBar = null;
 
     protected TextView financeDetailName;
     protected TextView financeDetailDate;
@@ -36,9 +40,8 @@ public class DetailedResourceActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        if (titleAppBar != null){
-            setTitle(titleAppBar);
-        }
+        setActionBarTitle(this, titleAppBar);
+        setActionBarColor(this, colorAppBar);
         setContentView(R.layout.activity_detailed_resource);
         getLayoutViews();
     }

@@ -1,4 +1,4 @@
-package com.example.lifemanager;
+package com.example.lifemanager.activities;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -14,10 +14,10 @@ import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.constraintlayout.widget.ConstraintSet;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.example.lifemanager.activities.AppSettingsActivity;
-import com.example.lifemanager.activities.FinancesActivity;
-import com.example.lifemanager.activities.StudiesActivity;
-import com.example.lifemanager.activities.TasksActivity;
+import com.example.lifemanager.R;
+import com.example.lifemanager.activities.finances.FinancesActivity;
+import com.example.lifemanager.activities.studies.StudiesActivity;
+import com.example.lifemanager.activities.tasks.TasksActivity;
 import com.example.lifemanager.dao.RoomSettingDAO;
 import com.example.lifemanager.model.Setting;
 import com.example.lifemanager.recycler_view.ListResourcesAdapter;

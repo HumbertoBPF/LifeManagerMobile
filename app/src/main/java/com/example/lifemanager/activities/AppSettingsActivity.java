@@ -1,6 +1,7 @@
 package com.example.lifemanager.activities;
 
 import static com.example.lifemanager.model.Constants.USERNAME_FOR_APP;
+import static com.example.lifemanager.tools.Util.setActionBarTitle;
 
 import android.os.Bundle;
 import android.util.Log;
@@ -26,7 +27,7 @@ public class AppSettingsActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setTitle(getResources().getString(R.string.title_appbar_settings));
+        setActionBarTitle(this, getResources().getString(R.string.title_appbar_settings));
         setContentView(R.layout.activity_app_settings);
 
         roomSettingDAO = LifeManagerDatabase.getInstance(getApplicationContext()).getRoomSettingDAO();

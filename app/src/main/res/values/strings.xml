@@ -1,8 +1,5 @@
 <resources>
     <string name="app_name">Life Manager</string>
-    <string name="color_finances_item">#cd120e</string>
-    <string name="color_studies_item">#f6c71c</string>
-    <string name="color_tasks_item">#3399ff</string>
     <string-array name="categories">
         <item>Finances</item>
         <item>Studies</item>
@@ -58,4 +55,18 @@
     <string name="form_type_radio_button_income">Income</string>
     <string name="form_type_radio_button_expense">Expense</string>
     <string name="title_appbar_details_finance">Finance details</string>
+    <string-array name="months">
+        <item>January</item>
+        <item>February</item>
+        <item>March</item>
+        <item>April</item>
+        <item>May</item>
+        <item>June</item>
+        <item>July</item>
+        <item>August</item>
+        <item>September</item>
+        <item>October</item>
+        <item>November</item>
+        <item>December</item>
+    </string-array>
 </resources>

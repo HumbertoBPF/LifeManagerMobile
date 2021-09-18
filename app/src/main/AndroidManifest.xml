@@ -10,7 +10,7 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.LifeManager">
         <activity
-            android:name=".activities.DetailedFinanceActivity"
+            android:name=".activities.finances.DetailedFinanceActivity"
             android:exported="true" />
         <activity
             android:name=".activities.DetailedResourceActivity"
@@ -19,31 +19,31 @@
             android:name=".activities.AddResourceActivity"
             android:exported="true" />
         <activity
-            android:name=".activities.AddFinanceActivity"
+            android:name=".activities.finances.AddFinanceActivity"
             android:exported="true" />
         <activity
-            android:name=".activities.AddStudyActivity"
+            android:name=".activities.studies.AddStudyActivity"
             android:exported="true" />
         <activity
-            android:name=".activities.AddTaskActivity"
+            android:name=".activities.tasks.AddTaskActivity"
             android:exported="true" />
         <activity
             android:name=".activities.CategoryActivity"
             android:exported="true" />
         <activity
-            android:name=".activities.TasksActivity"
+            android:name=".activities.tasks.TasksActivity"
             android:exported="true" />
         <activity
-            android:name=".activities.StudiesActivity"
+            android:name=".activities.studies.StudiesActivity"
             android:exported="true" />
         <activity
-            android:name=".activities.FinancesActivity"
+            android:name=".activities.finances.FinancesActivity"
             android:exported="true" />
         <activity
             android:name=".activities.AppSettingsActivity"
             android:exported="true" />
         <activity
-            android:name=".MainActivity"
+            android:name=".activities.MainActivity"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
