@@ -1,6 +1,7 @@
 package com.example.lifemanager.activities.finances;
 
 import static com.example.lifemanager.model.Constants.formatter;
+import static com.example.lifemanager.tools.Util.formatFromDateStringToCalendar;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -50,9 +51,7 @@ public class AddFinanceActivity extends AddResourceActivity {
                 String dateString = financeFormDate.getText().toString();
                 Integer year = Integer.parseInt(dateString.substring(0,4));
                 Integer month = Integer.parseInt(dateString.substring(4,6))-1;
-                Integer day = Integer.parseInt(dateString.substring(6,8));
-                Calendar dateCalendar = Calendar.getInstance();
-                dateCalendar.set(year,month,day);
+                Calendar dateCalendar = formatFromDateStringToCalendar(dateString);
                 BigDecimal valueBigDecimal = getBigDecimalValue();
                 TypeFinance typeFinance = getTypeFinance();
                 Sector sector = getSector();

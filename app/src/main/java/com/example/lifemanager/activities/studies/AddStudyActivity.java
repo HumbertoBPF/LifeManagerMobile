@@ -41,16 +41,18 @@ public class AddStudyActivity extends AddResourceActivity {
             fillForm(study);
         }
 
+        configureStudyFormButton();
+
+    }
+
+    private void configureStudyFormButton() {
         studiesFormButtonSubmit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 String name = studiesFormName.getText().toString();
                 String linkCourse = studiesFormLinkCourse.getText().toString();
                 String position = studiesFormPosition.getText().toString();
-                boolean status = false;
-                if (studiesFormConcluded.isChecked()){
-                    status = true;
-                }
+                boolean status = studiesFormConcluded.isChecked();
                 Category category = getCategory();
                 if (idToUpdate == null){
                     roomStudiesDAO.save(new Studies(name,linkCourse,category,Integer.parseInt(position),status));
@@ -61,7 +63,6 @@ public class AddStudyActivity extends AddResourceActivity {
                 finish();
             }
         });
-
     }
 
     private void fillForm(Studies study) {

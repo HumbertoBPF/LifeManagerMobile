@@ -8,6 +8,8 @@ import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import java.util.Calendar;
+
 public class Util {
 
     public static void showToast(Context context,String text){
@@ -25,6 +27,15 @@ public class Util {
             ColorDrawable colorDrawable = new ColorDrawable(color);
             activity.getSupportActionBar().setBackgroundDrawable(colorDrawable);
         }
+    }
+
+    public static Calendar formatFromDateStringToCalendar(String dateString){
+        Integer year = Integer.parseInt(dateString.substring(0,4));
+        Integer month = Integer.parseInt(dateString.substring(4,6))-1;
+        Integer day = Integer.parseInt(dateString.substring(6,8));
+        Calendar dateCalendar = Calendar.getInstance();
+        dateCalendar.set(year,month,day);
+        return dateCalendar;
     }
 
 }
