@@ -13,7 +13,6 @@ import com.example.lifemanager.dao.RoomTaskDAO;
 import com.example.lifemanager.model.Task;
 import com.example.lifemanager.recycler_view.ListTasksAdapter;
 import com.example.lifemanager.roomConfig.LifeManagerDatabase;
-import com.example.lifemanager.tools.Util;
 
 import java.util.List;
 
@@ -53,7 +52,9 @@ public class TasksActivity extends CategoryActivity {
         adapter = new ListTasksAdapter(this, tasks, new ListTasksAdapter.OnClickListener() {
             @Override
             public void onItemClickListener(Task task) {
-                Util.showToast(getApplicationContext(),"Show details");
+                Intent intent = new Intent(getApplicationContext(),DetailedTaskActivity.class);
+                intent.putExtra("task",task);
+                startActivity(intent);
             }
         });
         recyclerViewResources.setAdapter(adapter);

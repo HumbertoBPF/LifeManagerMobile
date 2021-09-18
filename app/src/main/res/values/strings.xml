@@ -55,7 +55,8 @@
     <string name="form_type_radio_button_income">Income</string>
     <string name="form_type_radio_button_expense">Expense</string>
     <string name="title_appbar_details_finance">Finance details</string>
-    <string name="title_appbar_details_study">Finance details</string>
+    <string name="title_appbar_details_study">Study details</string>
+    <string name="title_appbar_details_task">Task details</string>
     <string-array name="months">
         <item>January</item>
         <item>February</item>
