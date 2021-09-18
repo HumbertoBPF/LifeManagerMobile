@@ -1,5 +1,6 @@
 package com.example.lifemanager.activities.studies;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -28,11 +29,34 @@ public class StudiesActivity extends CategoryActivity {
         super.onCreate(savedInstanceState);
         roomStudiesDAO = LifeManagerDatabase.getInstance(this).getRoomStudiesDAO();
         configureAdapter();
+        registerForContextMenu(recyclerViewResources);
+    }
+
+    @Override
+    public boolean onContextItemSelected(@NonNull MenuItem item) {
+        Long chosenId = adapter.getChosenId();
+        Studies study = roomStudiesDAO.getStudyById(chosenId);
+        if (item.getTitle().equals("Remove")){
+            roomStudiesDAO.delete(study);
+        }else {
+            Intent intent = new Intent(this, AddStudyActivity.class);
+            intent.putExtra("study",study);
+            startActivity(intent);
+        }
+        configureAdapter();
+        return super.onContextItemSelected(item);
     }
 
     private void configureAdapter() {
         studies = roomStudiesDAO.getAllStudies();
-        adapter = new ListStudiesAdapter(this, studies);
+        adapter = new ListStudiesAdapter(this, studies, new ListStudiesAdapter.OnClickListener() {
+            @Override
+            public void onItemClickListener(Studies study) {
+                Intent intent = new Intent(getApplicationContext(), DetailedStudyActivity.class);
+                intent.putExtra("study",study);
+                startActivity(intent);
+            }
+        });
         recyclerViewResources.setAdapter(adapter);
     }
 

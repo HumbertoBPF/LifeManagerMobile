@@ -10,6 +10,9 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.LifeManager">
         <activity
+            android:name=".activities.studies.DetailedStudyActivity"
+            android:exported="true" />
+        <activity
             android:name=".activities.finances.DetailedFinanceActivity"
             android:exported="true" />
         <activity

@@ -23,7 +23,6 @@ import java.util.List;
 public class AddFinanceActivity extends AddResourceActivity {
 
     private RoomFinanceDAO roomFinanceDAO;
-    private Long idToUpdate = null;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

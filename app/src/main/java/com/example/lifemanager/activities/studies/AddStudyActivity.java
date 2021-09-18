@@ -1,8 +1,15 @@
 package com.example.lifemanager.activities.studies;
 
-import static com.example.lifemanager.enums.Category.*;
+import static com.example.lifemanager.enums.Category.BACKEND;
+import static com.example.lifemanager.enums.Category.DATA_SCIENCE;
+import static com.example.lifemanager.enums.Category.DEVOPS;
 import static com.example.lifemanager.enums.Category.FRONTEND;
+import static com.example.lifemanager.enums.Category.GENERAL_PROGRAMMING;
+import static com.example.lifemanager.enums.Category.LANGUAGES;
+import static com.example.lifemanager.enums.Category.MOBILE;
+import static com.example.lifemanager.enums.Category.OTHER;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 
@@ -12,7 +19,6 @@ import com.example.lifemanager.dao.RoomStudiesDAO;
 import com.example.lifemanager.enums.Category;
 import com.example.lifemanager.model.Studies;
 import com.example.lifemanager.roomConfig.LifeManagerDatabase;
-import com.example.lifemanager.tools.Util;
 
 import java.util.Arrays;
 import java.util.List;
@@ -29,6 +35,12 @@ public class AddStudyActivity extends AddResourceActivity {
         roomStudiesDAO = LifeManagerDatabase.getInstance(this).getRoomStudiesDAO();
         makeStudiesFormVisible();
 
+        Intent intent = getIntent();
+        Studies study = (Studies) intent.getSerializableExtra("study");
+        if (study != null){
+            fillForm(study);
+        }
+
         studiesFormButtonSubmit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -40,11 +52,29 @@ public class AddStudyActivity extends AddResourceActivity {
                     status = true;
                 }
                 Category category = getCategory();
-                roomStudiesDAO.save(new Studies(name,linkCourse,category,Integer.parseInt(position),status));
+                if (idToUpdate == null){
+                    roomStudiesDAO.save(new Studies(name,linkCourse,category,Integer.parseInt(position),status));
+                }else{
+                    roomStudiesDAO.update(
+                            new Studies(idToUpdate,name,linkCourse,category, Integer.parseInt(position),status));
+                }
                 finish();
             }
         });
 
+    }
+
+    private void fillForm(Studies study) {
+        idToUpdate = study.getId();
+        studiesFormName.setText(study.getName());
+        studiesFormLinkCourse.setText(study.getLinkCourse());
+        studiesFormPosition.setText(study.getPosition().toString());
+        studiesFormStatus.check(R.id.studies_form_status_pending);
+        if (study.getStatus()){
+            studiesFormStatus.check(R.id.studies_form_status_concluded);
+        }
+        List<String> categories = Arrays.asList(getResources().getStringArray(R.array.categories_study));
+        studiesFormCategorySpinner.setSelection(categories.indexOf(study.getCategory().getValue()));
     }
 
     private Category getCategory(){

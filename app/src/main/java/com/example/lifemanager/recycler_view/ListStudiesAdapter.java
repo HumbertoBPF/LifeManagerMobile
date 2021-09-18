@@ -1,6 +1,7 @@
 package com.example.lifemanager.recycler_view;
 
 import android.content.Context;
+import android.view.ContextMenu;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -16,12 +17,23 @@ import java.util.List;
 
 public class ListStudiesAdapter extends RecyclerView.Adapter<ListStudiesAdapter.StudyViewHolder> {
 
-    Context context;
-    List<Studies> studies;
+    private Context context;
+    private List<Studies> studies;
+    private OnClickListener onClickListener;
+    private Long chosenId;
 
-    public ListStudiesAdapter(Context context, List<Studies> studies){
+    public Long getChosenId() {
+        return chosenId;
+    }
+
+    public void setChosenId(Long chosenId) {
+        this.chosenId = chosenId;
+    }
+
+    public ListStudiesAdapter(Context context, List<Studies> studies, OnClickListener onClickListener){
         this.context = context;
         this.studies = studies;
+        this.onClickListener = onClickListener;
     }
 
     @NonNull
@@ -42,7 +54,7 @@ public class ListStudiesAdapter extends RecyclerView.Adapter<ListStudiesAdapter.
         return studies.size();
     }
 
-    class StudyViewHolder extends RecyclerView.ViewHolder{
+    class StudyViewHolder extends RecyclerView.ViewHolder implements View.OnCreateContextMenuListener {
 
         private TextView studyItemPosition;
         private TextView studyItemName;
@@ -53,6 +65,21 @@ public class ListStudiesAdapter extends RecyclerView.Adapter<ListStudiesAdapter.
             studyItemPosition = itemView.findViewById(R.id.study_item_position);
             studyItemName = itemView.findViewById(R.id.study_item_name);
             studyItemStatus = itemView.findViewById(R.id.study_item_status);
+            itemView.setOnCreateContextMenuListener(this);
+            itemView.setOnLongClickListener(new View.OnLongClickListener() {
+                @Override
+                public boolean onLongClick(View view) {
+                    setChosenId(studies.get(getPosition()).getId());
+                    return false;
+                }
+            });
+            itemView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    Studies study = studies.get(getPosition());
+                    onClickListener.onItemClickListener(study);
+                }
+            });
         }
 
         public void bind(Studies study){
@@ -68,6 +95,16 @@ public class ListStudiesAdapter extends RecyclerView.Adapter<ListStudiesAdapter.
             return "Pending";
         }
 
+
+        @Override
+        public void onCreateContextMenu(ContextMenu contextMenu, View view, ContextMenu.ContextMenuInfo contextMenuInfo) {
+            contextMenu.add("Update");
+            contextMenu.add("Remove");
+        }
+    }
+
+    public interface OnClickListener{
+        void onItemClickListener(Studies study);
     }
 
 }

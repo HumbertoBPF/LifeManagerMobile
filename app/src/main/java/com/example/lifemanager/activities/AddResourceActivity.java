@@ -63,6 +63,8 @@ public class AddResourceActivity extends AppCompatActivity implements AdapterVie
     protected String titleAppbar = null;
     protected Integer colorAppbar = null;
 
+    protected Long idToUpdate = null;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
