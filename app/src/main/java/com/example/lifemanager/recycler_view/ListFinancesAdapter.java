@@ -13,6 +13,7 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.lifemanager.R;
+import com.example.lifemanager.enums.TypeFinance;
 import com.example.lifemanager.model.Finance;
 
 import java.util.List;
@@ -83,6 +84,12 @@ public class ListFinancesAdapter extends RecyclerView.Adapter<ListFinancesAdapte
         }
 
         public void bind(Finance finance){
+            if (finance.getTypeFinance().equals(TypeFinance.INCOME)){
+                int greenTextColor = context.getResources().getColor(R.color.green_recycler_view_item);
+                financeItemName.setTextColor(greenTextColor);
+                financeItemValue.setTextColor(greenTextColor);
+                financeItemDate.setTextColor(greenTextColor);
+            }
             financeItemName.setText(finance.getName());
             financeItemValue.setText(finance.getValue()+"");
             financeItemDate.setText(formatter.format(finance.getDate().getTime()));
@@ -90,8 +97,8 @@ public class ListFinancesAdapter extends RecyclerView.Adapter<ListFinancesAdapte
 
         @Override
         public void onCreateContextMenu(ContextMenu contextMenu, View view, ContextMenu.ContextMenuInfo contextMenuInfo) {
-            contextMenu.add("Update");
-            contextMenu.add("Remove");
+            contextMenu.add(context.getResources().getString(R.string.context_menu_update_option));
+            contextMenu.add(context.getResources().getString(R.string.context_menu_delete_option));
         }
 
     }

@@ -71,4 +71,6 @@
         <item>November</item>
         <item>December</item>
     </string-array>
+    <string name="context_menu_update_option">Update</string>
+    <string name="context_menu_delete_option">Delete</string>
 </resources>

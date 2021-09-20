@@ -12,4 +12,6 @@
     <color name="color_finances_item">#cd120e</color>
     <color name="color_studies_item">#f6c71c</color>
     <color name="color_tasks_item">#3399ff</color>
+    <color name="green_recycler_view_item">#159c0e</color>
+    <color name="red_recycler_view_item">#cd120e</color>
 </resources>

@@ -58,15 +58,15 @@ public class ListTasksAdapter extends RecyclerView.Adapter<ListTasksAdapter.Task
 
     class TaskViewHolder extends RecyclerView.ViewHolder implements View.OnCreateContextMenuListener {
 
-        private TextView subject;
-        private TextView name;
-        private TextView dueDate;
+        private TextView taskItemSubject;
+        private TextView taskItemName;
+        private TextView taskItemDueDate;
 
         public TaskViewHolder(@NonNull View itemView) {
             super(itemView);
-            subject = itemView.findViewById(R.id.text_view_1);
-            name = itemView.findViewById(R.id.text_view_2);
-            dueDate = itemView.findViewById(R.id.text_view_3);
+            taskItemSubject = itemView.findViewById(R.id.text_view_1);
+            taskItemName = itemView.findViewById(R.id.text_view_2);
+            taskItemDueDate = itemView.findViewById(R.id.text_view_3);
             itemView.setOnCreateContextMenuListener(this);
             itemView.setOnLongClickListener(new View.OnLongClickListener() {
                 @Override
@@ -85,15 +85,21 @@ public class ListTasksAdapter extends RecyclerView.Adapter<ListTasksAdapter.Task
         }
 
         public void bind(Task task){
-            subject.setText(task.getSubject());
-            name.setText(task.getName());
-            dueDate.setText(formatter.format(task.getDueDate().getTime()));
+            if (task.isStatus()){
+                int greenTextColor = context.getResources().getColor(R.color.green_recycler_view_item);
+                taskItemSubject.setTextColor(greenTextColor);
+                taskItemName.setTextColor(greenTextColor);
+                taskItemDueDate.setTextColor(greenTextColor);
+            }
+            taskItemSubject.setText(task.getSubject());
+            taskItemName.setText(task.getName());
+            taskItemDueDate.setText(formatter.format(task.getDueDate().getTime()));
         }
 
         @Override
         public void onCreateContextMenu(ContextMenu contextMenu, View view, ContextMenu.ContextMenuInfo contextMenuInfo) {
-            contextMenu.add("Update");
-            contextMenu.add("Remove");
+            contextMenu.add(context.getResources().getString(R.string.context_menu_update_option));
+            contextMenu.add(context.getResources().getString(R.string.context_menu_delete_option));
         }
 
     }

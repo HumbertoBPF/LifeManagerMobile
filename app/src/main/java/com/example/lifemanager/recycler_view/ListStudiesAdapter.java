@@ -11,6 +11,7 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.lifemanager.R;
+import com.example.lifemanager.enums.TypeFinance;
 import com.example.lifemanager.model.Studies;
 
 import java.util.List;
@@ -83,6 +84,12 @@ public class ListStudiesAdapter extends RecyclerView.Adapter<ListStudiesAdapter.
         }
 
         public void bind(Studies study){
+            if (study.getStatus()){
+                int greenTextColor = context.getResources().getColor(R.color.green_recycler_view_item);
+                studyItemPosition.setTextColor(greenTextColor);
+                studyItemName.setTextColor(greenTextColor);
+                studyItemStatus.setTextColor(greenTextColor);
+            }
             studyItemPosition.setText(study.getPosition().toString());
             studyItemName.setText(study.getName());
             studyItemStatus.setText(getStatusString(study.getStatus()));
@@ -97,8 +104,8 @@ public class ListStudiesAdapter extends RecyclerView.Adapter<ListStudiesAdapter.
 
         @Override
         public void onCreateContextMenu(ContextMenu contextMenu, View view, ContextMenu.ContextMenuInfo contextMenuInfo) {
-            contextMenu.add("Update");
-            contextMenu.add("Remove");
+            contextMenu.add(context.getResources().getString(R.string.context_menu_update_option));
+            contextMenu.add(context.getResources().getString(R.string.context_menu_delete_option));
         }
     }
 
