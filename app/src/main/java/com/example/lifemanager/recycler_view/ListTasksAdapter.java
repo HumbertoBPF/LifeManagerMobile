@@ -41,7 +41,7 @@ public class ListTasksAdapter extends RecyclerView.Adapter<ListTasksAdapter.Task
     @NonNull
     @Override
     public ListTasksAdapter.TaskViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(context).inflate(R.layout.item_task_list, parent,false);
+        View view = LayoutInflater.from(context).inflate(R.layout.item_resource_list, parent,false);
         return new ListTasksAdapter.TaskViewHolder(view);
     }
 
@@ -64,9 +64,9 @@ public class ListTasksAdapter extends RecyclerView.Adapter<ListTasksAdapter.Task
 
         public TaskViewHolder(@NonNull View itemView) {
             super(itemView);
-            subject = itemView.findViewById(R.id.task_item_subject);
-            name = itemView.findViewById(R.id.task_item_name);
-            dueDate = itemView.findViewById(R.id.task_item_due_date);
+            subject = itemView.findViewById(R.id.text_view_1);
+            name = itemView.findViewById(R.id.text_view_2);
+            dueDate = itemView.findViewById(R.id.text_view_3);
             itemView.setOnCreateContextMenuListener(this);
             itemView.setOnLongClickListener(new View.OnLongClickListener() {
                 @Override

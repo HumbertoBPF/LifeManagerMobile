@@ -13,6 +13,7 @@
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:inputType="text"
+        android:textSize="18sp"
         android:hint="@string/form_name_hint"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -25,6 +26,7 @@
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:inputType="text"
+        android:textSize="18sp"
         android:hint="@string/form_link_course_hint"
         app:layout_constraintTop_toBottomOf="@id/studies_form_name"
         app:layout_constraintStart_toStartOf="@id/studies_form_name"
@@ -37,6 +39,7 @@
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:inputType="number"
+        android:textSize="18sp"
         android:hint="@string/form_position_hint"
         app:layout_constraintTop_toBottomOf="@id/studies_form_link_course"
         app:layout_constraintStart_toStartOf="@id/studies_form_name"
@@ -52,7 +55,7 @@
         app:layout_constraintStart_toStartOf="@id/studies_form_name"
         app:layout_constraintEnd_toEndOf="@id/studies_form_name"
         app:layout_constraintHorizontal_bias="0.0"
-        android:textSize="16sp"
+        android:textSize="18sp"
         android:textStyle="bold"
         android:text="@string/form_status_label"
         android:visibility="gone"/>
@@ -73,6 +76,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:checked="false"
+            android:textSize="18sp"
             android:text="@string/form_status_radio_button_concluded"
             android:visibility="gone"/>
 
@@ -81,6 +85,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:checked="true"
+            android:textSize="18sp"
             android:text="@string/form_status_radio_button_pending"
             android:visibility="gone"/>
 
@@ -94,7 +99,7 @@
         app:layout_constraintStart_toStartOf="@id/studies_form_name"
         app:layout_constraintEnd_toEndOf="@id/studies_form_name"
         app:layout_constraintHorizontal_bias="0.0"
-        android:textSize="16sp"
+        android:textSize="18sp"
         android:textStyle="bold"
         android:text="@string/form_category_label"
         android:visibility="gone"/>
@@ -104,6 +109,7 @@
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:background="@drawable/border_spinner"
+        android:textSize="18sp"
         app:layout_constraintTop_toBottomOf="@id/studies_form_category_label"
         app:layout_constraintStart_toStartOf="@id/studies_form_name"
         app:layout_constraintEnd_toEndOf="@id/studies_form_name"
@@ -115,12 +121,13 @@
         android:id="@+id/studies_form_button_submit"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:textSize="18sp"
         android:text="@string/title_appbar_studies_form"
         android:backgroundTint="@color/color_studies_item"
         app:layout_constraintTop_toBottomOf="@id/studies_form_category"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        android:layout_marginVertical="5dp"
+        android:layout_marginVertical="15dp"
         android:visibility="gone"/>
 
     <!--                    FORM FINANCES                    -->
@@ -130,6 +137,7 @@
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:inputType="text"
+        android:textSize="18sp"
         android:hint="@string/form_name_hint"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -143,6 +151,7 @@
         android:layout_height="wrap_content"
         android:inputType="date"
         android:maxLength="8"
+        android:textSize="18sp"
         android:hint="@string/form_date_hint"
         app:layout_constraintTop_toBottomOf="@id/finance_form_name"
         app:layout_constraintStart_toStartOf="@id/finance_form_name"
@@ -155,6 +164,7 @@
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:inputType="numberDecimal"
+        android:textSize="18sp"
         android:hint="@string/form_value_hint"
         app:layout_constraintTop_toBottomOf="@id/finance_form_date"
         app:layout_constraintStart_toStartOf="@id/finance_form_date"
@@ -170,7 +180,7 @@
         app:layout_constraintStart_toStartOf="@id/finance_form_date"
         app:layout_constraintEnd_toEndOf="@id/finance_form_date"
         app:layout_constraintHorizontal_bias="0.0"
-        android:textSize="16sp"
+        android:textSize="18sp"
         android:textStyle="bold"
         android:text="@string/form_type_label"
         android:visibility="gone"/>
@@ -180,6 +190,7 @@
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:orientation="vertical"
+        android:textSize="18sp"
         app:layout_constraintTop_toBottomOf="@id/finance_form_type_label"
         app:layout_constraintStart_toStartOf="@id/finance_form_date"
         app:layout_constraintEnd_toEndOf="@id/finance_form_date"
@@ -191,6 +202,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:checked="false"
+            android:textSize="18sp"
             android:text="@string/form_type_radio_button_income"
             android:visibility="gone"/>
 
@@ -199,6 +211,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:checked="true"
+            android:textSize="18sp"
             android:text="@string/form_type_radio_button_expense"
             android:visibility="gone"/>
 
@@ -212,7 +225,7 @@
         app:layout_constraintStart_toStartOf="@id/finance_form_date"
         app:layout_constraintEnd_toEndOf="@id/finance_form_date"
         app:layout_constraintHorizontal_bias="0.0"
-        android:textSize="16sp"
+        android:textSize="18sp"
         android:textStyle="bold"
         android:text="@string/form_sector_label"
         android:visibility="gone"/>
@@ -222,6 +235,7 @@
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:background="@drawable/border_spinner"
+        android:textSize="18sp"
         app:layout_constraintTop_toBottomOf="@id/finance_form_sector_label"
         app:layout_constraintStart_toStartOf="@id/finance_form_date"
         app:layout_constraintEnd_toEndOf="@id/finance_form_date"
@@ -233,12 +247,13 @@
         android:id="@+id/finance_form_button_submit"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:textSize="18sp"
         android:text="@string/title_appbar_finance_form"
         android:backgroundTint="@color/color_finances_item"
         app:layout_constraintTop_toBottomOf="@id/finance_form_sector"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        android:layout_marginVertical="5dp"
+        android:layout_marginVertical="15dp"
         android:visibility="gone"/>
 
     <!--                    FORM TASKS                    -->
@@ -248,6 +263,7 @@
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:inputType="text"
+        android:textSize="18sp"
         android:hint="@string/form_subject_hint"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -260,6 +276,7 @@
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:inputType="text"
+        android:textSize="18sp"
         android:hint="@string/form_name_hint"
         app:layout_constraintTop_toBottomOf="@id/task_form_subject"
         app:layout_constraintStart_toStartOf="@id/task_form_subject"
@@ -272,6 +289,7 @@
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:inputType="text"
+        android:textSize="18sp"
         android:hint="@string/form_description_hint"
         app:layout_constraintTop_toBottomOf="@id/task_form_name"
         app:layout_constraintStart_toStartOf="@id/task_form_subject"
@@ -287,7 +305,7 @@
         app:layout_constraintStart_toStartOf="@id/task_form_subject"
         app:layout_constraintEnd_toEndOf="@id/task_form_subject"
         app:layout_constraintHorizontal_bias="0.0"
-        android:textSize="16sp"
+        android:textSize="18sp"
         android:textStyle="bold"
         android:text="@string/form_status_label"
         android:visibility="gone"/>
@@ -308,6 +326,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:checked="false"
+            android:textSize="18sp"
             android:text="@string/form_status_radio_button_concluded"
             android:visibility="gone"/>
 
@@ -316,6 +335,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:checked="true"
+            android:textSize="18sp"
             android:text="@string/form_status_radio_button_pending"
             android:visibility="gone"/>
 
@@ -329,7 +349,7 @@
         app:layout_constraintStart_toStartOf="@id/task_form_subject"
         app:layout_constraintEnd_toEndOf="@id/task_form_subject"
         app:layout_constraintHorizontal_bias="0.0"
-        android:textSize="16sp"
+        android:textSize="18sp"
         android:textStyle="bold"
         android:text="@string/form_priority_label"
         android:visibility="gone"/>
@@ -350,6 +370,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:checked="false"
+            android:textSize="18sp"
             android:text="@string/form_priority_radio_button_high"
             android:visibility="gone"/>
 
@@ -358,6 +379,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:checked="true"
+            android:textSize="18sp"
             android:text="@string/form_priority_radio_button_medium"
             android:visibility="gone"/>
 
@@ -366,6 +388,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:checked="false"
+            android:textSize="18sp"
             android:text="@string/form_priority_radio_button_low"
             android:visibility="gone"/>
 
@@ -377,6 +400,7 @@
         android:layout_height="wrap_content"
         android:inputType="date"
         android:maxLength="8"
+        android:textSize="18sp"
         android:hint="@string/form_deadline_hint"
         app:layout_constraintTop_toBottomOf="@id/task_form_priority"
         app:layout_constraintStart_toStartOf="@id/task_form_subject"
@@ -390,6 +414,7 @@
         android:layout_height="wrap_content"
         android:inputType="date"
         android:maxLength="8"
+        android:textSize="18sp"
         android:hint="@string/form_due_date_hint"
         app:layout_constraintTop_toBottomOf="@id/task_form_deadline"
         app:layout_constraintStart_toStartOf="@id/task_form_subject"
@@ -401,12 +426,13 @@
         android:id="@+id/task_form_button_submit"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:textSize="18sp"
         android:text="@string/title_appbar_task_form"
         android:backgroundTint="@color/color_tasks_item"
         app:layout_constraintTop_toBottomOf="@id/task_form_due_date"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        android:layout_marginVertical="5dp"
+        android:layout_marginVertical="15dp"
         android:visibility="gone"/>
 
 

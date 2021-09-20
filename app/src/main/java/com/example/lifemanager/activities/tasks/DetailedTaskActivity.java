@@ -2,15 +2,12 @@ package com.example.lifemanager.activities.tasks;
 
 import static com.example.lifemanager.model.Constants.formatter;
 
-import androidx.appcompat.app.AppCompatActivity;
-
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 
 import com.example.lifemanager.R;
 import com.example.lifemanager.activities.DetailedResourceActivity;
-import com.example.lifemanager.model.Studies;
 import com.example.lifemanager.model.Task;
 
 public class DetailedTaskActivity extends DetailedResourceActivity {

@@ -13,7 +13,6 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.lifemanager.R;
-import com.example.lifemanager.tools.Util;
 
 public class CategoryActivity extends AppCompatActivity {
 

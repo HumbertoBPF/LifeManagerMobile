@@ -39,7 +39,7 @@ public class ListStudiesAdapter extends RecyclerView.Adapter<ListStudiesAdapter.
     @NonNull
     @Override
     public StudyViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(context).inflate(R.layout.item_study_list, parent,false);
+        View view = LayoutInflater.from(context).inflate(R.layout.item_resource_list, parent,false);
         return new ListStudiesAdapter.StudyViewHolder(view);
     }
 
@@ -62,9 +62,9 @@ public class ListStudiesAdapter extends RecyclerView.Adapter<ListStudiesAdapter.
 
         public StudyViewHolder(@NonNull View itemView) {
             super(itemView);
-            studyItemPosition = itemView.findViewById(R.id.study_item_position);
-            studyItemName = itemView.findViewById(R.id.study_item_name);
-            studyItemStatus = itemView.findViewById(R.id.study_item_status);
+            studyItemPosition = itemView.findViewById(R.id.text_view_1);
+            studyItemName = itemView.findViewById(R.id.text_view_2);
+            studyItemStatus = itemView.findViewById(R.id.text_view_3);
             itemView.setOnCreateContextMenuListener(this);
             itemView.setOnLongClickListener(new View.OnLongClickListener() {
                 @Override

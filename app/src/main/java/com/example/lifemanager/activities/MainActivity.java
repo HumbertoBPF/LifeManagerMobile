@@ -20,7 +20,7 @@ import com.example.lifemanager.activities.studies.StudiesActivity;
 import com.example.lifemanager.activities.tasks.TasksActivity;
 import com.example.lifemanager.dao.RoomSettingDAO;
 import com.example.lifemanager.model.Setting;
-import com.example.lifemanager.recycler_view.ListResourcesAdapter;
+import com.example.lifemanager.recycler_view.ListResourcesMenuAdapter;
 import com.example.lifemanager.roomConfig.LifeManagerDatabase;
 import com.example.lifemanager.tools.Util;
 
@@ -114,7 +114,7 @@ public class MainActivity extends AppCompatActivity {
 
     private void configureAdapter() {
         resourcesNames.addAll(Arrays.asList(getResources().getStringArray(R.array.categories)));
-        resourcesList.setAdapter(new ListResourcesAdapter(this, resourcesNames, new ListResourcesAdapter.OnClickListener() {
+        resourcesList.setAdapter(new ListResourcesMenuAdapter(this, resourcesNames, new ListResourcesMenuAdapter.OnClickListener() {
             @Override
             public void onItemClickListener(String category) {
                 if (category.equals(getResources().getStringArray(R.array.categories)[0])){

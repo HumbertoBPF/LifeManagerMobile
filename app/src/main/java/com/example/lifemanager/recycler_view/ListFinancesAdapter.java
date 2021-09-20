@@ -41,7 +41,7 @@ public class ListFinancesAdapter extends RecyclerView.Adapter<ListFinancesAdapte
     @NonNull
     @Override
     public ListFinancesAdapter.FinanceViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(context).inflate(R.layout.item_finance_list, parent,false);
+        View view = LayoutInflater.from(context).inflate(R.layout.item_resource_list, parent,false);
         return new ListFinancesAdapter.FinanceViewHolder(view);
     }
 
@@ -62,9 +62,9 @@ public class ListFinancesAdapter extends RecyclerView.Adapter<ListFinancesAdapte
 
         public FinanceViewHolder(@NonNull View itemView) {
             super(itemView);
-            financeItemName = itemView.findViewById(R.id.finance_item_name);
-            financeItemValue = itemView.findViewById(R.id.finance_item_value);
-            financeItemDate = itemView.findViewById(R.id.finance_item_date);
+            financeItemName = itemView.findViewById(R.id.text_view_1);
+            financeItemValue = itemView.findViewById(R.id.text_view_2);
+            financeItemDate = itemView.findViewById(R.id.text_view_3);
             itemView.setOnCreateContextMenuListener(this);
             itemView.setOnLongClickListener(new View.OnLongClickListener() {
                 @Override

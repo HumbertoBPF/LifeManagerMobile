@@ -14,13 +14,13 @@ import com.example.lifemanager.R;
 
 import java.util.List;
 
-public class ListResourcesAdapter extends RecyclerView.Adapter<ListResourcesAdapter.ResourceViewHolder> {
+public class ListResourcesMenuAdapter extends RecyclerView.Adapter<ListResourcesMenuAdapter.ResourceViewHolder> {
 
     private List<String> resourcesNames;
     private Context context;
     private OnClickListener onClickListener;
 
-    public ListResourcesAdapter(Context context, List<String> resourcesNames, OnClickListener onClickListener) {
+    public ListResourcesMenuAdapter(Context context, List<String> resourcesNames, OnClickListener onClickListener) {
         this.context = context;
         this.resourcesNames = resourcesNames;
         this.onClickListener = onClickListener;
@@ -28,13 +28,13 @@ public class ListResourcesAdapter extends RecyclerView.Adapter<ListResourcesAdap
 
     @NonNull
     @Override
-    public ListResourcesAdapter.ResourceViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(context).inflate(R.layout.item_resource_list,parent,false);
+    public ListResourcesMenuAdapter.ResourceViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+        View view = LayoutInflater.from(context).inflate(R.layout.item_resources_menu_list,parent,false);
         return new ResourceViewHolder(view);
     }
 
     @Override
-    public void onBindViewHolder(@NonNull ListResourcesAdapter.ResourceViewHolder holder, int position) {
+    public void onBindViewHolder(@NonNull ListResourcesMenuAdapter.ResourceViewHolder holder, int position) {
         String resourceNameString = resourcesNames.get(position);
         holder.bind(resourceNameString);
     }

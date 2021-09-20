@@ -6,7 +6,6 @@ import android.util.Log;
 
 import androidx.room.TypeConverter;
 
-import java.text.SimpleDateFormat;
 import java.util.Calendar;
 
 public class ConverterCalendar {

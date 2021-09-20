@@ -11,11 +11,12 @@
         android:id="@+id/date_text_view"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:textSize="18sp"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         android:layout_marginStart="5dp"
         android:layout_marginTop="10dp"
-        tools:text="Date"/>
+        tools:text="Greeting"/>
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/resources_list"
