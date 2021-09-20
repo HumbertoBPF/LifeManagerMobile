@@ -63,7 +63,7 @@ public class MainActivity extends AppCompatActivity {
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
         switch (item.getItemId()){
             case R.id.action_syncro:
-                Util.showToast(this,"Perform syncro");
+                Util.showToast(this,"Perform syncro",true);
                 return true;
             case R.id.action_settings:
                 startActivity(new Intent(this, AppSettingsActivity.class));

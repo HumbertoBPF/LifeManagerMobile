@@ -8,6 +8,7 @@ import static com.example.lifemanager.enums.Category.GENERAL_PROGRAMMING;
 import static com.example.lifemanager.enums.Category.LANGUAGES;
 import static com.example.lifemanager.enums.Category.MOBILE;
 import static com.example.lifemanager.enums.Category.OTHER;
+import static com.example.lifemanager.tools.Util.areToastsEnabled;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -19,6 +20,7 @@ import com.example.lifemanager.dao.RoomStudiesDAO;
 import com.example.lifemanager.enums.Category;
 import com.example.lifemanager.model.Studies;
 import com.example.lifemanager.roomConfig.LifeManagerDatabase;
+import com.example.lifemanager.tools.Util;
 
 import java.util.Arrays;
 import java.util.List;
@@ -56,9 +58,11 @@ public class AddStudyActivity extends AddResourceActivity {
                 Category category = getCategory();
                 if (idToUpdate == null){
                     roomStudiesDAO.save(new Studies(name,linkCourse,category,Integer.parseInt(position),status));
+                    Util.showToast(getApplicationContext(),"Study successfully added",areToastsEnabled(getApplicationContext()));
                 }else{
                     roomStudiesDAO.update(
                             new Studies(idToUpdate,name,linkCourse,category, Integer.parseInt(position),status));
+                    Util.showToast(getApplicationContext(),"Study successfully updated",areToastsEnabled(getApplicationContext()));
                 }
                 finish();
             }

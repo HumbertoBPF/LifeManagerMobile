@@ -1,6 +1,7 @@
 package com.example.lifemanager.activities.tasks;
 
 import static com.example.lifemanager.model.Constants.formatter;
+import static com.example.lifemanager.tools.Util.areToastsEnabled;
 import static com.example.lifemanager.tools.Util.formatFromDateStringToCalendar;
 
 import android.content.Intent;
@@ -13,6 +14,7 @@ import com.example.lifemanager.dao.RoomTaskDAO;
 import com.example.lifemanager.enums.Priority;
 import com.example.lifemanager.model.Task;
 import com.example.lifemanager.roomConfig.LifeManagerDatabase;
+import com.example.lifemanager.tools.Util;
 
 import java.util.Calendar;
 
@@ -56,9 +58,11 @@ public class AddTaskActivity extends AddResourceActivity {
                 Calendar dueDate = formatFromDateStringToCalendar(taskFormDueDate.getText().toString());
                 if (idToUpdate == null){
                     roomTaskDAO.save(new Task(subject,name,description,status,priority,deadline,dueDate));
+                    Util.showToast(getApplicationContext(),"Task successfully added",areToastsEnabled(getApplicationContext()));
                 }else{
                     roomTaskDAO.update(
                             new Task(idToUpdate,subject,name,description,status,priority,deadline,dueDate));
+                    Util.showToast(getApplicationContext(),"Task successfully updated",areToastsEnabled(getApplicationContext()));
                 }
                 finish();
             }

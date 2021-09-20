@@ -8,7 +8,7 @@ import androidx.room.PrimaryKey;
 public class Setting {
 
     @PrimaryKey(autoGenerate = true)
-    private Long id = 0L;
+    private Long id;
     private String name;
     private String value;
 

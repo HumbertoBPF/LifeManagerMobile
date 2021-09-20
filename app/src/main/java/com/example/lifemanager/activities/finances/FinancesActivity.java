@@ -1,5 +1,7 @@
 package com.example.lifemanager.activities.finances;
 
+import static com.example.lifemanager.tools.Util.areToastsEnabled;
+
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.Menu;
@@ -13,6 +15,7 @@ import com.example.lifemanager.dao.RoomFinanceDAO;
 import com.example.lifemanager.model.Finance;
 import com.example.lifemanager.recycler_view.ListFinancesAdapter;
 import com.example.lifemanager.roomConfig.LifeManagerDatabase;
+import com.example.lifemanager.tools.Util;
 
 import java.util.List;
 
@@ -36,8 +39,9 @@ public class FinancesActivity extends CategoryActivity {
     public boolean onContextItemSelected(@NonNull MenuItem item) {
         Long chosenId = adapter.getChosenId();
         Finance finance = roomFinanceDAO.getFinanceById(chosenId);
-        if (item.getTitle().equals("Remove")){
+        if (item.getTitle().equals(getResources().getString(R.string.context_menu_delete_option))){
             roomFinanceDAO.delete(finance);
+            Util.showToast(getApplicationContext(),"Finance successfully deleted",areToastsEnabled(getApplicationContext()));
         }else {
             Intent intent = new Intent(this,AddFinanceActivity.class);
             intent.putExtra("finance",finance);

@@ -1,5 +1,7 @@
 package com.example.lifemanager.activities.studies;
 
+import static com.example.lifemanager.tools.Util.areToastsEnabled;
+
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.Menu;
@@ -13,6 +15,7 @@ import com.example.lifemanager.dao.RoomStudiesDAO;
 import com.example.lifemanager.model.Studies;
 import com.example.lifemanager.recycler_view.ListStudiesAdapter;
 import com.example.lifemanager.roomConfig.LifeManagerDatabase;
+import com.example.lifemanager.tools.Util;
 
 import java.util.List;
 
@@ -36,8 +39,9 @@ public class StudiesActivity extends CategoryActivity {
     public boolean onContextItemSelected(@NonNull MenuItem item) {
         Long chosenId = adapter.getChosenId();
         Studies study = roomStudiesDAO.getStudyById(chosenId);
-        if (item.getTitle().equals("Remove")){
+        if (item.getTitle().equals(getResources().getString(R.string.context_menu_delete_option))){
             roomStudiesDAO.delete(study);
+            Util.showToast(getApplicationContext(),"Study successfully deleted",areToastsEnabled(getApplicationContext()));
         }else {
             Intent intent = new Intent(this, AddStudyActivity.class);
             intent.putExtra("study",study);

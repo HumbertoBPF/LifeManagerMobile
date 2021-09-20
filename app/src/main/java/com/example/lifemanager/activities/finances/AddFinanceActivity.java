@@ -1,7 +1,9 @@
 package com.example.lifemanager.activities.finances;
 
 import static com.example.lifemanager.model.Constants.formatter;
+import static com.example.lifemanager.tools.Util.areToastsEnabled;
 import static com.example.lifemanager.tools.Util.formatFromDateStringToCalendar;
+import static com.example.lifemanager.tools.Util.showToast;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -57,9 +59,11 @@ public class AddFinanceActivity extends AddResourceActivity {
                 Sector sector = getSector();
                 if (idToUpdate == null){
                     roomFinanceDAO.save(new Finance(name,dateCalendar,month,year,valueBigDecimal,sector,typeFinance));
+                    showToast(getApplicationContext(),"Finance successfully added",areToastsEnabled(getApplicationContext()));
                 }else{
                     roomFinanceDAO.update(
                             new Finance(idToUpdate,name,dateCalendar,month,year,valueBigDecimal,sector,typeFinance));
+                    showToast(getApplicationContext(),"Finance successfully updated",areToastsEnabled(getApplicationContext()));
                 }
                 finish();
             }
