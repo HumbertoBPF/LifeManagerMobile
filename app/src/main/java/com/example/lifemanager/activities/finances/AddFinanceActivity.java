@@ -59,11 +59,13 @@ public class AddFinanceActivity extends AddResourceActivity {
                 Sector sector = getSector();
                 if (idToUpdate == null){
                     roomFinanceDAO.save(new Finance(name,dateCalendar,month,year,valueBigDecimal,sector,typeFinance));
-                    showToast(getApplicationContext(),"Finance successfully added",areToastsEnabled(getApplicationContext()));
+                    showToast(getApplicationContext(),getResources().getString(R.string.add_finance_toast_message),
+                            areToastsEnabled(getApplicationContext()));
                 }else{
                     roomFinanceDAO.update(
                             new Finance(idToUpdate,name,dateCalendar,month,year,valueBigDecimal,sector,typeFinance));
-                    showToast(getApplicationContext(),"Finance successfully updated",areToastsEnabled(getApplicationContext()));
+                    showToast(getApplicationContext(),getResources().getString(R.string.update_finance_toast_message),
+                            areToastsEnabled(getApplicationContext()));
                 }
                 finish();
             }

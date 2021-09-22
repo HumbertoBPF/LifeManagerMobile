@@ -58,11 +58,13 @@ public class AddStudyActivity extends AddResourceActivity {
                 Category category = getCategory();
                 if (idToUpdate == null){
                     roomStudiesDAO.save(new Studies(name,linkCourse,category,Integer.parseInt(position),status));
-                    Util.showToast(getApplicationContext(),"Study successfully added",areToastsEnabled(getApplicationContext()));
+                    Util.showToast(getApplicationContext(),getResources().getString(R.string.add_study_toast_message),
+                            areToastsEnabled(getApplicationContext()));
                 }else{
                     roomStudiesDAO.update(
                             new Studies(idToUpdate,name,linkCourse,category, Integer.parseInt(position),status));
-                    Util.showToast(getApplicationContext(),"Study successfully updated",areToastsEnabled(getApplicationContext()));
+                    Util.showToast(getApplicationContext(),getResources().getString(R.string.update_study_toast_message),
+                            areToastsEnabled(getApplicationContext()));
                 }
                 finish();
             }

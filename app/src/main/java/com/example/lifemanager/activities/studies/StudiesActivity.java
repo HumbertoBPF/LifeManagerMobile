@@ -41,7 +41,8 @@ public class StudiesActivity extends CategoryActivity {
         Studies study = roomStudiesDAO.getStudyById(chosenId);
         if (item.getTitle().equals(getResources().getString(R.string.context_menu_delete_option))){
             roomStudiesDAO.delete(study);
-            Util.showToast(getApplicationContext(),"Study successfully deleted",areToastsEnabled(getApplicationContext()));
+            Util.showToast(getApplicationContext(),getResources().getString(R.string.delete_study_toast_message),
+                    areToastsEnabled(getApplicationContext()));
         }else {
             Intent intent = new Intent(this, AddStudyActivity.class);
             intent.putExtra("study",study);

@@ -41,7 +41,8 @@ public class FinancesActivity extends CategoryActivity {
         Finance finance = roomFinanceDAO.getFinanceById(chosenId);
         if (item.getTitle().equals(getResources().getString(R.string.context_menu_delete_option))){
             roomFinanceDAO.delete(finance);
-            Util.showToast(getApplicationContext(),"Finance successfully deleted",areToastsEnabled(getApplicationContext()));
+            Util.showToast(getApplicationContext(),getResources().getString(R.string.delete_finance_toast_message),
+                    areToastsEnabled(getApplicationContext()));
         }else {
             Intent intent = new Intent(this,AddFinanceActivity.class);
             intent.putExtra("finance",finance);

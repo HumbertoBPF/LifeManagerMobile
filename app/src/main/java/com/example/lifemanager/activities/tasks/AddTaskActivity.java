@@ -58,11 +58,12 @@ public class AddTaskActivity extends AddResourceActivity {
                 Calendar dueDate = formatFromDateStringToCalendar(taskFormDueDate.getText().toString());
                 if (idToUpdate == null){
                     roomTaskDAO.save(new Task(subject,name,description,status,priority,deadline,dueDate));
-                    Util.showToast(getApplicationContext(),"Task successfully added",areToastsEnabled(getApplicationContext()));
+                    Util.showToast(getApplicationContext(),getResources().getString(R.string.add_task_toast_message),
+                            areToastsEnabled(getApplicationContext()));
                 }else{
                     roomTaskDAO.update(
                             new Task(idToUpdate,subject,name,description,status,priority,deadline,dueDate));
-                    Util.showToast(getApplicationContext(),"Task successfully updated",areToastsEnabled(getApplicationContext()));
+                    Util.showToast(getApplicationContext(),getResources().getString(R.string.update_task_toast_message),areToastsEnabled(getApplicationContext()));
                 }
                 finish();
             }

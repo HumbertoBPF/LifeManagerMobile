@@ -41,7 +41,8 @@ public class TasksActivity extends CategoryActivity {
         Task task = roomTaskDAO.getTaskById(chosenId);
         if (item.getTitle().equals(getResources().getString(R.string.context_menu_delete_option))){
             roomTaskDAO.delete(task);
-            Util.showToast(getApplicationContext(),"Task successfully deleted",areToastsEnabled(getApplicationContext()));
+            Util.showToast(getApplicationContext(),getResources().getString(R.string.delete_task_toast_message),
+                    areToastsEnabled(getApplicationContext()));
         }else {
             Intent intent = new Intent(this, AddTaskActivity.class);
             intent.putExtra("task",task);
