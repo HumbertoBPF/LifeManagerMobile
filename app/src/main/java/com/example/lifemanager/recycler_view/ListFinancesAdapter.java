@@ -1,8 +1,10 @@
 package com.example.lifemanager.recycler_view;
 
 import static com.example.lifemanager.model.Constants.formatter;
+import static com.example.lifemanager.tools.Util.makeSelector;
 
 import android.content.Context;
+import android.graphics.Color;
 import android.view.ContextMenu;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -10,6 +12,7 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
+import androidx.cardview.widget.CardView;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.lifemanager.R;
@@ -57,12 +60,14 @@ public class ListFinancesAdapter extends RecyclerView.Adapter<ListFinancesAdapte
 
     class FinanceViewHolder extends RecyclerView.ViewHolder implements View.OnCreateContextMenuListener {
 
+        private CardView rootCardView;
         private TextView financeItemName;
         private TextView financeItemValue;
         private TextView financeItemDate;
 
         public FinanceViewHolder(@NonNull View itemView) {
             super(itemView);
+            rootCardView = itemView.findViewById(R.id.root_card_view);
             financeItemName = itemView.findViewById(R.id.text_view_1);
             financeItemValue = itemView.findViewById(R.id.text_view_2);
             financeItemDate = itemView.findViewById(R.id.text_view_3);
@@ -93,6 +98,7 @@ public class ListFinancesAdapter extends RecyclerView.Adapter<ListFinancesAdapte
             financeItemName.setText(finance.getName());
             financeItemValue.setText(finance.getValue()+"");
             financeItemDate.setText(formatter.format(finance.getDate().getTime()));
+            rootCardView.setBackground(makeSelector(Color.parseColor("#FFFFFF"),0.95f));
         }
 
         @Override

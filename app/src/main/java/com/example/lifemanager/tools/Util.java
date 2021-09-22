@@ -2,7 +2,10 @@ package com.example.lifemanager.tools;
 
 import android.app.Activity;
 import android.content.Context;
+import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
+import android.graphics.drawable.GradientDrawable;
+import android.graphics.drawable.StateListDrawable;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -47,6 +50,27 @@ public class Util {
         RoomSettingDAO roomSettingDAO = LifeManagerDatabase.getInstance(context).getRoomSettingDAO();
         Setting toastsEnabledSetting =  roomSettingDAO.getEnableToastsSetting();
         return !toastsEnabledSetting.getValue().equals("false");
+    }
+
+    public static StateListDrawable makeSelector(int color, float factorPressedColor) {
+        StateListDrawable res = new StateListDrawable();
+        GradientDrawable colorPressed = new GradientDrawable();
+        colorPressed.setColor(manipulateColor(color,factorPressedColor));
+        colorPressed.setCornerRadius(20);
+        GradientDrawable normalColor = new GradientDrawable();
+        normalColor.setColor(color);
+        normalColor.setCornerRadius(20);
+        res.addState(new int[]{android.R.attr.state_pressed}, colorPressed);
+        res.addState(new int[]{}, normalColor);
+        return res;
+    }
+
+    public static int manipulateColor(int color, float factor) {
+        int a = Color.alpha(color);
+        int r = Math.round(Color.red(color) * factor);
+        int g = Math.round(Color.green(color) * factor);
+        int b = Math.round(Color.blue(color) * factor);
+        return Color.argb(a, Math.min(r,255), Math.min(g,255), Math.min(b,255));
     }
 
 }

@@ -1,5 +1,7 @@
 package com.example.lifemanager.recycler_view;
 
+import static com.example.lifemanager.tools.Util.makeSelector;
+
 import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -66,7 +68,7 @@ public class ListResourcesMenuAdapter extends RecyclerView.Adapter<ListResources
             int idColorResource = context.getResources().getIdentifier("color_"+
                     resourceNameString.toLowerCase()+"_item","color", context.getPackageName());
             int color = context.getResources().getColor(idColorResource);
-            backgroundCardView.setCardBackgroundColor(color);
+            backgroundCardView.setBackground(makeSelector(color,0.8f));
         }
 
     }

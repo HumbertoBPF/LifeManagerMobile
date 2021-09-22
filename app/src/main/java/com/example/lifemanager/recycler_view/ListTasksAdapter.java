@@ -1,8 +1,10 @@
 package com.example.lifemanager.recycler_view;
 
 import static com.example.lifemanager.model.Constants.formatter;
+import static com.example.lifemanager.tools.Util.makeSelector;
 
 import android.content.Context;
+import android.graphics.Color;
 import android.view.ContextMenu;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -10,6 +12,7 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
+import androidx.cardview.widget.CardView;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.lifemanager.R;
@@ -58,12 +61,14 @@ public class ListTasksAdapter extends RecyclerView.Adapter<ListTasksAdapter.Task
 
     class TaskViewHolder extends RecyclerView.ViewHolder implements View.OnCreateContextMenuListener {
 
+        private CardView rootCardView;
         private TextView taskItemSubject;
         private TextView taskItemName;
         private TextView taskItemDueDate;
 
         public TaskViewHolder(@NonNull View itemView) {
             super(itemView);
+            rootCardView = itemView.findViewById(R.id.root_card_view);
             taskItemSubject = itemView.findViewById(R.id.text_view_1);
             taskItemName = itemView.findViewById(R.id.text_view_2);
             taskItemDueDate = itemView.findViewById(R.id.text_view_3);
@@ -94,6 +99,7 @@ public class ListTasksAdapter extends RecyclerView.Adapter<ListTasksAdapter.Task
             taskItemSubject.setText(task.getSubject());
             taskItemName.setText(task.getName());
             taskItemDueDate.setText(formatter.format(task.getDueDate().getTime()));
+            rootCardView.setBackground(makeSelector(Color.parseColor("#FFFFFF"),0.95f));
         }
 
         @Override

@@ -1,6 +1,9 @@
 package com.example.lifemanager.recycler_view;
 
+import static com.example.lifemanager.tools.Util.makeSelector;
+
 import android.content.Context;
+import android.graphics.Color;
 import android.view.ContextMenu;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -8,6 +11,7 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
+import androidx.cardview.widget.CardView;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.lifemanager.R;
@@ -57,12 +61,14 @@ public class ListStudiesAdapter extends RecyclerView.Adapter<ListStudiesAdapter.
 
     class StudyViewHolder extends RecyclerView.ViewHolder implements View.OnCreateContextMenuListener {
 
+        private CardView rootCardView;
         private TextView studyItemPosition;
         private TextView studyItemName;
         private TextView studyItemStatus;
 
         public StudyViewHolder(@NonNull View itemView) {
             super(itemView);
+            rootCardView = itemView.findViewById(R.id.root_card_view);
             studyItemPosition = itemView.findViewById(R.id.text_view_1);
             studyItemName = itemView.findViewById(R.id.text_view_2);
             studyItemStatus = itemView.findViewById(R.id.text_view_3);
@@ -93,6 +99,7 @@ public class ListStudiesAdapter extends RecyclerView.Adapter<ListStudiesAdapter.
             studyItemPosition.setText(study.getPosition().toString());
             studyItemName.setText(study.getName());
             studyItemStatus.setText(getStatusString(study.getStatus()));
+            rootCardView.setBackground(makeSelector(Color.parseColor("#FFFFFF"),0.95f));
         }
 
         private String getStatusString(Boolean status){
