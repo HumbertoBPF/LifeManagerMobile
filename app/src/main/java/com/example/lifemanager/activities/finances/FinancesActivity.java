@@ -1,7 +1,10 @@
 package com.example.lifemanager.activities.finances;
 
 import static com.example.lifemanager.tools.Util.areToastsEnabled;
+import static com.example.lifemanager.tools.Util.confirmDeletionDialog;
+import static com.example.lifemanager.tools.Util.showToast;
 
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.Menu;
@@ -15,7 +18,6 @@ import com.example.lifemanager.dao.RoomFinanceDAO;
 import com.example.lifemanager.model.Finance;
 import com.example.lifemanager.recycler_view.ListFinancesAdapter;
 import com.example.lifemanager.roomConfig.LifeManagerDatabase;
-import com.example.lifemanager.tools.Util;
 
 import java.util.List;
 
@@ -40,15 +42,21 @@ public class FinancesActivity extends CategoryActivity {
         Long chosenId = adapter.getChosenId();
         Finance finance = roomFinanceDAO.getFinanceById(chosenId);
         if (item.getTitle().equals(getResources().getString(R.string.context_menu_delete_option))){
-            roomFinanceDAO.delete(finance);
-            Util.showToast(getApplicationContext(),getResources().getString(R.string.delete_finance_toast_message),
-                    areToastsEnabled(getApplicationContext()));
+            confirmDeletionDialog(this, new DialogInterface.OnClickListener() {
+                @Override
+                public void onClick(DialogInterface dialogInterface, int i) {
+                    roomFinanceDAO.delete(finance);
+                    showToast(getApplicationContext(),
+                            getResources().getString(R.string.delete_finance_toast_message),
+                            areToastsEnabled(getApplicationContext()));
+                    configureAdapter();
+                }
+            });
         }else {
             Intent intent = new Intent(this,AddFinanceActivity.class);
             intent.putExtra("finance",finance);
             startActivity(intent);
         }
-        configureAdapter();
         return super.onContextItemSelected(item);
     }
 

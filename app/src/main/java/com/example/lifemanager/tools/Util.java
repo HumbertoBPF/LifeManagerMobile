@@ -1,7 +1,9 @@
 package com.example.lifemanager.tools;
 
 import android.app.Activity;
+import android.app.AlertDialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.graphics.drawable.GradientDrawable;
@@ -71,6 +73,16 @@ public class Util {
         int g = Math.round(Color.green(color) * factor);
         int b = Math.round(Color.blue(color) * factor);
         return Color.argb(a, Math.min(r,255), Math.min(g,255), Math.min(b,255));
+    }
+
+    public static void confirmDeletionDialog(Context context, DialogInterface.OnClickListener onClickListener){
+        AlertDialog.Builder builder =  new AlertDialog.Builder(context);
+        builder.setTitle("Confirm deletion")
+                .setMessage("The item will be permanently deleted. Confirm ?")
+                .setPositiveButton("Yes", onClickListener)
+                .setNegativeButton("No", null);
+        AlertDialog dialog = builder.create();
+        dialog.show();
     }
 
 }

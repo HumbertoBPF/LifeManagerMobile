@@ -1,7 +1,10 @@
 package com.example.lifemanager.activities.tasks;
 
 import static com.example.lifemanager.tools.Util.areToastsEnabled;
+import static com.example.lifemanager.tools.Util.confirmDeletionDialog;
+import static com.example.lifemanager.tools.Util.showToast;
 
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.Menu;
@@ -15,7 +18,6 @@ import com.example.lifemanager.dao.RoomTaskDAO;
 import com.example.lifemanager.model.Task;
 import com.example.lifemanager.recycler_view.ListTasksAdapter;
 import com.example.lifemanager.roomConfig.LifeManagerDatabase;
-import com.example.lifemanager.tools.Util;
 
 import java.util.List;
 
@@ -40,15 +42,20 @@ public class TasksActivity extends CategoryActivity {
         Long chosenId = adapter.getChosenId();
         Task task = roomTaskDAO.getTaskById(chosenId);
         if (item.getTitle().equals(getResources().getString(R.string.context_menu_delete_option))){
-            roomTaskDAO.delete(task);
-            Util.showToast(getApplicationContext(),getResources().getString(R.string.delete_task_toast_message),
-                    areToastsEnabled(getApplicationContext()));
+            confirmDeletionDialog(this, new DialogInterface.OnClickListener() {
+                @Override
+                public void onClick(DialogInterface dialogInterface, int i) {
+                    roomTaskDAO.delete(task);
+                    showToast(getApplicationContext(),getResources().getString(R.string.delete_task_toast_message),
+                            areToastsEnabled(getApplicationContext()));
+                    configureAdapter();
+                }
+            });
         }else {
             Intent intent = new Intent(this, AddTaskActivity.class);
             intent.putExtra("task",task);
             startActivity(intent);
         }
-        configureAdapter();
         return super.onContextItemSelected(item);
     }
 

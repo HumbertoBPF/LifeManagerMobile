@@ -1,7 +1,10 @@
 package com.example.lifemanager.activities.studies;
 
 import static com.example.lifemanager.tools.Util.areToastsEnabled;
+import static com.example.lifemanager.tools.Util.confirmDeletionDialog;
+import static com.example.lifemanager.tools.Util.showToast;
 
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.Menu;
@@ -15,7 +18,6 @@ import com.example.lifemanager.dao.RoomStudiesDAO;
 import com.example.lifemanager.model.Studies;
 import com.example.lifemanager.recycler_view.ListStudiesAdapter;
 import com.example.lifemanager.roomConfig.LifeManagerDatabase;
-import com.example.lifemanager.tools.Util;
 
 import java.util.List;
 
@@ -40,15 +42,20 @@ public class StudiesActivity extends CategoryActivity {
         Long chosenId = adapter.getChosenId();
         Studies study = roomStudiesDAO.getStudyById(chosenId);
         if (item.getTitle().equals(getResources().getString(R.string.context_menu_delete_option))){
-            roomStudiesDAO.delete(study);
-            Util.showToast(getApplicationContext(),getResources().getString(R.string.delete_study_toast_message),
-                    areToastsEnabled(getApplicationContext()));
+            confirmDeletionDialog(this, new DialogInterface.OnClickListener() {
+                @Override
+                public void onClick(DialogInterface dialogInterface, int i) {
+                    roomStudiesDAO.delete(study);
+                    showToast(getApplicationContext(),getResources().getString(R.string.delete_study_toast_message),
+                            areToastsEnabled(getApplicationContext()));
+                    configureAdapter();
+                }
+            });
         }else {
             Intent intent = new Intent(this, AddStudyActivity.class);
             intent.putExtra("study",study);
             startActivity(intent);
         }
-        configureAdapter();
         return super.onContextItemSelected(item);
     }
 
