@@ -5,6 +5,7 @@ import static com.example.lifemanager.model.Constants.USERNAME_FOR_APP;
 import static com.example.lifemanager.tools.Util.yesOrNoDialog;
 
 import android.app.AlertDialog;
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
@@ -24,6 +25,7 @@ import com.example.lifemanager.R;
 import com.example.lifemanager.activities.finances.FinancesActivity;
 import com.example.lifemanager.activities.studies.StudiesActivity;
 import com.example.lifemanager.activities.tasks.TasksActivity;
+import com.example.lifemanager.async_tasks.SettingsAsyncTask;
 import com.example.lifemanager.dao.RoomSettingDAO;
 import com.example.lifemanager.model.Setting;
 import com.example.lifemanager.recycler_view.ListResourcesMenuAdapter;
@@ -67,7 +69,6 @@ public class MainActivity extends AppCompatActivity {
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
         switch (item.getItemId()){
             case R.id.action_syncro:
-                Util.showToast(this,"Perform syncro",true);
                 return true;
             case R.id.action_settings:
                 startActivity(new Intent(this, AppSettingsActivity.class));
@@ -78,51 +79,82 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void configureGreeting() {
-        SimpleDateFormat formatter = new SimpleDateFormat("H");
-        String currentHourString =formatter.format(Calendar.getInstance().getTime());
-        int currentHour = Integer.parseInt(currentHourString);
-        String username = getUsernameSetting();
-        Log.i("numberOfUsernameSetting", username);
-        if (currentHour < 12) {
-            dateTextView.setText(getResources().getString(R.string.greeting_morning)+username);
-        }else if (currentHour < 18) {
-            dateTextView.setText(getResources().getString(R.string.greeting_afternoon)+username);
-        }else {
-            dateTextView.setText(getResources().getString(R.string.greeting_evening)+username);
-        }
+        new SettingsAsyncTask(new SettingsAsyncTask.SettingsAsyncTaskInterface() {
+            @Override
+            public Setting doInBackground() {
+                return roomSettingDAO.getUsernameSetting();
+            }
+
+            @Override
+            public void onPostExecute(Setting setting) {
+                SimpleDateFormat formatter = new SimpleDateFormat("H");
+                String currentHourString =formatter.format(Calendar.getInstance().getTime());
+                int currentHour = Integer.parseInt(currentHourString);
+
+                String username = "";
+                if (setting != null){
+                    username = setting.getValue();
+                }
+                if (currentHour < 12) {
+                    dateTextView.setText(getResources().getString(R.string.greeting_morning)+username);
+                }else if (currentHour < 18) {
+                    dateTextView.setText(getResources().getString(R.string.greeting_afternoon)+username);
+                }else {
+                    dateTextView.setText(getResources().getString(R.string.greeting_evening)+username);
+                }
+            }
+        }).execute();
     }
 
-    private String getUsernameSetting() {
-        Setting usernameSetting = roomSettingDAO.getUsernameSetting();
-        if (usernameSetting != null){
-            return usernameSetting.getValue();
-        }else{
-            Log.i("settingsDialog","Launch settings dialog");
-            AlertDialog settingsDialog = yesOrNoDialog(this, getResources().getString(R.string.settings_dialog_title),
-                    getResources().getString(R.string.settings_dialog_message),
-                    getResources().getString(R.string.settings_dialog_yes),
-                    getResources().getString(R.string.settings_dialog_no),
-                    new DialogInterface.OnClickListener() {
-                        @Override
-                        public void onClick(DialogInterface dialogInterface, int i) {
-                            startActivity(new Intent(getApplicationContext(), AppSettingsActivity.class));
-                        }
-                    },
-                    new DialogInterface.OnClickListener() {
-                        @Override
-                        public void onClick(DialogInterface dialogInterface, int i) {
-                            defaultSettings();
-                        }
-                    });
-            settingsDialog.setCanceledOnTouchOutside(false);
-            settingsDialog.show();
-        }
-        return "";
+    private void askForSettings() {
+        Context context = this;
+        new SettingsAsyncTask(new SettingsAsyncTask.SettingsAsyncTaskInterface() {
+            @Override
+            public Setting doInBackground() {
+                return roomSettingDAO.getUsernameSetting();
+            }
+
+            @Override
+            public void onPostExecute(Setting setting) {
+                if (setting == null){
+                    Log.i("settingsDialog","Launch settings dialog");
+                    AlertDialog settingsDialog = yesOrNoDialog(context, getResources().getString(R.string.settings_dialog_title),
+                            getResources().getString(R.string.settings_dialog_message),
+                            getResources().getString(R.string.settings_dialog_yes),
+                            getResources().getString(R.string.settings_dialog_no),
+                            new DialogInterface.OnClickListener() {
+                                @Override
+                                public void onClick(DialogInterface dialogInterface, int i) {
+                                    startActivity(new Intent(getApplicationContext(), AppSettingsActivity.class));
+                                }
+                            },
+                            new DialogInterface.OnClickListener() {
+                                @Override
+                                public void onClick(DialogInterface dialogInterface, int i) {
+                                    defaultSettings();
+                                }
+                            });
+                    settingsDialog.setCanceledOnTouchOutside(false);
+                    settingsDialog.show();
+                }
+            }
+        }).execute();
     }
 
     private void defaultSettings() {
-        roomSettingDAO.save(new Setting(USERNAME_FOR_APP,""));
-        roomSettingDAO.save(new Setting(ENABLE_TOASTS,"true"));
+        new SettingsAsyncTask(new SettingsAsyncTask.SettingsAsyncTaskInterface() {
+            @Override
+            public Setting doInBackground() {
+                roomSettingDAO.save(new Setting(USERNAME_FOR_APP,""));
+                roomSettingDAO.save(new Setting(ENABLE_TOASTS,"true"));
+                return null;
+            }
+
+            @Override
+            public void onPostExecute(Setting setting) {
+
+            }
+        }).execute();
     }
 
     private void placeViews() {
@@ -170,6 +202,7 @@ public class MainActivity extends AppCompatActivity {
 
     @Override
     protected void onResume() {
+        askForSettings();
         configureGreeting();
         super.onResume();
     }

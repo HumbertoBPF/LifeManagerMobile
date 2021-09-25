@@ -1,7 +1,6 @@
 package com.example.lifemanager.activities.finances;
 
 import static com.example.lifemanager.model.Constants.formatter;
-import static com.example.lifemanager.tools.Util.areToastsEnabled;
 import static com.example.lifemanager.tools.Util.formatFromDateStringToCalendar;
 import static com.example.lifemanager.tools.Util.showToast;
 
@@ -11,6 +10,7 @@ import android.view.View;
 
 import com.example.lifemanager.R;
 import com.example.lifemanager.activities.AddResourceActivity;
+import com.example.lifemanager.async_tasks.FinancesAsyncTask;
 import com.example.lifemanager.dao.RoomFinanceDAO;
 import com.example.lifemanager.enums.Sector;
 import com.example.lifemanager.enums.TypeFinance;
@@ -57,17 +57,28 @@ public class AddFinanceActivity extends AddResourceActivity {
                 BigDecimal valueBigDecimal = getBigDecimalValue();
                 TypeFinance typeFinance = getTypeFinance();
                 Sector sector = getSector();
-                if (idToUpdate == null){
-                    roomFinanceDAO.save(new Finance(name,dateCalendar,month,year,valueBigDecimal,sector,typeFinance));
-                    showToast(getApplicationContext(),getResources().getString(R.string.add_finance_toast_message),
-                            areToastsEnabled(getApplicationContext()));
-                }else{
-                    roomFinanceDAO.update(
-                            new Finance(idToUpdate,name,dateCalendar,month,year,valueBigDecimal,sector,typeFinance));
-                    showToast(getApplicationContext(),getResources().getString(R.string.update_finance_toast_message),
-                            areToastsEnabled(getApplicationContext()));
-                }
-                finish();
+                new FinancesAsyncTask(new FinancesAsyncTask.FinancesAsyncTaskInterface() {
+                    @Override
+                    public List<Finance> doInBackground() {
+                        if (idToUpdate == null){
+                            roomFinanceDAO.save(new Finance(name,dateCalendar,month,year,valueBigDecimal,sector,typeFinance));
+                        }else{
+                            roomFinanceDAO.update(
+                                    new Finance(idToUpdate,name,dateCalendar,month,year,valueBigDecimal,sector,typeFinance));
+                        }
+                        return null;
+                    }
+
+                    @Override
+                    public void onPostExecute(List<Finance> finances) {
+                        if (idToUpdate == null){
+                            showToast(getApplicationContext(),getResources().getString(R.string.add_finance_toast_message));
+                        }else{
+                            showToast(getApplicationContext(),getResources().getString(R.string.update_finance_toast_message));
+                        }
+                        finish();
+                    }
+                }).execute();
             }
         });
     }

@@ -31,8 +31,7 @@ public abstract class LifeManagerDatabase extends RoomDatabase {
 
     public static LifeManagerDatabase getInstance(Context context){
         return Room
-                .databaseBuilder(context,LifeManagerDatabase.class,NAME_DATABASE)
-                .allowMainThreadQueries().build();
+                .databaseBuilder(context,LifeManagerDatabase.class,NAME_DATABASE).build();
     }
 
 }

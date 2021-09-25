@@ -13,6 +13,7 @@ import android.widget.Toast;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.lifemanager.R;
+import com.example.lifemanager.async_tasks.SettingsAsyncTask;
 import com.example.lifemanager.dao.RoomSettingDAO;
 import com.example.lifemanager.model.Setting;
 import com.example.lifemanager.roomConfig.LifeManagerDatabase;
@@ -21,10 +22,22 @@ import java.util.Calendar;
 
 public class Util {
 
-    public static void showToast(Context context,String text, boolean showToast){
-        if (showToast){
-            Toast.makeText(context,text,Toast.LENGTH_LONG).show();
-        }
+    public static void showToast(Context context,String text){
+        new SettingsAsyncTask(new SettingsAsyncTask.SettingsAsyncTaskInterface() {
+            @Override
+            public Setting doInBackground() {
+                RoomSettingDAO roomSettingDAO = LifeManagerDatabase.getInstance(context).getRoomSettingDAO();
+                return roomSettingDAO.getEnableToastsSetting();
+            }
+
+            @Override
+            public void onPostExecute(Setting setting) {
+                boolean showToast = setting.getValue().equals("true");
+                if (showToast){
+                    Toast.makeText(context, text, Toast.LENGTH_SHORT).show();
+                }
+            }
+        }).execute();
     }
 
     public static void setActionBarTitle(Activity activity, String title){
@@ -47,12 +60,6 @@ public class Util {
         Calendar dateCalendar = Calendar.getInstance();
         dateCalendar.set(year,month,day);
         return dateCalendar;
-    }
-
-    public static boolean areToastsEnabled(Context context){
-        RoomSettingDAO roomSettingDAO = LifeManagerDatabase.getInstance(context).getRoomSettingDAO();
-        Setting toastsEnabledSetting =  roomSettingDAO.getEnableToastsSetting();
-        return !toastsEnabledSetting.getValue().equals("false");
     }
 
     public static StateListDrawable makeSelector(int color, float factorPressedColor) {

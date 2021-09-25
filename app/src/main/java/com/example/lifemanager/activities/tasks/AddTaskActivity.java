@@ -1,7 +1,6 @@
 package com.example.lifemanager.activities.tasks;
 
 import static com.example.lifemanager.model.Constants.formatter;
-import static com.example.lifemanager.tools.Util.areToastsEnabled;
 import static com.example.lifemanager.tools.Util.formatFromDateStringToCalendar;
 
 import android.content.Intent;
@@ -10,6 +9,7 @@ import android.view.View;
 
 import com.example.lifemanager.R;
 import com.example.lifemanager.activities.AddResourceActivity;
+import com.example.lifemanager.async_tasks.TasksAsyncTask;
 import com.example.lifemanager.dao.RoomTaskDAO;
 import com.example.lifemanager.enums.Priority;
 import com.example.lifemanager.model.Task;
@@ -17,6 +17,7 @@ import com.example.lifemanager.roomConfig.LifeManagerDatabase;
 import com.example.lifemanager.tools.Util;
 
 import java.util.Calendar;
+import java.util.List;
 
 public class AddTaskActivity extends AddResourceActivity {
 
@@ -56,16 +57,29 @@ public class AddTaskActivity extends AddResourceActivity {
                 }
                 Calendar deadline = formatFromDateStringToCalendar(taskFormDeadline.getText().toString());
                 Calendar dueDate = formatFromDateStringToCalendar(taskFormDueDate.getText().toString());
-                if (idToUpdate == null){
-                    roomTaskDAO.save(new Task(subject,name,description,status,priority,deadline,dueDate));
-                    Util.showToast(getApplicationContext(),getResources().getString(R.string.add_task_toast_message),
-                            areToastsEnabled(getApplicationContext()));
-                }else{
-                    roomTaskDAO.update(
-                            new Task(idToUpdate,subject,name,description,status,priority,deadline,dueDate));
-                    Util.showToast(getApplicationContext(),getResources().getString(R.string.update_task_toast_message),areToastsEnabled(getApplicationContext()));
-                }
-                finish();
+                Priority finalPriority = priority;
+                new TasksAsyncTask(new TasksAsyncTask.TasksAsyncTaskInterface() {
+                    @Override
+                    public List<Task> doInBackground() {
+                        if (idToUpdate == null){
+                            roomTaskDAO.save(new Task(subject,name,description,status, finalPriority,deadline,dueDate));
+                        }else{
+                            roomTaskDAO.update(
+                                    new Task(idToUpdate,subject,name,description,status, finalPriority,deadline,dueDate));
+                        }
+                        return null;
+                    }
+
+                    @Override
+                    public void onPostExecute(List<Task> tasks) {
+                        if (idToUpdate == null){
+                            Util.showToast(getApplicationContext(),getResources().getString(R.string.add_task_toast_message));
+                        }else{
+                            Util.showToast(getApplicationContext(),getResources().getString(R.string.update_task_toast_message));
+                        }
+                        finish();
+                    }
+                }).execute();
             }
         });
     }

@@ -8,7 +8,6 @@ import static com.example.lifemanager.enums.Category.GENERAL_PROGRAMMING;
 import static com.example.lifemanager.enums.Category.LANGUAGES;
 import static com.example.lifemanager.enums.Category.MOBILE;
 import static com.example.lifemanager.enums.Category.OTHER;
-import static com.example.lifemanager.tools.Util.areToastsEnabled;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -16,6 +15,7 @@ import android.view.View;
 
 import com.example.lifemanager.R;
 import com.example.lifemanager.activities.AddResourceActivity;
+import com.example.lifemanager.async_tasks.StudiesAsyncTask;
 import com.example.lifemanager.dao.RoomStudiesDAO;
 import com.example.lifemanager.enums.Category;
 import com.example.lifemanager.model.Studies;
@@ -56,17 +56,28 @@ public class AddStudyActivity extends AddResourceActivity {
                 String position = studiesFormPosition.getText().toString();
                 boolean status = studiesFormConcluded.isChecked();
                 Category category = getCategory();
-                if (idToUpdate == null){
-                    roomStudiesDAO.save(new Studies(name,linkCourse,category,Integer.parseInt(position),status));
-                    Util.showToast(getApplicationContext(),getResources().getString(R.string.add_study_toast_message),
-                            areToastsEnabled(getApplicationContext()));
-                }else{
-                    roomStudiesDAO.update(
-                            new Studies(idToUpdate,name,linkCourse,category, Integer.parseInt(position),status));
-                    Util.showToast(getApplicationContext(),getResources().getString(R.string.update_study_toast_message),
-                            areToastsEnabled(getApplicationContext()));
-                }
-                finish();
+                new StudiesAsyncTask(new StudiesAsyncTask.StudiesAsyncTaskInterface() {
+                    @Override
+                    public List<Studies> doInBackground() {
+                        if (idToUpdate == null){
+                            roomStudiesDAO.save(new Studies(name,linkCourse,category,Integer.parseInt(position),status));
+                        }else{
+                            roomStudiesDAO.update(
+                                    new Studies(idToUpdate,name,linkCourse,category, Integer.parseInt(position),status));
+                        }
+                        return null;
+                    }
+
+                    @Override
+                    public void onPostExecute(List<Studies> studies) {
+                        if (idToUpdate == null){
+                            Util.showToast(getApplicationContext(),getResources().getString(R.string.add_study_toast_message));
+                        }else{
+                            Util.showToast(getApplicationContext(),getResources().getString(R.string.update_study_toast_message));
+                        }
+                        finish();
+                    }
+                }).execute();
             }
         });
     }

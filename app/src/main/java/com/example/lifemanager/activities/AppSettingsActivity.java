@@ -15,6 +15,7 @@ import android.widget.RadioGroup;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.lifemanager.R;
+import com.example.lifemanager.async_tasks.SettingsAsyncTask;
 import com.example.lifemanager.dao.RoomSettingDAO;
 import com.example.lifemanager.model.Setting;
 import com.example.lifemanager.roomConfig.LifeManagerDatabase;
@@ -46,29 +47,57 @@ public class AppSettingsActivity extends AppCompatActivity {
     }
 
     private void fillEnableToastsSetting() {
-        Setting enableToastsSetting = roomSettingDAO.getEnableToastsSetting();
-        if (enableToastsSetting != null){
-            enableToasts.check(R.id.enable_toasts_false);
-            if (enableToastsSetting.getValue().equals("true")){
-                enableToasts.check(R.id.enable_toasts_true);
+        new SettingsAsyncTask(new SettingsAsyncTask.SettingsAsyncTaskInterface() {
+            @Override
+            public Setting doInBackground() {
+                return roomSettingDAO.getEnableToastsSetting();
             }
-        }
+
+            @Override
+            public void onPostExecute(Setting setting) {
+                if (setting != null){
+                    enableToasts.check(R.id.enable_toasts_false);
+                    if (setting.getValue().equals("true")){
+                        enableToasts.check(R.id.enable_toasts_true);
+                    }
+                }
+            }
+        }).execute();
     }
 
     private void fillUsernameSetting() {
-        Setting usernameSetting = roomSettingDAO.getUsernameSetting();
-        if (usernameSetting != null){
-                inputUsername.setText(usernameSetting.getValue());
-        }
+        new SettingsAsyncTask(new SettingsAsyncTask.SettingsAsyncTaskInterface() {
+            @Override
+            public Setting doInBackground() {
+                return roomSettingDAO.getUsernameSetting();
+            }
+
+            @Override
+            public void onPostExecute(Setting setting) {
+                if (setting != null){
+                    inputUsername.setText(setting.getValue());
+                }
+            }
+        }).execute();
     }
 
     private void configureButtonSaveSettings() {
         buttonSaveSettings.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                createOrUpdateUsernameSetting();
-                createOrUpdateEnableToastsSetting();
-                finish();
+                new SettingsAsyncTask(new SettingsAsyncTask.SettingsAsyncTaskInterface() {
+                    @Override
+                    public Setting doInBackground() {
+                        createOrUpdateUsernameSetting();
+                        createOrUpdateEnableToastsSetting();
+                        return null;
+                    }
+
+                    @Override
+                    public void onPostExecute(Setting setting) {
+                        finish();
+                    }
+                }).execute();
             }
         });
     }

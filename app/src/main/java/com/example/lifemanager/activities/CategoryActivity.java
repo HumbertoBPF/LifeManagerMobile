@@ -3,6 +3,7 @@ package com.example.lifemanager.activities;
 import static com.example.lifemanager.tools.Util.setActionBarColor;
 import static com.example.lifemanager.tools.Util.setActionBarTitle;
 
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.Menu;
@@ -20,6 +21,7 @@ public class CategoryActivity extends AppCompatActivity {
     protected Integer colorAppbar = null;
     protected String titleIconAppbar = null;
     private MenuItem addItem;
+    protected Context context;
     protected Class<?> formAddClass;
     protected RecyclerView recyclerViewResources;
 
@@ -29,6 +31,7 @@ public class CategoryActivity extends AppCompatActivity {
         setActionBarTitle(this, titleAppbar);
         setActionBarColor(this, colorAppbar);
         setContentView(R.layout.activity_category);
+        context = this;
         recyclerViewResources = findViewById(R.id.recycler_view_resources);
     }
 
