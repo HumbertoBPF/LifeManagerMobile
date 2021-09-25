@@ -19,8 +19,6 @@ import com.example.lifemanager.dao.RoomSettingDAO;
 import com.example.lifemanager.model.Setting;
 import com.example.lifemanager.roomConfig.LifeManagerDatabase;
 
-import java.util.List;
-
 public class AppSettingsActivity extends AppCompatActivity {
 
     private RoomSettingDAO roomSettingDAO;
@@ -58,11 +56,9 @@ public class AppSettingsActivity extends AppCompatActivity {
     }
 
     private void fillUsernameSetting() {
-        List<Setting> usernameSetting = roomSettingDAO.getUsernameSetting();
+        Setting usernameSetting = roomSettingDAO.getUsernameSetting();
         if (usernameSetting != null){
-            if (!usernameSetting.isEmpty()){
-                inputUsername.setText(usernameSetting.get(0).getValue());
-            }
+                inputUsername.setText(usernameSetting.getValue());
         }
     }
 
@@ -92,17 +88,12 @@ public class AppSettingsActivity extends AppCompatActivity {
 
     private void createOrUpdateUsernameSetting() {
         String username = inputUsername.getText().toString();
-        List<Setting> usernameSetting = roomSettingDAO.getUsernameSetting();
+        Setting usernameSetting = roomSettingDAO.getUsernameSetting();
         if (usernameSetting == null){
             Log.i("numberOfUsernameSetting","It is null");
             roomSettingDAO.save(new Setting(USERNAME_FOR_APP,username));
         }else{
-            Log.i("numberOfUsernameSetting",roomSettingDAO.getUsernameSetting().size()+"");
-            if (usernameSetting.isEmpty()){
-                roomSettingDAO.save(new Setting(USERNAME_FOR_APP,username));
-            }else{
-                roomSettingDAO.update(new Setting(usernameSetting.get(0).getId(),USERNAME_FOR_APP,username));
-            }
+            roomSettingDAO.update(new Setting(usernameSetting.getId(),USERNAME_FOR_APP,username));
         }
     }
 

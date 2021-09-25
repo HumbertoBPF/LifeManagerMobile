@@ -1,5 +1,11 @@
 package com.example.lifemanager.activities;
 
+import static com.example.lifemanager.model.Constants.ENABLE_TOASTS;
+import static com.example.lifemanager.model.Constants.USERNAME_FOR_APP;
+import static com.example.lifemanager.tools.Util.yesOrNoDialog;
+
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.DisplayMetrics;
@@ -49,8 +55,6 @@ public class MainActivity extends AppCompatActivity {
         getScreenDimensions();
         placeViews();
         configureAdapter();
-        configureGreeting();
-
     }
 
     @Override
@@ -89,13 +93,36 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private String getUsernameSetting() {
-        List<Setting> usernameSetting = roomSettingDAO.getUsernameSetting();
+        Setting usernameSetting = roomSettingDAO.getUsernameSetting();
         if (usernameSetting != null){
-            if (!usernameSetting.isEmpty()){
-                return usernameSetting.get(0).getValue();
-            }
+            return usernameSetting.getValue();
+        }else{
+            Log.i("settingsDialog","Launch settings dialog");
+            AlertDialog settingsDialog = yesOrNoDialog(this, getResources().getString(R.string.settings_dialog_title),
+                    getResources().getString(R.string.settings_dialog_message),
+                    getResources().getString(R.string.settings_dialog_yes),
+                    getResources().getString(R.string.settings_dialog_no),
+                    new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialogInterface, int i) {
+                            startActivity(new Intent(getApplicationContext(), AppSettingsActivity.class));
+                        }
+                    },
+                    new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialogInterface, int i) {
+                            defaultSettings();
+                        }
+                    });
+            settingsDialog.setCanceledOnTouchOutside(false);
+            settingsDialog.show();
         }
         return "";
+    }
+
+    private void defaultSettings() {
+        roomSettingDAO.save(new Setting(USERNAME_FOR_APP,""));
+        roomSettingDAO.save(new Setting(ENABLE_TOASTS,"true"));
     }
 
     private void placeViews() {

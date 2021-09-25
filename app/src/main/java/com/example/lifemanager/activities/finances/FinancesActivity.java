@@ -1,9 +1,10 @@
 package com.example.lifemanager.activities.finances;
 
 import static com.example.lifemanager.tools.Util.areToastsEnabled;
-import static com.example.lifemanager.tools.Util.confirmDeletionDialog;
+import static com.example.lifemanager.tools.Util.deletionDialog;
 import static com.example.lifemanager.tools.Util.showToast;
 
+import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
@@ -42,7 +43,7 @@ public class FinancesActivity extends CategoryActivity {
         Long chosenId = adapter.getChosenId();
         Finance finance = roomFinanceDAO.getFinanceById(chosenId);
         if (item.getTitle().equals(getResources().getString(R.string.context_menu_delete_option))){
-            confirmDeletionDialog(this, new DialogInterface.OnClickListener() {
+            AlertDialog deletionDialog = deletionDialog(this, new DialogInterface.OnClickListener() {
                 @Override
                 public void onClick(DialogInterface dialogInterface, int i) {
                     roomFinanceDAO.delete(finance);
@@ -52,6 +53,7 @@ public class FinancesActivity extends CategoryActivity {
                     configureAdapter();
                 }
             });
+            deletionDialog.show();
         }else {
             Intent intent = new Intent(this,AddFinanceActivity.class);
             intent.putExtra("finance",finance);

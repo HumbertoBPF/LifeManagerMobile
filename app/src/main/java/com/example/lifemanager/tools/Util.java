@@ -12,6 +12,7 @@ import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.example.lifemanager.R;
 import com.example.lifemanager.dao.RoomSettingDAO;
 import com.example.lifemanager.model.Setting;
 import com.example.lifemanager.roomConfig.LifeManagerDatabase;
@@ -75,14 +76,20 @@ public class Util {
         return Color.argb(a, Math.min(r,255), Math.min(g,255), Math.min(b,255));
     }
 
-    public static void confirmDeletionDialog(Context context, DialogInterface.OnClickListener onClickListener){
+    public static AlertDialog yesOrNoDialog(Context context, String title, String message, String yesOption, String noOption,
+                                            DialogInterface.OnClickListener onClickListenerYes, DialogInterface.OnClickListener onClickListenerNo){
         AlertDialog.Builder builder =  new AlertDialog.Builder(context);
-        builder.setTitle("Confirm deletion")
-                .setMessage("The item will be permanently deleted. Confirm ?")
-                .setPositiveButton("Yes", onClickListener)
-                .setNegativeButton("No", null);
-        AlertDialog dialog = builder.create();
-        dialog.show();
+        builder.setTitle(title).setMessage(message).setPositiveButton(yesOption, onClickListenerYes)
+                .setNegativeButton(noOption, onClickListenerNo);
+        return builder.create();
+    }
+
+    public static AlertDialog deletionDialog(Context context, DialogInterface.OnClickListener onClickListenerYes){
+        return yesOrNoDialog(context, context.getResources().getString(R.string.deletion_dialog_title),
+                context.getResources().getString(R.string.deletion_dialog_message),
+                context.getResources().getString(R.string.deletion_dialog_yes),
+                context.getResources().getString(R.string.deletion_dialog_no),
+                onClickListenerYes,null);
     }
 
 }

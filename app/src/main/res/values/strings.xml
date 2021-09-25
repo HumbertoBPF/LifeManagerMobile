@@ -85,4 +85,15 @@
     <string name="add_finance_toast_message">Finance successfully added</string>
     <string name="update_finance_toast_message">Finance successfully updated</string>
     <string name="delete_finance_toast_message">Finance successfully deleted</string>
+    <string name="deletion_dialog_title">Confirm deletion</string>
+    <string name="deletion_dialog_message">The item will be permanently deleted. Confirm ?</string>
+    <string name="deletion_dialog_yes">Yes</string>
+    <string name="deletion_dialog_no">No</string>
+    <string name="settings_dialog_title">Initial set up</string>
+    <string name="settings_dialog_message">It seems that this is the first time that you launch the
+        app. There are some personal settings that you need to do to use all the functionalities available
+        and to customize the app. Would you like to do it now ? (You can do it at any time in the settings
+        area accessible by clicking on the cog icon in the bar on the top of the screen)</string>
+    <string name="settings_dialog_yes">Do it now</string>
+    <string name="settings_dialog_no">Not now</string>
 </resources>
