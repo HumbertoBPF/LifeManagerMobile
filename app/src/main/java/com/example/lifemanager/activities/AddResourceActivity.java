@@ -3,6 +3,7 @@ package com.example.lifemanager.activities;
 import static com.example.lifemanager.tools.Util.setActionBarColor;
 import static com.example.lifemanager.tools.Util.setActionBarTitle;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.AdapterView;
@@ -62,6 +63,7 @@ public abstract class AddResourceActivity extends AppCompatActivity implements A
 
     protected String titleAppbar = null;
     protected Integer colorAppbar = null;
+    protected String resourceType;
 
     protected Long idToUpdate = null;
 
@@ -79,11 +81,19 @@ public abstract class AddResourceActivity extends AppCompatActivity implements A
 
         makeFormVisible();
         configureFormButton();
+
+        Intent intent = getIntent();
+        Object object = intent.getSerializableExtra(resourceType);
+        if (object != null){
+            fillForm(object);
+        }
     }
 
     protected abstract void configureFormButton();
 
     protected abstract void makeFormVisible();
+
+    protected abstract void fillForm(Object object);
 
     private void configureSpinner(int arrayResourceId, Spinner spinner) {
         ArrayAdapter<CharSequence> adapterCategoryStudy = ArrayAdapter.createFromResource(getApplicationContext(),

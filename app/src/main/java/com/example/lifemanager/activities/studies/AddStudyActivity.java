@@ -9,7 +9,6 @@ import static com.example.lifemanager.enums.Category.LANGUAGES;
 import static com.example.lifemanager.enums.Category.MOBILE;
 import static com.example.lifemanager.enums.Category.OTHER;
 
-import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 
@@ -34,14 +33,8 @@ public class AddStudyActivity extends AddResourceActivity {
         roomStudiesDAO = LifeManagerDatabase.getInstance(this).getRoomStudiesDAO();
         titleAppbar = getResources().getString(R.string.title_appbar_studies_form);
         colorAppbar = getResources().getColor(R.color.color_studies_item);
+        resourceType = "study";
         super.onCreate(savedInstanceState);
-
-        Intent intent = getIntent();
-        Studies study = (Studies) intent.getSerializableExtra("study");
-        if (study != null){
-            fillForm(study);
-        }
-
     }
 
     protected void configureFormButton() {
@@ -79,7 +72,8 @@ public class AddStudyActivity extends AddResourceActivity {
         });
     }
 
-    private void fillForm(Studies study) {
+    protected void fillForm(Object object) {
+        Studies study = (Studies) object;
         idToUpdate = study.getId();
         studiesFormName.setText(study.getName());
         studiesFormLinkCourse.setText(study.getLinkCourse());

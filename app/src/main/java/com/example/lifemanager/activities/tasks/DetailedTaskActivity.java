@@ -2,7 +2,6 @@ package com.example.lifemanager.activities.tasks;
 
 import static com.example.lifemanager.model.Constants.formatter;
 
-import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 
@@ -16,11 +15,8 @@ public class DetailedTaskActivity extends DetailedResourceActivity {
     protected void onCreate(Bundle savedInstanceState) {
         titleAppBar = getResources().getString(R.string.title_appbar_details_task);
         colorAppBar = getResources().getColor(R.color.color_tasks_item);
+        resourceType = "task";
         super.onCreate(savedInstanceState);
-        Intent intent = getIntent();
-        Task task = (Task) intent.getSerializableExtra("task");
-        makeViewsVisible();
-        bind(task);
     }
 
     protected void makeViewsVisible() {
@@ -33,7 +29,8 @@ public class DetailedTaskActivity extends DetailedResourceActivity {
         taskDetailDueDate.setVisibility(View.VISIBLE);
     }
 
-    private void bind(Task task){
+    protected void bind(Object object){
+        Task task = (Task) object;
         taskDetailSubject.setText("Subject: "+task.getSubject());
         taskDetailName.setText("Name: "+task.getName());
         taskDetailDescription.setText("Description: "+task.getDescription());

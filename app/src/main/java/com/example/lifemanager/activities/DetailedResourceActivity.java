@@ -3,6 +3,7 @@ package com.example.lifemanager.activities;
 import static com.example.lifemanager.tools.Util.setActionBarColor;
 import static com.example.lifemanager.tools.Util.setActionBarTitle;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.widget.TextView;
 
@@ -14,6 +15,7 @@ public abstract class DetailedResourceActivity extends AppCompatActivity {
 
     protected String titleAppBar = null;
     protected Integer colorAppBar = null;
+    protected String resourceType;
 
     protected TextView financeDetailName;
     protected TextView financeDetailDate;
@@ -44,6 +46,12 @@ public abstract class DetailedResourceActivity extends AppCompatActivity {
         setActionBarColor(this, colorAppBar);
         setContentView(R.layout.activity_detailed_resource);
         getLayoutViews();
+        makeViewsVisible();
+        Intent intent = getIntent();
+        Object object = intent.getSerializableExtra(resourceType);
+        if (object != null){
+            bind(object);
+        }
     }
 
     private void getLayoutViews() {
@@ -71,5 +79,7 @@ public abstract class DetailedResourceActivity extends AppCompatActivity {
     }
 
     abstract protected void makeViewsVisible();
+
+    abstract protected void bind(Object object);
 
 }

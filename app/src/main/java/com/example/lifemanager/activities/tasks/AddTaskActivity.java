@@ -3,7 +3,6 @@ package com.example.lifemanager.activities.tasks;
 import static com.example.lifemanager.model.Constants.formatter;
 import static com.example.lifemanager.tools.Util.formatFromDateStringToCalendar;
 
-import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 
@@ -28,14 +27,8 @@ public class AddTaskActivity extends AddResourceActivity {
         roomTaskDAO = LifeManagerDatabase.getInstance(this).getRoomTaskDAO();
         titleAppbar = getResources().getString(R.string.title_appbar_task_form);
         colorAppbar = getResources().getColor(R.color.color_tasks_item);
+        resourceType = "task";
         super.onCreate(savedInstanceState);
-
-        Intent intent = getIntent();
-        Task task = (Task) intent.getSerializableExtra("task");
-        if (task != null){
-            fillForm(task);
-        }
-
     }
 
     protected void configureFormButton() {
@@ -81,7 +74,8 @@ public class AddTaskActivity extends AddResourceActivity {
         });
     }
 
-    private void fillForm(Task task) {
+    protected void fillForm(Object object) {
+        Task task = (Task) object;
         idToUpdate = task.getId();
         taskFormSubject.setText(task.getSubject());
         taskFormName.setText(task.getName());

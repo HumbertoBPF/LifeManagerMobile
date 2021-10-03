@@ -1,6 +1,5 @@
 package com.example.lifemanager.activities.studies;
 
-import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 
@@ -14,11 +13,8 @@ public class DetailedStudyActivity extends DetailedResourceActivity {
     protected void onCreate(Bundle savedInstanceState) {
         titleAppBar = getResources().getString(R.string.title_appbar_details_study);
         colorAppBar = getResources().getColor(R.color.color_studies_item);
+        resourceType = "study";
         super.onCreate(savedInstanceState);
-        Intent intent = getIntent();
-        Studies study = (Studies) intent.getSerializableExtra("study");
-        makeViewsVisible();
-        bind(study);
     }
 
     protected void makeViewsVisible() {
@@ -29,7 +25,8 @@ public class DetailedStudyActivity extends DetailedResourceActivity {
         studyDetailStatus.setVisibility(View.VISIBLE);
     }
 
-    private void bind(Studies study){
+    protected void bind(Object object){
+        Studies study = (Studies) object;
         studyDetailName.setText("Name: "+study.getName());
         studyDetailLinkCourse.setText("Link associated: "+study.getLinkCourse());
         studyDetailPosition.setText("Priority position: "+study.getPosition().toString());

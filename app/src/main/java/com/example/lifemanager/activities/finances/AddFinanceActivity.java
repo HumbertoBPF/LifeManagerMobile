@@ -4,7 +4,6 @@ import static com.example.lifemanager.model.Constants.formatter;
 import static com.example.lifemanager.tools.Util.formatFromDateStringToCalendar;
 import static com.example.lifemanager.tools.Util.showToast;
 
-import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 
@@ -32,14 +31,8 @@ public class AddFinanceActivity extends AddResourceActivity {
         roomFinanceDAO = LifeManagerDatabase.getInstance(this).getRoomFinanceDAO();
         titleAppbar = getResources().getString(R.string.title_appbar_finance_form);
         colorAppbar = getResources().getColor(R.color.color_finances_item);
+        resourceType = "finance";
         super.onCreate(savedInstanceState);
-
-        Intent intent = getIntent();
-        Finance finance = (Finance) intent.getSerializableExtra("finance");
-        if (finance != null){
-            fillForm(finance);
-        }
-
     }
 
     protected void configureFormButton() {
@@ -80,7 +73,8 @@ public class AddFinanceActivity extends AddResourceActivity {
         });
     }
 
-    private void fillForm(Finance finance) {
+    protected void fillForm(Object object) {
+        Finance finance = (Finance) object;
         idToUpdate = finance.getId();
         financeFormName.setText(finance.getName());
         financeFormDate.setText(formatter.format(finance.getDate().getTime()).replace("-",""));

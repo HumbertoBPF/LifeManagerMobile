@@ -2,7 +2,6 @@ package com.example.lifemanager.activities.finances;
 
 import static com.example.lifemanager.model.Constants.formatter;
 
-import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 
@@ -16,11 +15,8 @@ public class DetailedFinanceActivity extends DetailedResourceActivity {
     protected void onCreate(Bundle savedInstanceState) {
         titleAppBar = getResources().getString(R.string.title_appbar_details_finance);
         colorAppBar = getResources().getColor(R.color.color_finances_item);
+        resourceType = "finance";
         super.onCreate(savedInstanceState);
-        Intent intent = getIntent();
-        Finance finance = (Finance) intent.getSerializableExtra("finance");
-        makeViewsVisible();
-        bind(finance);
     }
 
     protected void makeViewsVisible() {
@@ -33,7 +29,8 @@ public class DetailedFinanceActivity extends DetailedResourceActivity {
         financeDetailTypeFinance.setVisibility(View.VISIBLE);
     }
 
-    private void bind(Finance finance){
+    protected void bind(Object object){
+        Finance finance = (Finance) object;
         String[] months = getResources().getStringArray(R.array.months);
         financeDetailName.setText("Name: "+finance.getName());
         financeDetailDate.setText("Date: "+formatter.format(finance.getDate().getTime()));
