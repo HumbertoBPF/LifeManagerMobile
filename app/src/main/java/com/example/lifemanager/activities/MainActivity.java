@@ -25,12 +25,11 @@ import com.example.lifemanager.R;
 import com.example.lifemanager.activities.finances.FinancesActivity;
 import com.example.lifemanager.activities.studies.StudiesActivity;
 import com.example.lifemanager.activities.tasks.TasksActivity;
-import com.example.lifemanager.async_tasks.SettingsAsyncTask;
+import com.example.lifemanager.async_tasks.AsyncTask;
 import com.example.lifemanager.dao.RoomSettingDAO;
 import com.example.lifemanager.model.Setting;
 import com.example.lifemanager.recycler_view.ListResourcesMenuAdapter;
 import com.example.lifemanager.roomConfig.LifeManagerDatabase;
-import com.example.lifemanager.tools.Util;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -79,14 +78,17 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void configureGreeting() {
-        new SettingsAsyncTask(new SettingsAsyncTask.SettingsAsyncTaskInterface() {
+        new AsyncTask(new AsyncTask.AsyncTaskInterface() {
             @Override
-            public Setting doInBackground() {
-                return roomSettingDAO.getUsernameSetting();
+            public List<Object> doInBackground() {
+                List<Object> objects = new ArrayList<>();
+                objects.add(roomSettingDAO.getUsernameSetting());
+                return objects;
             }
 
             @Override
-            public void onPostExecute(Setting setting) {
+            public void onPostExecute(List<Object> objects) {
+                Setting setting = (Setting) objects.get(0);
                 SimpleDateFormat formatter = new SimpleDateFormat("H");
                 String currentHourString =formatter.format(Calendar.getInstance().getTime());
                 int currentHour = Integer.parseInt(currentHourString);
@@ -108,14 +110,17 @@ public class MainActivity extends AppCompatActivity {
 
     private void askForSettings() {
         Context context = this;
-        new SettingsAsyncTask(new SettingsAsyncTask.SettingsAsyncTaskInterface() {
+        new AsyncTask(new AsyncTask.AsyncTaskInterface() {
             @Override
-            public Setting doInBackground() {
-                return roomSettingDAO.getUsernameSetting();
+            public List<Object> doInBackground() {
+                List<Object> objects = new ArrayList<>();
+                objects.add(roomSettingDAO.getUsernameSetting());
+                return objects;
             }
 
             @Override
-            public void onPostExecute(Setting setting) {
+            public void onPostExecute(List<Object> objects) {
+                Setting setting = (Setting) objects.get(0);
                 if (setting == null){
                     Log.i("settingsDialog","Launch settings dialog");
                     AlertDialog settingsDialog = yesOrNoDialog(context, getResources().getString(R.string.settings_dialog_title),
@@ -142,16 +147,16 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void defaultSettings() {
-        new SettingsAsyncTask(new SettingsAsyncTask.SettingsAsyncTaskInterface() {
+        new AsyncTask(new AsyncTask.AsyncTaskInterface() {
             @Override
-            public Setting doInBackground() {
+            public List<Object> doInBackground() {
                 roomSettingDAO.save(new Setting(USERNAME_FOR_APP,""));
                 roomSettingDAO.save(new Setting(ENABLE_TOASTS,"true"));
                 return null;
             }
 
             @Override
-            public void onPostExecute(Setting setting) {
+            public void onPostExecute(List<Object> objects) {
 
             }
         }).execute();

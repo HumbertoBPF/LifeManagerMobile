@@ -8,7 +8,7 @@ import android.view.View;
 
 import com.example.lifemanager.R;
 import com.example.lifemanager.activities.AddResourceActivity;
-import com.example.lifemanager.async_tasks.TasksAsyncTask;
+import com.example.lifemanager.async_tasks.AsyncTask;
 import com.example.lifemanager.dao.RoomTaskDAO;
 import com.example.lifemanager.enums.Priority;
 import com.example.lifemanager.model.Task;
@@ -48,9 +48,9 @@ public class AddTaskActivity extends AddResourceActivity {
                 Calendar deadline = formatFromDateStringToCalendar(taskFormDeadline.getText().toString());
                 Calendar dueDate = formatFromDateStringToCalendar(taskFormDueDate.getText().toString());
                 Priority finalPriority = priority;
-                new TasksAsyncTask(new TasksAsyncTask.TasksAsyncTaskInterface() {
+                new AsyncTask(new AsyncTask.AsyncTaskInterface() {
                     @Override
-                    public List<Task> doInBackground() {
+                    public List<Object> doInBackground() {
                         if (idToUpdate == null){
                             roomTaskDAO.save(new Task(subject,name,description,status, finalPriority,deadline,dueDate));
                         }else{
@@ -61,7 +61,7 @@ public class AddTaskActivity extends AddResourceActivity {
                     }
 
                     @Override
-                    public void onPostExecute(List<Task> tasks) {
+                    public void onPostExecute(List<Object> objects) {
                         if (idToUpdate == null){
                             Util.showToast(getApplicationContext(),getResources().getString(R.string.add_task_toast_message));
                         }else{

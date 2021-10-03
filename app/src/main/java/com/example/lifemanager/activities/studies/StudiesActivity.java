@@ -13,7 +13,7 @@ import androidx.annotation.NonNull;
 
 import com.example.lifemanager.R;
 import com.example.lifemanager.activities.CategoryActivity;
-import com.example.lifemanager.async_tasks.StudiesAsyncTask;
+import com.example.lifemanager.async_tasks.AsyncTask;
 import com.example.lifemanager.dao.RoomStudiesDAO;
 import com.example.lifemanager.model.Studies;
 import com.example.lifemanager.recycler_view.ListStudiesAdapter;
@@ -40,27 +40,28 @@ public class StudiesActivity extends CategoryActivity {
     @Override
     public boolean onContextItemSelected(@NonNull MenuItem item) {
         Long chosenId = adapter.getChosenId();
-        new StudiesAsyncTask(new StudiesAsyncTask.StudiesAsyncTaskInterface() {
+        new AsyncTask(new AsyncTask.AsyncTaskInterface() {
             @Override
-            public List<Studies> doInBackground() {
-                List<Studies> studies = new ArrayList<>();
-                studies.add(roomStudiesDAO.getStudyById(chosenId));
-                return studies;
+            public List<Object> doInBackground() {
+                List<Object> objects = new ArrayList<>();
+                objects.add(roomStudiesDAO.getStudyById(chosenId));
+                return objects;
             }
 
             @Override
-            public void onPostExecute(List<Studies> studies) {
+            public void onPostExecute(List<Object> objects) {
+                Studies study = (Studies) objects.get(0);
                 if (item.getTitle().equals(getResources().getString(R.string.context_menu_delete_option))){
                     AlertDialog deletionDialog = deletionDialog(context, new DialogInterface.OnClickListener() {
                         @Override
                         public void onClick(DialogInterface dialogInterface, int i) {
-                            deleteItemFromRecyclerView(studies.get(0));
+                            deleteItemFromRecyclerView(study);
                         }
                     });
                     deletionDialog.show();
                 }else {
                     Intent intent = new Intent(context, AddStudyActivity.class);
-                    intent.putExtra("study",studies.get(0));
+                    intent.putExtra("study",study);
                     startActivity(intent);
                 }
             }
@@ -69,15 +70,15 @@ public class StudiesActivity extends CategoryActivity {
     }
 
     private void deleteItemFromRecyclerView(Studies study) {
-        new StudiesAsyncTask(new StudiesAsyncTask.StudiesAsyncTaskInterface() {
+        new AsyncTask(new AsyncTask.AsyncTaskInterface() {
             @Override
-            public List<Studies> doInBackground() {
+            public List<Object> doInBackground() {
                 roomStudiesDAO.delete(study);
                 return null;
             }
 
             @Override
-            public void onPostExecute(List<Studies> studies) {
+            public void onPostExecute(List<Object> objects) {
                 showToast(getApplicationContext(),getResources().getString(R.string.delete_study_toast_message));
                 configureAdapter();
             }
@@ -85,14 +86,20 @@ public class StudiesActivity extends CategoryActivity {
     }
 
     protected void configureAdapter() {
-        new StudiesAsyncTask(new StudiesAsyncTask.StudiesAsyncTaskInterface() {
+        new AsyncTask(new AsyncTask.AsyncTaskInterface() {
             @Override
-            public List<Studies> doInBackground() {
-                return roomStudiesDAO.getAllStudies();
+            public List<Object> doInBackground() {
+                List<Object> objects = new ArrayList<>();
+                objects.addAll(roomStudiesDAO.getAllStudies());
+                return objects;
             }
 
             @Override
-            public void onPostExecute(List<Studies> studies) {
+            public void onPostExecute(List<Object> objects) {
+                List<Studies> studies = new ArrayList<>();
+                for (Object object : objects){
+                    studies.add((Studies) object);
+                }
                 adapter = new ListStudiesAdapter(context, studies, new ListStudiesAdapter.OnClickListener() {
                     @Override
                     public void onItemClickListener(Studies study) {

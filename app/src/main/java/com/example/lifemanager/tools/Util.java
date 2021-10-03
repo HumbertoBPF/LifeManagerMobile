@@ -13,25 +13,31 @@ import android.widget.Toast;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.lifemanager.R;
-import com.example.lifemanager.async_tasks.SettingsAsyncTask;
+import com.example.lifemanager.async_tasks.AsyncTask;
 import com.example.lifemanager.dao.RoomSettingDAO;
 import com.example.lifemanager.model.Setting;
 import com.example.lifemanager.roomConfig.LifeManagerDatabase;
 
+import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.List;
 
 public class Util {
 
     public static void showToast(Context context,String text){
-        new SettingsAsyncTask(new SettingsAsyncTask.SettingsAsyncTaskInterface() {
+
+        new AsyncTask(new AsyncTask.AsyncTaskInterface() {
             @Override
-            public Setting doInBackground() {
+            public List<Object> doInBackground() {
                 RoomSettingDAO roomSettingDAO = LifeManagerDatabase.getInstance(context).getRoomSettingDAO();
-                return roomSettingDAO.getEnableToastsSetting();
+                List<Object> objects = new ArrayList<>();
+                objects.add(roomSettingDAO.getEnableToastsSetting());
+                return objects;
             }
 
             @Override
-            public void onPostExecute(Setting setting) {
+            public void onPostExecute(List<Object> objects) {
+                Setting setting = (Setting) objects.get(0);
                 boolean showToast = setting.getValue().equals("true");
                 if (showToast){
                     Toast.makeText(context, text, Toast.LENGTH_SHORT).show();

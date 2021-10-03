@@ -14,7 +14,7 @@ import android.view.View;
 
 import com.example.lifemanager.R;
 import com.example.lifemanager.activities.AddResourceActivity;
-import com.example.lifemanager.async_tasks.StudiesAsyncTask;
+import com.example.lifemanager.async_tasks.AsyncTask;
 import com.example.lifemanager.dao.RoomStudiesDAO;
 import com.example.lifemanager.enums.Category;
 import com.example.lifemanager.model.Studies;
@@ -46,9 +46,9 @@ public class AddStudyActivity extends AddResourceActivity {
                 String position = studiesFormPosition.getText().toString();
                 boolean status = studiesFormConcluded.isChecked();
                 Category category = getCategory();
-                new StudiesAsyncTask(new StudiesAsyncTask.StudiesAsyncTaskInterface() {
+                new AsyncTask(new AsyncTask.AsyncTaskInterface() {
                     @Override
-                    public List<Studies> doInBackground() {
+                    public List<Object> doInBackground() {
                         if (idToUpdate == null){
                             roomStudiesDAO.save(new Studies(name,linkCourse,category,Integer.parseInt(position),status));
                         }else{
@@ -59,7 +59,7 @@ public class AddStudyActivity extends AddResourceActivity {
                     }
 
                     @Override
-                    public void onPostExecute(List<Studies> studies) {
+                    public void onPostExecute(List<Object> objects) {
                         if (idToUpdate == null){
                             Util.showToast(getApplicationContext(),getResources().getString(R.string.add_study_toast_message));
                         }else{

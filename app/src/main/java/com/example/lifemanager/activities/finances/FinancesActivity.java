@@ -1,6 +1,5 @@
 package com.example.lifemanager.activities.finances;
 
-
 import static com.example.lifemanager.tools.Util.deletionDialog;
 import static com.example.lifemanager.tools.Util.showToast;
 
@@ -14,7 +13,7 @@ import androidx.annotation.NonNull;
 
 import com.example.lifemanager.R;
 import com.example.lifemanager.activities.CategoryActivity;
-import com.example.lifemanager.async_tasks.FinancesAsyncTask;
+import com.example.lifemanager.async_tasks.AsyncTask;
 import com.example.lifemanager.dao.RoomFinanceDAO;
 import com.example.lifemanager.model.Finance;
 import com.example.lifemanager.recycler_view.ListFinancesAdapter;
@@ -41,17 +40,17 @@ public class FinancesActivity extends CategoryActivity {
     @Override
     public boolean onContextItemSelected(@NonNull MenuItem item) {
         Long chosenId = adapter.getChosenId();
-        new FinancesAsyncTask(new FinancesAsyncTask.FinancesAsyncTaskInterface() {
+        new AsyncTask(new AsyncTask.AsyncTaskInterface() {
             @Override
-            public List<Finance> doInBackground() {
-                List<Finance> finances = new ArrayList<>();
-                finances.add(roomFinanceDAO.getFinanceById(chosenId));
-                return finances;
+            public List<Object> doInBackground() {
+                List<Object> objects = new ArrayList<>();
+                objects.add(roomFinanceDAO.getFinanceById(chosenId));
+                return objects;
             }
 
             @Override
-            public void onPostExecute(List<Finance> finances) {
-                Finance finance = finances.get(0);
+            public void onPostExecute(List<Object> objects) {
+                Finance finance = (Finance) objects.get(0);
                 if (item.getTitle().equals(getResources().getString(R.string.context_menu_delete_option))) {
                     AlertDialog deletionDialog = deletionDialog(context, new DialogInterface.OnClickListener() {
                         @Override
@@ -71,15 +70,15 @@ public class FinancesActivity extends CategoryActivity {
     }
 
     private void deleteItemFromRecyclerView(Finance finance) {
-        new FinancesAsyncTask(new FinancesAsyncTask.FinancesAsyncTaskInterface() {
+        new AsyncTask(new AsyncTask.AsyncTaskInterface() {
             @Override
-            public List<Finance> doInBackground() {
+            public List<Object> doInBackground() {
                 roomFinanceDAO.delete(finance);
                 return null;
             }
 
             @Override
-            public void onPostExecute(List<Finance> finances) {
+            public void onPostExecute(List<Object> objects) {
                 showToast(getApplicationContext(), getResources().getString(R.string.delete_finance_toast_message));
                 configureAdapter();
             }
@@ -87,14 +86,20 @@ public class FinancesActivity extends CategoryActivity {
     }
 
     protected void configureAdapter() {
-        new FinancesAsyncTask(new FinancesAsyncTask.FinancesAsyncTaskInterface() {
+        new AsyncTask(new AsyncTask.AsyncTaskInterface() {
             @Override
-            public List<Finance> doInBackground() {
-                return roomFinanceDAO.getAllFinances();
+            public List<Object> doInBackground() {
+                List<Object> objects = new ArrayList<>();
+                objects.addAll(roomFinanceDAO.getAllFinances());
+                return objects;
             }
 
             @Override
-            public void onPostExecute(List<Finance> finances) {
+            public void onPostExecute(List<Object> objects) {
+                List<Finance> finances = new ArrayList<>();
+                for (Object object : objects){
+                    finances.add((Finance) object);
+                }
                 adapter = new ListFinancesAdapter(context, finances, new ListFinancesAdapter.OnClickListener() {
                     @Override
                     public void onItemClickListener(Finance finance) {

@@ -15,10 +15,13 @@ import android.widget.RadioGroup;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.lifemanager.R;
-import com.example.lifemanager.async_tasks.SettingsAsyncTask;
+import com.example.lifemanager.async_tasks.AsyncTask;
 import com.example.lifemanager.dao.RoomSettingDAO;
 import com.example.lifemanager.model.Setting;
 import com.example.lifemanager.roomConfig.LifeManagerDatabase;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class AppSettingsActivity extends AppCompatActivity {
 
@@ -47,14 +50,17 @@ public class AppSettingsActivity extends AppCompatActivity {
     }
 
     private void fillEnableToastsSetting() {
-        new SettingsAsyncTask(new SettingsAsyncTask.SettingsAsyncTaskInterface() {
+        new AsyncTask(new AsyncTask.AsyncTaskInterface() {
             @Override
-            public Setting doInBackground() {
-                return roomSettingDAO.getEnableToastsSetting();
+            public List<Object> doInBackground() {
+                List<Object> objects = new ArrayList<>();
+                objects.add(roomSettingDAO.getEnableToastsSetting());
+                return objects;
             }
 
             @Override
-            public void onPostExecute(Setting setting) {
+            public void onPostExecute(List<Object> objects) {
+                Setting setting = (Setting) objects.get(0);
                 if (setting != null){
                     enableToasts.check(R.id.enable_toasts_false);
                     if (setting.getValue().equals("true")){
@@ -66,35 +72,38 @@ public class AppSettingsActivity extends AppCompatActivity {
     }
 
     private void fillUsernameSetting() {
-        new SettingsAsyncTask(new SettingsAsyncTask.SettingsAsyncTaskInterface() {
+        new AsyncTask((new AsyncTask.AsyncTaskInterface() {
             @Override
-            public Setting doInBackground() {
-                return roomSettingDAO.getUsernameSetting();
+            public List<Object> doInBackground() {
+                List<Object> objects = new ArrayList<>();
+                objects.add(roomSettingDAO.getUsernameSetting());
+                return objects;
             }
 
             @Override
-            public void onPostExecute(Setting setting) {
+            public void onPostExecute(List<Object> objects) {
+                Setting setting = (Setting) objects.get(0);
                 if (setting != null){
                     inputUsername.setText(setting.getValue());
                 }
             }
-        }).execute();
+        })).execute();
     }
 
     private void configureButtonSaveSettings() {
         buttonSaveSettings.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                new SettingsAsyncTask(new SettingsAsyncTask.SettingsAsyncTaskInterface() {
+                new AsyncTask(new AsyncTask.AsyncTaskInterface() {
                     @Override
-                    public Setting doInBackground() {
+                    public List<Object> doInBackground() {
                         createOrUpdateUsernameSetting();
                         createOrUpdateEnableToastsSetting();
                         return null;
                     }
 
                     @Override
-                    public void onPostExecute(Setting setting) {
+                    public void onPostExecute(List<Object> objects) {
                         finish();
                     }
                 }).execute();

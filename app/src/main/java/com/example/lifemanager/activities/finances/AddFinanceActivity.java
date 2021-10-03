@@ -9,7 +9,7 @@ import android.view.View;
 
 import com.example.lifemanager.R;
 import com.example.lifemanager.activities.AddResourceActivity;
-import com.example.lifemanager.async_tasks.FinancesAsyncTask;
+import com.example.lifemanager.async_tasks.AsyncTask;
 import com.example.lifemanager.dao.RoomFinanceDAO;
 import com.example.lifemanager.enums.Sector;
 import com.example.lifemanager.enums.TypeFinance;
@@ -47,9 +47,9 @@ public class AddFinanceActivity extends AddResourceActivity {
                 BigDecimal valueBigDecimal = getBigDecimalValue();
                 TypeFinance typeFinance = getTypeFinance();
                 Sector sector = getSector();
-                new FinancesAsyncTask(new FinancesAsyncTask.FinancesAsyncTaskInterface() {
+                new AsyncTask(new AsyncTask.AsyncTaskInterface() {
                     @Override
-                    public List<Finance> doInBackground() {
+                    public List<Object> doInBackground() {
                         if (idToUpdate == null){
                             roomFinanceDAO.save(new Finance(name,dateCalendar,month,year,valueBigDecimal,sector,typeFinance));
                         }else{
@@ -60,7 +60,7 @@ public class AddFinanceActivity extends AddResourceActivity {
                     }
 
                     @Override
-                    public void onPostExecute(List<Finance> finances) {
+                    public void onPostExecute(List<Object> objects) {
                         if (idToUpdate == null){
                             showToast(getApplicationContext(),getResources().getString(R.string.add_finance_toast_message));
                         }else{
