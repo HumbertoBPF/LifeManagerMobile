@@ -15,7 +15,7 @@ public class DetailedTaskActivity extends DetailedResourceActivity {
     protected void onCreate(Bundle savedInstanceState) {
         titleAppBar = getResources().getString(R.string.title_appbar_details_task);
         colorAppBar = getResources().getColor(R.color.color_tasks_item);
-        resourceType = "task";
+        resourceType = getResources().getStringArray(R.array.categories)[2];
         super.onCreate(savedInstanceState);
     }
 

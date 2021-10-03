@@ -13,7 +13,7 @@ public class DetailedStudyActivity extends DetailedResourceActivity {
     protected void onCreate(Bundle savedInstanceState) {
         titleAppBar = getResources().getString(R.string.title_appbar_details_study);
         colorAppBar = getResources().getColor(R.color.color_studies_item);
-        resourceType = "study";
+        resourceType = getResources().getStringArray(R.array.categories)[1];
         super.onCreate(savedInstanceState);
     }
 

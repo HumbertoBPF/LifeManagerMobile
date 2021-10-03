@@ -32,6 +32,7 @@ public class StudiesActivity extends CategoryActivity {
         titleAppbar = getResources().getStringArray(R.array.categories)[1];
         colorAppbar = getResources().getColor(R.color.color_studies_item);
         titleIconAppbar = getResources().getString(R.string.title_appbar_studies_form);
+        resourceType = getResources().getStringArray(R.array.categories)[1];
         formAddClass = AddStudyActivity.class;
         super.onCreate(savedInstanceState);
         roomStudiesDAO = LifeManagerDatabase.getInstance(this).getRoomStudiesDAO();
@@ -61,7 +62,7 @@ public class StudiesActivity extends CategoryActivity {
                     deletionDialog.show();
                 }else {
                     Intent intent = new Intent(context, AddStudyActivity.class);
-                    intent.putExtra("study",study);
+                    intent.putExtra(resourceType,study);
                     startActivity(intent);
                 }
             }
@@ -104,7 +105,7 @@ public class StudiesActivity extends CategoryActivity {
                     @Override
                     public void onItemClickListener(Studies study) {
                         Intent intent = new Intent(getApplicationContext(), DetailedStudyActivity.class);
-                        intent.putExtra("study",study);
+                        intent.putExtra(resourceType,study);
                         startActivity(intent);
                     }
                 });

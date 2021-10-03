@@ -20,6 +20,7 @@ public abstract class CategoryActivity extends AppCompatActivity {
     protected String titleAppbar = null;
     protected Integer colorAppbar = null;
     protected String titleIconAppbar = null;
+    protected String resourceType = null;
     private MenuItem addItem;
     protected Context context;
     protected Class<?> formAddClass;

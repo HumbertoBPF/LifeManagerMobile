@@ -15,7 +15,7 @@ public abstract class DetailedResourceActivity extends AppCompatActivity {
 
     protected String titleAppBar = null;
     protected Integer colorAppBar = null;
-    protected String resourceType;
+    protected String resourceType = null;
 
     protected TextView financeDetailName;
     protected TextView financeDetailDate;

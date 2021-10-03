@@ -33,7 +33,7 @@ public class AddStudyActivity extends AddResourceActivity {
         roomStudiesDAO = LifeManagerDatabase.getInstance(this).getRoomStudiesDAO();
         titleAppbar = getResources().getString(R.string.title_appbar_studies_form);
         colorAppbar = getResources().getColor(R.color.color_studies_item);
-        resourceType = "study";
+        resourceType = getResources().getStringArray(R.array.categories)[1];
         super.onCreate(savedInstanceState);
     }
 

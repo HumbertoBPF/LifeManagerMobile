@@ -32,6 +32,7 @@ public class TasksActivity extends CategoryActivity {
         titleAppbar = getResources().getStringArray(R.array.categories)[2];
         colorAppbar = getResources().getColor(R.color.color_tasks_item);
         titleIconAppbar = getResources().getString(R.string.title_appbar_task_form);
+        resourceType = getResources().getStringArray(R.array.categories)[2];
         formAddClass = AddTaskActivity.class;
         super.onCreate(savedInstanceState);
         roomTaskDAO = LifeManagerDatabase.getInstance(this).getRoomTaskDAO();
@@ -61,7 +62,7 @@ public class TasksActivity extends CategoryActivity {
                     deletionDialog.show();
                 }else {
                     Intent intent = new Intent(context, AddTaskActivity.class);
-                    intent.putExtra("task",task);
+                    intent.putExtra(resourceType,task);
                     startActivity(intent);
                 }
             }
@@ -104,7 +105,7 @@ public class TasksActivity extends CategoryActivity {
                     @Override
                     public void onItemClickListener(Task task) {
                         Intent intent = new Intent(getApplicationContext(),DetailedTaskActivity.class);
-                        intent.putExtra("task",task);
+                        intent.putExtra(resourceType,task);
                         startActivity(intent);
                     }
                 });

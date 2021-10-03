@@ -63,7 +63,7 @@ public abstract class AddResourceActivity extends AppCompatActivity implements A
 
     protected String titleAppbar = null;
     protected Integer colorAppbar = null;
-    protected String resourceType;
+    protected String resourceType = null;
 
     protected Long idToUpdate = null;
 

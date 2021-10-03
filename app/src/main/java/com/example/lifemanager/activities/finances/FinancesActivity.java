@@ -32,6 +32,7 @@ public class FinancesActivity extends CategoryActivity {
         titleAppbar = getResources().getStringArray(R.array.categories)[0];
         colorAppbar = getResources().getColor(R.color.color_finances_item);
         titleIconAppbar = getResources().getString(R.string.title_appbar_finance_form);
+        resourceType = getResources().getStringArray(R.array.categories)[0];
         formAddClass = AddFinanceActivity.class;
         super.onCreate(savedInstanceState);
         roomFinanceDAO = LifeManagerDatabase.getInstance(this).getRoomFinanceDAO();
@@ -61,7 +62,7 @@ public class FinancesActivity extends CategoryActivity {
                     deletionDialog.show();
                 }else {
                     Intent intent = new Intent(context,AddFinanceActivity.class);
-                    intent.putExtra("finance",finance);
+                    intent.putExtra(resourceType,finance);
                     startActivity(intent);
                 }
             }
@@ -104,7 +105,7 @@ public class FinancesActivity extends CategoryActivity {
                     @Override
                     public void onItemClickListener(Finance finance) {
                         Intent intent = new Intent(getApplicationContext(), DetailedFinanceActivity.class);
-                        intent.putExtra("finance",finance);
+                        intent.putExtra(resourceType,finance);
                         startActivity(intent);
                     }
                 });

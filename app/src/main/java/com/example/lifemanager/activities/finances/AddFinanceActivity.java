@@ -31,7 +31,7 @@ public class AddFinanceActivity extends AddResourceActivity {
         roomFinanceDAO = LifeManagerDatabase.getInstance(this).getRoomFinanceDAO();
         titleAppbar = getResources().getString(R.string.title_appbar_finance_form);
         colorAppbar = getResources().getColor(R.color.color_finances_item);
-        resourceType = "finance";
+        resourceType = getResources().getStringArray(R.array.categories)[0];
         super.onCreate(savedInstanceState);
     }
 

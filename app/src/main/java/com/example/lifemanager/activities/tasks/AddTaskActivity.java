@@ -27,7 +27,7 @@ public class AddTaskActivity extends AddResourceActivity {
         roomTaskDAO = LifeManagerDatabase.getInstance(this).getRoomTaskDAO();
         titleAppbar = getResources().getString(R.string.title_appbar_task_form);
         colorAppbar = getResources().getColor(R.color.color_tasks_item);
-        resourceType = "task";
+        resourceType = getResources().getStringArray(R.array.categories)[2];
         super.onCreate(savedInstanceState);
     }
 
