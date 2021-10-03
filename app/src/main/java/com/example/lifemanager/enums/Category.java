@@ -5,9 +5,9 @@ public enum Category {
     BACKEND("Back-end"),
     FRONTEND("Front-end"),
     MOBILE("Mobile"),
-    DATA_SCIENCE("Data science"),
+    DATA_SCIENCE("Data Science"),
     DEVOPS("DevOps"),
-    GENERAL_PROGRAMMING("General programming"),
+    GENERAL_PROGRAMMING("General Programming"),
     LANGUAGES("Languages"),
     OTHER("Other");
 

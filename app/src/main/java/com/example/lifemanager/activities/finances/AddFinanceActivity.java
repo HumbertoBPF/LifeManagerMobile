@@ -29,11 +29,10 @@ public class AddFinanceActivity extends AddResourceActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        roomFinanceDAO = LifeManagerDatabase.getInstance(this).getRoomFinanceDAO();
         titleAppbar = getResources().getString(R.string.title_appbar_finance_form);
         colorAppbar = getResources().getColor(R.color.color_finances_item);
         super.onCreate(savedInstanceState);
-        roomFinanceDAO = LifeManagerDatabase.getInstance(this).getRoomFinanceDAO();
-        makeFinanceFormVisible();
 
         Intent intent = getIntent();
         Finance finance = (Finance) intent.getSerializableExtra("finance");
@@ -41,11 +40,9 @@ public class AddFinanceActivity extends AddResourceActivity {
             fillForm(finance);
         }
 
-        configureFinanceFormButton();
-
     }
 
-    private void configureFinanceFormButton() {
+    protected void configureFormButton() {
         financeFormButtonSubmit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -123,7 +120,7 @@ public class AddFinanceActivity extends AddResourceActivity {
                 .setScale(2, RoundingMode.HALF_UP);
     }
 
-    private void makeFinanceFormVisible() {
+    protected void makeFormVisible() {
         financeFormName.setVisibility(View.VISIBLE);
         financeFormDate.setVisibility(View.VISIBLE);
         financeFormValue.setVisibility(View.VISIBLE);

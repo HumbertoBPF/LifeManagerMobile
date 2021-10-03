@@ -18,7 +18,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.lifemanager.R;
 
-public class AddResourceActivity extends AppCompatActivity implements AdapterView.OnItemSelectedListener{
+public abstract class AddResourceActivity extends AppCompatActivity implements AdapterView.OnItemSelectedListener{
 
     protected String spinnerValue;
 
@@ -76,7 +76,14 @@ public class AddResourceActivity extends AppCompatActivity implements AdapterVie
 
         configureSpinner(R.array.categories_study, studiesFormCategorySpinner);
         configureSpinner(R.array.sector_finance, financeFormSectorSpinner);
+
+        makeFormVisible();
+        configureFormButton();
     }
+
+    protected abstract void configureFormButton();
+
+    protected abstract void makeFormVisible();
 
     private void configureSpinner(int arrayResourceId, Spinner spinner) {
         ArrayAdapter<CharSequence> adapterCategoryStudy = ArrayAdapter.createFromResource(getApplicationContext(),

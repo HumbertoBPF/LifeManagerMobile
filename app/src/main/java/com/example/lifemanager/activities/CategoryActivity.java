@@ -15,7 +15,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.lifemanager.R;
 
-public class CategoryActivity extends AppCompatActivity {
+public abstract class CategoryActivity extends AppCompatActivity {
 
     protected String titleAppbar = null;
     protected Integer colorAppbar = null;
@@ -57,6 +57,14 @@ public class CategoryActivity extends AppCompatActivity {
             addItem.setTitle(titleIconAppbar);
         }
         return super.onPrepareOptionsMenu(menu);
+    }
+
+    abstract protected void configureAdapter();
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        configureAdapter();
     }
 
 }

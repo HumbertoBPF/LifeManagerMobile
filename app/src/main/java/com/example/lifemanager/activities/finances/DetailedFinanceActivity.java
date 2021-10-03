@@ -23,7 +23,7 @@ public class DetailedFinanceActivity extends DetailedResourceActivity {
         bind(finance);
     }
 
-    private void makeViewsVisible() {
+    protected void makeViewsVisible() {
         financeDetailName.setVisibility(View.VISIBLE);
         financeDetailDate.setVisibility(View.VISIBLE);
         financeDetailMonth.setVisibility(View.VISIBLE);

@@ -7,7 +7,6 @@ import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
-import android.view.Menu;
 import android.view.MenuItem;
 
 import androidx.annotation.NonNull;
@@ -32,6 +31,8 @@ public class TasksActivity extends CategoryActivity {
     protected void onCreate(Bundle savedInstanceState) {
         titleAppbar = getResources().getStringArray(R.array.categories)[2];
         colorAppbar = getResources().getColor(R.color.color_tasks_item);
+        titleIconAppbar = getResources().getString(R.string.title_appbar_task_form);
+        formAddClass = AddTaskActivity.class;
         super.onCreate(savedInstanceState);
         roomTaskDAO = LifeManagerDatabase.getInstance(this).getRoomTaskDAO();
     }
@@ -83,7 +84,7 @@ public class TasksActivity extends CategoryActivity {
         }).execute();
     }
 
-    private void configureAdapter() {
+    protected void configureAdapter() {
         new TasksAsyncTask(new TasksAsyncTask.TasksAsyncTaskInterface() {
             @Override
             public List<Task> doInBackground() {
@@ -104,24 +105,6 @@ public class TasksActivity extends CategoryActivity {
                 registerForContextMenu(recyclerViewResources);
             }
         }).execute();
-    }
-
-    @Override
-    public boolean onPrepareOptionsMenu(Menu menu) {
-        titleIconAppbar = getResources().getString(R.string.title_appbar_task_form);
-        return super.onPrepareOptionsMenu(menu);
-    }
-
-    @Override
-    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
-        formAddClass = AddTaskActivity.class;
-        return super.onOptionsItemSelected(item);
-    }
-
-    @Override
-    protected void onResume() {
-        super.onResume();
-        configureAdapter();
     }
 
 }

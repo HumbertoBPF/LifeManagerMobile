@@ -21,7 +21,7 @@ public class DetailedStudyActivity extends DetailedResourceActivity {
         bind(study);
     }
 
-    private void makeViewsVisible() {
+    protected void makeViewsVisible() {
         studyDetailName.setVisibility(View.VISIBLE);
         studyDetailLinkCourse.setVisibility(View.VISIBLE);
         studyDetailPosition.setVisibility(View.VISIBLE);

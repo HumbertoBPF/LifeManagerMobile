@@ -25,11 +25,10 @@ public class AddTaskActivity extends AddResourceActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        roomTaskDAO = LifeManagerDatabase.getInstance(this).getRoomTaskDAO();
         titleAppbar = getResources().getString(R.string.title_appbar_task_form);
         colorAppbar = getResources().getColor(R.color.color_tasks_item);
         super.onCreate(savedInstanceState);
-        roomTaskDAO = LifeManagerDatabase.getInstance(this).getRoomTaskDAO();
-        makeTaskFormVisible();
 
         Intent intent = getIntent();
         Task task = (Task) intent.getSerializableExtra("task");
@@ -37,11 +36,9 @@ public class AddTaskActivity extends AddResourceActivity {
             fillForm(task);
         }
 
-        configureTaskFormButton();
-
     }
 
-    private void configureTaskFormButton() {
+    protected void configureFormButton() {
         taskFormButtonSubmit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -103,7 +100,7 @@ public class AddTaskActivity extends AddResourceActivity {
         taskFormDueDate.setText(formatter.format(task.getDueDate().getTime()).replace("-",""));
     }
 
-    private void makeTaskFormVisible() {
+    protected void makeFormVisible() {
         taskFormSubject.setVisibility(View.VISIBLE);
         taskFormName.setVisibility(View.VISIBLE);
         taskFormDescription.setVisibility(View.VISIBLE);

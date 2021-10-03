@@ -23,7 +23,7 @@ public class DetailedTaskActivity extends DetailedResourceActivity {
         bind(task);
     }
 
-    private void makeViewsVisible() {
+    protected void makeViewsVisible() {
         taskDetailSubject.setVisibility(View.VISIBLE);
         taskDetailName.setVisibility(View.VISIBLE);
         taskDetailDescription.setVisibility(View.VISIBLE);

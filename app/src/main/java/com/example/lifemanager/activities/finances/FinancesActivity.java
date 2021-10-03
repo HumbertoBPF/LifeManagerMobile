@@ -8,7 +8,6 @@ import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
-import android.view.Menu;
 import android.view.MenuItem;
 
 import androidx.annotation.NonNull;
@@ -33,6 +32,8 @@ public class FinancesActivity extends CategoryActivity {
     protected void onCreate(Bundle savedInstanceState) {
         titleAppbar = getResources().getStringArray(R.array.categories)[0];
         colorAppbar = getResources().getColor(R.color.color_finances_item);
+        titleIconAppbar = getResources().getString(R.string.title_appbar_finance_form);
+        formAddClass = AddFinanceActivity.class;
         super.onCreate(savedInstanceState);
         roomFinanceDAO = LifeManagerDatabase.getInstance(this).getRoomFinanceDAO();
     }
@@ -85,7 +86,7 @@ public class FinancesActivity extends CategoryActivity {
         }).execute();
     }
 
-    private void configureAdapter() {
+    protected void configureAdapter() {
         new FinancesAsyncTask(new FinancesAsyncTask.FinancesAsyncTaskInterface() {
             @Override
             public List<Finance> doInBackground() {
@@ -108,21 +109,4 @@ public class FinancesActivity extends CategoryActivity {
         }).execute();
     }
 
-    @Override
-    public boolean onPrepareOptionsMenu(Menu menu) {
-        titleIconAppbar = getResources().getString(R.string.title_appbar_finance_form);
-        return super.onPrepareOptionsMenu(menu);
-    }
-
-    @Override
-    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
-        formAddClass = AddFinanceActivity.class;
-        return super.onOptionsItemSelected(item);
-    }
-
-    @Override
-    protected void onResume() {
-        super.onResume();
-        configureAdapter();
-    }
 }

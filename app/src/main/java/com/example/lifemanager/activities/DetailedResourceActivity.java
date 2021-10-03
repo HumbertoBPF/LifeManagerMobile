@@ -3,14 +3,14 @@ package com.example.lifemanager.activities;
 import static com.example.lifemanager.tools.Util.setActionBarColor;
 import static com.example.lifemanager.tools.Util.setActionBarTitle;
 
-import androidx.appcompat.app.AppCompatActivity;
-
 import android.os.Bundle;
 import android.widget.TextView;
 
+import androidx.appcompat.app.AppCompatActivity;
+
 import com.example.lifemanager.R;
 
-public class DetailedResourceActivity extends AppCompatActivity {
+public abstract class DetailedResourceActivity extends AppCompatActivity {
 
     protected String titleAppBar = null;
     protected Integer colorAppBar = null;
@@ -69,4 +69,7 @@ public class DetailedResourceActivity extends AppCompatActivity {
         taskDetailDeadline = findViewById(R.id.task_detail_deadline);
         taskDetailDueDate = findViewById(R.id.task_detail_due_date);
     }
+
+    abstract protected void makeViewsVisible();
+
 }

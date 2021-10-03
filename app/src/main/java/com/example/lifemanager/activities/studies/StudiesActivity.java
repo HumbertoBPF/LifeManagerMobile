@@ -7,7 +7,6 @@ import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
-import android.view.Menu;
 import android.view.MenuItem;
 
 import androidx.annotation.NonNull;
@@ -32,6 +31,8 @@ public class StudiesActivity extends CategoryActivity {
     protected void onCreate(Bundle savedInstanceState) {
         titleAppbar = getResources().getStringArray(R.array.categories)[1];
         colorAppbar = getResources().getColor(R.color.color_studies_item);
+        titleIconAppbar = getResources().getString(R.string.title_appbar_studies_form);
+        formAddClass = AddStudyActivity.class;
         super.onCreate(savedInstanceState);
         roomStudiesDAO = LifeManagerDatabase.getInstance(this).getRoomStudiesDAO();
     }
@@ -83,7 +84,7 @@ public class StudiesActivity extends CategoryActivity {
         }).execute();
     }
 
-    private void configureAdapter() {
+    protected void configureAdapter() {
         new StudiesAsyncTask(new StudiesAsyncTask.StudiesAsyncTaskInterface() {
             @Override
             public List<Studies> doInBackground() {
@@ -104,24 +105,6 @@ public class StudiesActivity extends CategoryActivity {
                 registerForContextMenu(recyclerViewResources);
             }
         }).execute();
-    }
-
-    @Override
-    public boolean onPrepareOptionsMenu(Menu menu) {
-        titleIconAppbar = getResources().getString(R.string.title_appbar_studies_form);
-        return super.onPrepareOptionsMenu(menu);
-    }
-
-    @Override
-    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
-        formAddClass = AddStudyActivity.class;
-        return super.onOptionsItemSelected(item);
-    }
-
-    @Override
-    protected void onResume() {
-        super.onResume();
-        configureAdapter();
     }
 
 }

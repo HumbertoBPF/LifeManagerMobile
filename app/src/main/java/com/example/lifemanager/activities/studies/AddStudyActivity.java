@@ -31,11 +31,10 @@ public class AddStudyActivity extends AddResourceActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        roomStudiesDAO = LifeManagerDatabase.getInstance(this).getRoomStudiesDAO();
         titleAppbar = getResources().getString(R.string.title_appbar_studies_form);
         colorAppbar = getResources().getColor(R.color.color_studies_item);
         super.onCreate(savedInstanceState);
-        roomStudiesDAO = LifeManagerDatabase.getInstance(this).getRoomStudiesDAO();
-        makeStudiesFormVisible();
 
         Intent intent = getIntent();
         Studies study = (Studies) intent.getSerializableExtra("study");
@@ -43,11 +42,9 @@ public class AddStudyActivity extends AddResourceActivity {
             fillForm(study);
         }
 
-        configureStudyFormButton();
-
     }
 
-    private void configureStudyFormButton() {
+    protected void configureFormButton() {
         studiesFormButtonSubmit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -101,22 +98,21 @@ public class AddStudyActivity extends AddResourceActivity {
                 return FRONTEND;
             case "Mobile":
                 return MOBILE;
-            case "Data science":
+            case "Data Science":
                 return DATA_SCIENCE;
             case "DevOps":
                 return DEVOPS;
-            case "General programming":
+            case "General Programming":
                 return GENERAL_PROGRAMMING;
             case "Languages":
                 return LANGUAGES;
             case "Other":
                 return OTHER;
-            default:
-                return BACKEND;
         }
+        return BACKEND;
     }
 
-    private void makeStudiesFormVisible() {
+    protected void makeFormVisible() {
         studiesFormName.setVisibility(View.VISIBLE);
         studiesFormLinkCourse.setVisibility(View.VISIBLE);
         studiesFormPosition.setVisibility(View.VISIBLE);
