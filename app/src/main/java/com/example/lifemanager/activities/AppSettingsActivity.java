@@ -8,6 +8,7 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
@@ -27,9 +28,7 @@ public class AppSettingsActivity extends AppCompatActivity {
 
     private RoomSettingDAO roomSettingDAO;
     private EditText inputUsername;
-    private RadioGroup enableToasts;
-    private RadioButton enableOption;
-    private RadioButton disableOption;
+    private CheckBox enableToasts;
     private Button buttonSaveSettings;
 
     @Override
@@ -62,9 +61,9 @@ public class AppSettingsActivity extends AppCompatActivity {
             public void onPostExecute(List<Object> objects) {
                 Setting setting = (Setting) objects.get(0);
                 if (setting != null){
-                    enableToasts.check(R.id.enable_toasts_false);
+                    enableToasts.setChecked(false);
                     if (setting.getValue().equals("true")){
-                        enableToasts.check(R.id.enable_toasts_true);
+                        enableToasts.setChecked(true);
                     }
                 }
             }
@@ -113,7 +112,7 @@ public class AppSettingsActivity extends AppCompatActivity {
 
     private void createOrUpdateEnableToastsSetting() {
         String enableToastsValue = "false";
-        if (enableOption.isChecked()){
+        if (enableToasts.isChecked()){
             enableToastsValue = "true";
         }
         Setting enableToastsSetting = roomSettingDAO.getEnableToastsSetting();
@@ -139,7 +138,5 @@ public class AppSettingsActivity extends AppCompatActivity {
         inputUsername = findViewById(R.id.input_username);
         buttonSaveSettings = findViewById(R.id.button_save_settings);
         enableToasts = findViewById(R.id.enable_toasts);
-        enableOption = findViewById(R.id.enable_toasts_true);
-        disableOption = findViewById(R.id.enable_toasts_false);
     }
 }
