@@ -46,6 +46,7 @@ public class AddStudyActivity extends AddResourceActivity {
                 String position = studiesFormPosition.getText().toString();
                 boolean status = studiesFormConcluded.isChecked();
                 Category category = getCategory();
+                loadingDialog.show();
                 new AsyncTask(new AsyncTask.AsyncTaskInterface() {
                     @Override
                     public List<Object> doInBackground() {
@@ -60,6 +61,7 @@ public class AddStudyActivity extends AddResourceActivity {
 
                     @Override
                     public void onPostExecute(List<Object> objects) {
+                        loadingDialog.dismiss();
                         if (idToUpdate == null){
                             Util.showToast(getApplicationContext(),getResources().getString(R.string.add_study_toast_message));
                         }else{

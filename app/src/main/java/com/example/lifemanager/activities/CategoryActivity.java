@@ -1,8 +1,10 @@
 package com.example.lifemanager.activities;
 
+import static com.example.lifemanager.tools.Util.loadingDialog;
 import static com.example.lifemanager.tools.Util.setActionBarColor;
 import static com.example.lifemanager.tools.Util.setActionBarTitle;
 
+import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
@@ -25,6 +27,7 @@ public abstract class CategoryActivity extends AppCompatActivity {
     protected Context context;
     protected Class<?> formAddClass;
     protected RecyclerView recyclerViewResources;
+    protected ProgressDialog loadingDialog;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -34,6 +37,7 @@ public abstract class CategoryActivity extends AppCompatActivity {
         setContentView(R.layout.activity_category);
         context = this;
         recyclerViewResources = findViewById(R.id.recycler_view_resources);
+        loadingDialog = loadingDialog(this);
     }
 
     @Override

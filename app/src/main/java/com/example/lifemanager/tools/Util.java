@@ -2,6 +2,7 @@ package com.example.lifemanager.tools;
 
 import android.app.Activity;
 import android.app.AlertDialog;
+import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.graphics.Color;
@@ -103,6 +104,23 @@ public class Util {
                 context.getResources().getString(R.string.deletion_dialog_yes),
                 context.getResources().getString(R.string.deletion_dialog_no),
                 onClickListenerYes,null);
+    }
+
+    public static ProgressDialog loadingDialog(Context context){
+        ProgressDialog progressDialog = new ProgressDialog(context);
+        progressDialog.setTitle("Processing...");
+        progressDialog.setMessage("Please, wait.");
+        progressDialog.setProgressStyle(ProgressDialog.STYLE_SPINNER);
+        progressDialog.setCancelable(false);
+        return progressDialog;
+    }
+
+    public static void insertThreadDelay(long timeDelay){
+        try {
+            Thread.sleep(timeDelay);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
     }
 
 }

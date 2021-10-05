@@ -48,6 +48,7 @@ public class AddTaskActivity extends AddResourceActivity {
                 Calendar deadline = formatFromDateStringToCalendar(taskFormDeadline.getText().toString());
                 Calendar dueDate = formatFromDateStringToCalendar(taskFormDueDate.getText().toString());
                 Priority finalPriority = priority;
+                loadingDialog.show();
                 new AsyncTask(new AsyncTask.AsyncTaskInterface() {
                     @Override
                     public List<Object> doInBackground() {
@@ -62,6 +63,7 @@ public class AddTaskActivity extends AddResourceActivity {
 
                     @Override
                     public void onPostExecute(List<Object> objects) {
+                        loadingDialog.dismiss();
                         if (idToUpdate == null){
                             Util.showToast(getApplicationContext(),getResources().getString(R.string.add_task_toast_message));
                         }else{

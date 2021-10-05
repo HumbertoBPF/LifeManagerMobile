@@ -47,6 +47,7 @@ public class AddFinanceActivity extends AddResourceActivity {
                 BigDecimal valueBigDecimal = getBigDecimalValue();
                 TypeFinance typeFinance = getTypeFinance();
                 Sector sector = getSector();
+                loadingDialog.show();
                 new AsyncTask(new AsyncTask.AsyncTaskInterface() {
                     @Override
                     public List<Object> doInBackground() {
@@ -61,6 +62,7 @@ public class AddFinanceActivity extends AddResourceActivity {
 
                     @Override
                     public void onPostExecute(List<Object> objects) {
+                        loadingDialog.dismiss();
                         if (idToUpdate == null){
                             showToast(getApplicationContext(),getResources().getString(R.string.add_finance_toast_message));
                         }else{

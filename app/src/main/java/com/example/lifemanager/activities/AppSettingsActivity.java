@@ -2,16 +2,16 @@ package com.example.lifemanager.activities;
 
 import static com.example.lifemanager.model.Constants.ENABLE_TOASTS;
 import static com.example.lifemanager.model.Constants.USERNAME_FOR_APP;
+import static com.example.lifemanager.tools.Util.loadingDialog;
 import static com.example.lifemanager.tools.Util.setActionBarTitle;
 
+import android.app.ProgressDialog;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.EditText;
-import android.widget.RadioButton;
-import android.widget.RadioGroup;
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -93,6 +93,8 @@ public class AppSettingsActivity extends AppCompatActivity {
         buttonSaveSettings.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                ProgressDialog loadingDialog = loadingDialog(AppSettingsActivity.this);
+                loadingDialog.show();
                 new AsyncTask(new AsyncTask.AsyncTaskInterface() {
                     @Override
                     public List<Object> doInBackground() {
@@ -103,6 +105,7 @@ public class AppSettingsActivity extends AppCompatActivity {
 
                     @Override
                     public void onPostExecute(List<Object> objects) {
+                        loadingDialog.dismiss();
                         finish();
                     }
                 }).execute();
