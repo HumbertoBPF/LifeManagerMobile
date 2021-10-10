@@ -19,6 +19,9 @@ public interface RoomStudiesDAO {
     @Query("SELECT * FROM studies ORDER BY position ASC")
     List<Studies> getAllStudies();
 
+    @Query("SELECT MAX(position) FROM studies")
+    Integer getMaxPosition();
+
     @Insert
     void save(Studies study);
 

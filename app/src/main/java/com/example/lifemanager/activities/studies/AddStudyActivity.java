@@ -21,6 +21,7 @@ import com.example.lifemanager.model.Studies;
 import com.example.lifemanager.roomConfig.LifeManagerDatabase;
 import com.example.lifemanager.tools.Util;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
@@ -35,6 +36,26 @@ public class AddStudyActivity extends AddResourceActivity {
         colorAppbar = getResources().getColor(R.color.color_studies_item);
         resourceType = getResources().getStringArray(R.array.categories)[1];
         super.onCreate(savedInstanceState);
+
+        if (idToUpdate == null){
+            fillWithNextPosition();
+        }
+    }
+
+    private void fillWithNextPosition() {
+        new AsyncTask(new AsyncTask.AsyncTaskInterface() {
+            @Override
+            public List<Object> doInBackground() {
+                List<Object> objects = new ArrayList<>();
+                objects.add(roomStudiesDAO.getMaxPosition());
+                return objects;
+            }
+
+            @Override
+            public void onPostExecute(List<Object> objects) {
+                studiesFormPosition.setText((((Integer) objects.get(0)) + 1)+"");
+            }
+        }).execute();
     }
 
     protected void configureFormButton() {
