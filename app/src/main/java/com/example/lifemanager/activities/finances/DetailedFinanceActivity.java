@@ -9,6 +9,9 @@ import com.example.lifemanager.R;
 import com.example.lifemanager.activities.DetailedResourceActivity;
 import com.example.lifemanager.model.Finance;
 
+import java.text.NumberFormat;
+import java.util.Locale;
+
 public class DetailedFinanceActivity extends DetailedResourceActivity {
 
     @Override
@@ -30,13 +33,14 @@ public class DetailedFinanceActivity extends DetailedResourceActivity {
     }
 
     protected void bind(Object object){
+        NumberFormat currencyFormat = NumberFormat.getCurrencyInstance(Locale.FRANCE);
         Finance finance = (Finance) object;
         String[] months = getResources().getStringArray(R.array.months);
         financeDetailName.setText("Name: "+finance.getName());
         financeDetailDate.setText("Date: "+formatter.format(finance.getDate().getTime()));
         financeDetailMonth.setText("Month: "+months[finance.getMonth()]);
         financeDetailYear.setText("Year: "+finance.getYear().toString());
-        financeDetailValue.setText("Value: "+finance.getValue().toString());
+        financeDetailValue.setText("Value: "+currencyFormat.format(finance.getValue()));
         financeDetailSector.setText("Sector: "+finance.getSector().getValue());
         financeDetailTypeFinance.setText("Type: "+finance.getTypeFinance().getValue());
     }
