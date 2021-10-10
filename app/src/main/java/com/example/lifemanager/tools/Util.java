@@ -1,5 +1,7 @@
 package com.example.lifemanager.tools;
 
+import static com.example.lifemanager.activities.MainActivity.ARE_TOASTS_ENABLED;
+
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.Context;
@@ -17,15 +19,9 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.FragmentManager;
 
 import com.example.lifemanager.R;
-import com.example.lifemanager.async_tasks.AsyncTask;
-import com.example.lifemanager.dao.RoomSettingDAO;
 import com.example.lifemanager.fragments.DatePickerFragment;
-import com.example.lifemanager.model.Setting;
-import com.example.lifemanager.roomConfig.LifeManagerDatabase;
 
-import java.util.ArrayList;
 import java.util.Calendar;
-import java.util.List;
 
 public class Util {
 
@@ -34,25 +30,9 @@ public class Util {
     }
 
     public static void showToastIfEnabled(Context context, String text){
-
-        new AsyncTask(new AsyncTask.AsyncTaskInterface() {
-            @Override
-            public List<Object> doInBackground() {
-                RoomSettingDAO roomSettingDAO = LifeManagerDatabase.getInstance(context).getRoomSettingDAO();
-                List<Object> objects = new ArrayList<>();
-                objects.add(roomSettingDAO.getEnableToastsSetting());
-                return objects;
-            }
-
-            @Override
-            public void onPostExecute(List<Object> objects) {
-                Setting setting = (Setting) objects.get(0);
-                boolean showToast = setting.getValue().equals("true");
-                if (showToast){
-                    Toast.makeText(context, text, Toast.LENGTH_SHORT).show();
-                }
-            }
-        }).execute();
+        if (ARE_TOASTS_ENABLED){
+            Toast.makeText(context, text, Toast.LENGTH_SHORT).show();
+        }
     }
 
     public static void setActionBarTitle(Activity activity, String title){

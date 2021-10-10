@@ -1,5 +1,6 @@
 package com.example.lifemanager.recycler_view;
 
+import static com.example.lifemanager.activities.MainActivity.CURRENCY_FORMAT;
 import static com.example.lifemanager.model.Constants.formatter;
 import static com.example.lifemanager.tools.Util.makeSelector;
 
@@ -19,11 +20,7 @@ import com.example.lifemanager.R;
 import com.example.lifemanager.enums.TypeFinance;
 import com.example.lifemanager.model.Finance;
 
-import java.math.BigDecimal;
-import java.math.RoundingMode;
-import java.text.NumberFormat;
 import java.util.List;
-import java.util.Locale;
 
 public class ListFinancesAdapter extends RecyclerView.Adapter<ListFinancesAdapter.FinanceViewHolder> {
 
@@ -99,9 +96,8 @@ public class ListFinancesAdapter extends RecyclerView.Adapter<ListFinancesAdapte
                 financeItemValue.setTextColor(greenTextColor);
                 financeItemDate.setTextColor(greenTextColor);
             }
-            NumberFormat currencyFormat = NumberFormat.getCurrencyInstance(Locale.FRANCE);
             financeItemName.setText(finance.getName());
-            financeItemValue.setText(currencyFormat.format(finance.getValue())+"");
+            financeItemValue.setText(CURRENCY_FORMAT.format(finance.getValue())+"");
             financeItemDate.setText(formatter.format(finance.getDate().getTime()));
             rootCardView.setBackground(makeSelector(Color.parseColor("#FFFFFF"),0.95f));
         }

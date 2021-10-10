@@ -1,5 +1,6 @@
 package com.example.lifemanager.activities.finances;
 
+import static com.example.lifemanager.activities.MainActivity.CURRENCY_FORMAT;
 import static com.example.lifemanager.model.Constants.formatter;
 
 import android.os.Bundle;
@@ -8,9 +9,6 @@ import android.view.View;
 import com.example.lifemanager.R;
 import com.example.lifemanager.activities.DetailedResourceActivity;
 import com.example.lifemanager.model.Finance;
-
-import java.text.NumberFormat;
-import java.util.Locale;
 
 public class DetailedFinanceActivity extends DetailedResourceActivity {
 
@@ -33,14 +31,13 @@ public class DetailedFinanceActivity extends DetailedResourceActivity {
     }
 
     protected void bind(Object object){
-        NumberFormat currencyFormat = NumberFormat.getCurrencyInstance(Locale.FRANCE);
         Finance finance = (Finance) object;
         String[] months = getResources().getStringArray(R.array.months);
         financeDetailName.setText("Name: "+finance.getName());
         financeDetailDate.setText("Date: "+formatter.format(finance.getDate().getTime()));
         financeDetailMonth.setText("Month: "+months[finance.getMonth()]);
         financeDetailYear.setText("Year: "+finance.getYear().toString());
-        financeDetailValue.setText("Value: "+currencyFormat.format(finance.getValue()));
+        financeDetailValue.setText("Value: "+ CURRENCY_FORMAT.format(finance.getValue()));
         financeDetailSector.setText("Sector: "+finance.getSector().getValue());
         financeDetailTypeFinance.setText("Type: "+finance.getTypeFinance().getValue());
     }

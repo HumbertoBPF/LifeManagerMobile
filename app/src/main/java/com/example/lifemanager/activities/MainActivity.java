@@ -1,5 +1,6 @@
 package com.example.lifemanager.activities;
 
+import static com.example.lifemanager.model.Constants.CURRENCY_TYPE;
 import static com.example.lifemanager.model.Constants.ENABLE_TOASTS;
 import static com.example.lifemanager.model.Constants.USERNAME_FOR_APP;
 import static com.example.lifemanager.tools.Util.yesOrNoDialog;
@@ -31,11 +32,13 @@ import com.example.lifemanager.model.Setting;
 import com.example.lifemanager.recycler_view.ListResourcesMenuAdapter;
 import com.example.lifemanager.roomConfig.LifeManagerDatabase;
 
+import java.text.NumberFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Calendar;
 import java.util.List;
+import java.util.Locale;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -45,6 +48,8 @@ public class MainActivity extends AppCompatActivity {
     private TextView dateTextView;
     public static int SCREEN_WIDTH, SCREEN_HEIGHT;
     private RoomSettingDAO roomSettingDAO;
+    public static boolean ARE_TOASTS_ENABLED;
+    public static NumberFormat CURRENCY_FORMAT;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -114,7 +119,7 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public List<Object> doInBackground() {
                 List<Object> objects = new ArrayList<>();
-                objects.add(roomSettingDAO.getUsernameSetting());
+                objects.addAll(roomSettingDAO.getAllSettings());
                 return objects;
             }
 
@@ -141,9 +146,20 @@ public class MainActivity extends AppCompatActivity {
                             });
                     settingsDialog.setCanceledOnTouchOutside(false);
                     settingsDialog.show();
+                }else{
+                    CURRENCY_FORMAT = getCurrencyFormat(((Setting) objects.get(0)).getValue());
+                    ARE_TOASTS_ENABLED = ((Setting) objects.get(1)).getValue().equals("true");
                 }
             }
         }).execute();
+    }
+
+    private NumberFormat getCurrencyFormat(String currencyTypeSetting) {
+        String[] currencyTypes = getResources().getStringArray(R.array.currency_types);
+        if (currencyTypeSetting.equals(currencyTypes[0])){
+            return NumberFormat.getCurrencyInstance(Locale.FRANCE);
+        }
+        return NumberFormat.getCurrencyInstance(Locale.US);
     }
 
     private void defaultSettings() {
@@ -152,12 +168,14 @@ public class MainActivity extends AppCompatActivity {
             public List<Object> doInBackground() {
                 roomSettingDAO.save(new Setting(USERNAME_FOR_APP,""));
                 roomSettingDAO.save(new Setting(ENABLE_TOASTS,"true"));
+                roomSettingDAO.save(new Setting(CURRENCY_TYPE,getResources().getStringArray(R.array.currency_types)[0]));
                 return null;
             }
 
             @Override
             public void onPostExecute(List<Object> objects) {
-
+                CURRENCY_FORMAT = NumberFormat.getCurrencyInstance(Locale.US);
+                ARE_TOASTS_ENABLED = true;
             }
         }).execute();
     }
