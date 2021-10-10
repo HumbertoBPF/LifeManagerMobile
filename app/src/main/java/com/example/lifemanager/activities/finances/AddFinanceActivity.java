@@ -1,7 +1,9 @@
 package com.example.lifemanager.activities.finances;
 
 import static com.example.lifemanager.model.Constants.formatter;
+import static com.example.lifemanager.tools.Util.configureDatePicker;
 import static com.example.lifemanager.tools.Util.formatFromDateStringToCalendar;
+import static com.example.lifemanager.tools.Util.getDateFromPicker;
 import static com.example.lifemanager.tools.Util.showToast;
 
 import android.os.Bundle;
@@ -33,6 +35,9 @@ public class AddFinanceActivity extends AddResourceActivity {
         colorAppbar = getResources().getColor(R.color.color_finances_item);
         resourceType = getResources().getStringArray(R.array.categories)[0];
         super.onCreate(savedInstanceState);
+
+        configureDatePicker(getSupportFragmentManager(), financeFormDate, getResources().getString(R.string.form_date_label),
+                "financeDatePicker");
     }
 
     protected void configureFormButton() {
@@ -40,7 +45,7 @@ public class AddFinanceActivity extends AddResourceActivity {
             @Override
             public void onClick(View view) {
                 String name = financeFormName.getText().toString();
-                String dateString = financeFormDate.getText().toString();
+                String dateString = getDateFromPicker(financeFormDate,getResources().getString(R.string.form_date_label));
                 Integer year = Integer.parseInt(dateString.substring(0,4));
                 Integer month = Integer.parseInt(dateString.substring(4,6))-1;
                 Calendar dateCalendar = formatFromDateStringToCalendar(dateString);
@@ -77,7 +82,7 @@ public class AddFinanceActivity extends AddResourceActivity {
         Finance finance = (Finance) object;
         idToUpdate = finance.getId();
         financeFormName.setText(finance.getName());
-        financeFormDate.setText(formatter.format(finance.getDate().getTime()).replace("-",""));
+        financeFormDate.setText(getResources().getString(R.string.form_date_hint)+" "+formatter.format(finance.getDate().getTime()));
         financeFormValue.setText(finance.getValue()+"");
         financeFormType.check(R.id.finance_form_income);
         if (finance.getTypeFinance().equals(TypeFinance.EXPENSE)){

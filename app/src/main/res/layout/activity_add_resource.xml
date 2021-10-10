@@ -152,14 +152,12 @@
             android:layout_margin="5dp"
             android:visibility="gone"/>
 
-        <EditText
+        <TextView
             android:id="@+id/finance_form_date"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:inputType="date"
-            android:maxLength="8"
+            android:text="@string/form_date_hint"
             android:textSize="18sp"
-            android:hint="@string/form_date_hint"
             app:layout_constraintTop_toBottomOf="@id/finance_form_name"
             app:layout_constraintStart_toStartOf="@id/finance_form_name"
             app:layout_constraintEnd_toEndOf="@id/finance_form_name"

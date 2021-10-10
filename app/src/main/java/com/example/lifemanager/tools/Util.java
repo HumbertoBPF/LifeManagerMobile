@@ -8,13 +8,18 @@ import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.graphics.drawable.GradientDrawable;
 import android.graphics.drawable.StateListDrawable;
+import android.view.View;
+import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.fragment.app.FragmentManager;
 
 import com.example.lifemanager.R;
 import com.example.lifemanager.async_tasks.AsyncTask;
 import com.example.lifemanager.dao.RoomSettingDAO;
+import com.example.lifemanager.fragments.DatePickerFragment;
 import com.example.lifemanager.model.Setting;
 import com.example.lifemanager.roomConfig.LifeManagerDatabase;
 
@@ -103,6 +108,40 @@ public class Util {
                 context.getResources().getString(R.string.deletion_dialog_yes),
                 context.getResources().getString(R.string.deletion_dialog_no),
                 onClickListenerYes,null);
+    }
+
+    public static void configureDatePicker(FragmentManager fragmentManager, TextView datePickerInput, String label, String tagName) {
+        datePickerInput.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                DatePickerFragment datePickerFragment = new DatePickerFragment();
+                datePickerFragment.setOnDateSetListener(new DatePickerFragment.OnDateSetListener() {
+                    @Override
+                    public void OnDateSetListener(int year, int month, int day) {
+                        String monthString = month+"";
+                        String dayString = day+"";
+                        if (month<10){
+                            monthString = "0" + monthString;
+                        }
+                        if (day<10){
+                            dayString = "0" + dayString;
+                        }
+                        datePickerInput.setText(label+" "+year+"-"+monthString+"-"+dayString);
+                    }
+                });
+                datePickerFragment.show(fragmentManager,tagName);
+            }
+        });
+    }
+
+    @NonNull
+    public static String getDateFromPicker(TextView datePickerInput, String label) {
+        String dateString = datePickerInput.getText().toString().replace("-","");
+        dateString = dateString.replace("-","");
+        dateString = dateString.replace(":","");
+        dateString = dateString.replace(" ","");
+        dateString = dateString.replace(label,"");
+        return dateString;
     }
 
 }

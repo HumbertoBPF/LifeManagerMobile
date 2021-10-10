@@ -35,7 +35,7 @@ public abstract class AddResourceActivity extends AppCompatActivity implements A
     protected Button studiesFormButtonSubmit;
 
     protected EditText financeFormName;
-    protected EditText financeFormDate;
+    protected TextView financeFormDate;
     protected EditText financeFormValue;
     protected TextView financeFormTypeLabel;
     protected RadioGroup financeFormType;
