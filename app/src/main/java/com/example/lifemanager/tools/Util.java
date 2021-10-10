@@ -29,7 +29,11 @@ import java.util.List;
 
 public class Util {
 
-    public static void showToast(Context context,String text){
+    public static void showToast(Context context, String message) {
+        Toast.makeText(context, message, Toast.LENGTH_SHORT).show();
+    }
+
+    public static void showToastIfEnabled(Context context, String text){
 
         new AsyncTask(new AsyncTask.AsyncTaskInterface() {
             @Override

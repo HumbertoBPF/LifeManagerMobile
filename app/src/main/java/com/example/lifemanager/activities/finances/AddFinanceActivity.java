@@ -5,6 +5,7 @@ import static com.example.lifemanager.tools.Util.configureDatePicker;
 import static com.example.lifemanager.tools.Util.formatFromDateStringToCalendar;
 import static com.example.lifemanager.tools.Util.getDateFromPicker;
 import static com.example.lifemanager.tools.Util.showToast;
+import static com.example.lifemanager.tools.Util.showToastIfEnabled;
 
 import android.os.Bundle;
 import android.view.View;
@@ -45,35 +46,43 @@ public class AddFinanceActivity extends AddResourceActivity {
             @Override
             public void onClick(View view) {
                 String name = financeFormName.getText().toString();
-                String dateString = getDateFromPicker(financeFormDate,getResources().getString(R.string.form_date_label));
-                Integer year = Integer.parseInt(dateString.substring(0,4));
-                Integer month = Integer.parseInt(dateString.substring(4,6))-1;
-                Calendar dateCalendar = formatFromDateStringToCalendar(dateString);
-                BigDecimal valueBigDecimal = getBigDecimalValue();
                 TypeFinance typeFinance = getTypeFinance();
                 Sector sector = getSector();
-                new AsyncTask(new AsyncTask.AsyncTaskInterface() {
-                    @Override
-                    public List<Object> doInBackground() {
-                        if (idToUpdate == null){
-                            roomFinanceDAO.save(new Finance(name,dateCalendar,month,year,valueBigDecimal,sector,typeFinance));
-                        }else{
-                            roomFinanceDAO.update(
-                                    new Finance(idToUpdate,name,dateCalendar,month,year,valueBigDecimal,sector,typeFinance));
-                        }
-                        return null;
-                    }
+                if (name.equals("")){
+                    showToast(getApplicationContext(),"All fields are required");
+                }else{
+                    try{
+                        String dateString = getDateFromPicker(financeFormDate,getResources().getString(R.string.form_date_label));
+                        Integer year = Integer.parseInt(dateString.substring(0,4));
+                        Integer month = Integer.parseInt(dateString.substring(4,6))-1;
+                        Calendar dateCalendar = formatFromDateStringToCalendar(dateString);
+                        BigDecimal valueBigDecimal = getBigDecimalValue();
+                        new AsyncTask(new AsyncTask.AsyncTaskInterface() {
+                            @Override
+                            public List<Object> doInBackground() {
+                                if (idToUpdate == null){
+                                    roomFinanceDAO.save(new Finance(name,dateCalendar,month,year,valueBigDecimal,sector,typeFinance));
+                                }else{
+                                    roomFinanceDAO.update(
+                                            new Finance(idToUpdate,name,dateCalendar,month,year,valueBigDecimal,sector,typeFinance));
+                                }
+                                return null;
+                            }
 
-                    @Override
-                    public void onPostExecute(List<Object> objects) {
-                        if (idToUpdate == null){
-                            showToast(getApplicationContext(),getResources().getString(R.string.add_finance_toast_message));
-                        }else{
-                            showToast(getApplicationContext(),getResources().getString(R.string.update_finance_toast_message));
-                        }
-                        finish();
+                            @Override
+                            public void onPostExecute(List<Object> objects) {
+                                if (idToUpdate == null){
+                                    showToastIfEnabled(getApplicationContext(),getResources().getString(R.string.add_finance_toast_message));
+                                }else{
+                                    showToastIfEnabled(getApplicationContext(),getResources().getString(R.string.update_finance_toast_message));
+                                }
+                                finish();
+                            }
+                        }).execute();
+                    }catch (Exception e){
+                        showToast(getApplicationContext(),"All fields are required");
                     }
-                }).execute();
+                }
             }
         });
     }

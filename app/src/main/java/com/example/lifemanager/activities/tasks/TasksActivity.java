@@ -1,7 +1,7 @@
 package com.example.lifemanager.activities.tasks;
 
 import static com.example.lifemanager.tools.Util.deletionDialog;
-import static com.example.lifemanager.tools.Util.showToast;
+import static com.example.lifemanager.tools.Util.showToastIfEnabled;
 
 import android.app.AlertDialog;
 import android.content.DialogInterface;
@@ -80,7 +80,7 @@ public class TasksActivity extends CategoryActivity {
 
             @Override
             public void onPostExecute(List<Object> objects) {
-                showToast(getApplicationContext(),getResources().getString(R.string.delete_task_toast_message));
+                showToastIfEnabled(getApplicationContext(),getResources().getString(R.string.delete_task_toast_message));
                 configureAdapter();
             }
         }).execute();

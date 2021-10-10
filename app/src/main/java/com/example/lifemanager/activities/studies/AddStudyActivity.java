@@ -8,6 +8,7 @@ import static com.example.lifemanager.enums.Category.GENERAL_PROGRAMMING;
 import static com.example.lifemanager.enums.Category.LANGUAGES;
 import static com.example.lifemanager.enums.Category.MOBILE;
 import static com.example.lifemanager.enums.Category.OTHER;
+import static com.example.lifemanager.tools.Util.showToast;
 
 import android.os.Bundle;
 import android.view.View;
@@ -67,28 +68,36 @@ public class AddStudyActivity extends AddResourceActivity {
                 String position = studiesFormPosition.getText().toString();
                 boolean status = studiesFormConcluded.isChecked();
                 Category category = getCategory();
-                new AsyncTask(new AsyncTask.AsyncTaskInterface() {
-                    @Override
-                    public List<Object> doInBackground() {
-                        if (idToUpdate == null){
-                            roomStudiesDAO.save(new Studies(name,linkCourse,category,Integer.parseInt(position),status));
-                        }else{
-                            roomStudiesDAO.update(
-                                    new Studies(idToUpdate,name,linkCourse,category, Integer.parseInt(position),status));
-                        }
-                        return null;
-                    }
+                if (name.equals("")){
+                    showToast(getApplicationContext(),"The name field is required");
+                }else{
+                    try{
+                        Integer positionInteger = Integer.parseInt(position);
+                        new AsyncTask(new AsyncTask.AsyncTaskInterface() {
+                            @Override
+                            public List<Object> doInBackground() {
+                                if (idToUpdate == null){
+                                    roomStudiesDAO.save(new Studies(name,linkCourse,category,positionInteger,status));
+                                }else{
+                                    roomStudiesDAO.update(new Studies(idToUpdate,name,linkCourse,category,positionInteger,status));
+                                }
+                                return null;
+                            }
 
-                    @Override
-                    public void onPostExecute(List<Object> objects) {
-                        if (idToUpdate == null){
-                            Util.showToast(getApplicationContext(),getResources().getString(R.string.add_study_toast_message));
-                        }else{
-                            Util.showToast(getApplicationContext(),getResources().getString(R.string.update_study_toast_message));
-                        }
-                        finish();
+                            @Override
+                            public void onPostExecute(List<Object> objects) {
+                                if (idToUpdate == null){
+                                    Util.showToastIfEnabled(getApplicationContext(),getResources().getString(R.string.add_study_toast_message));
+                                }else{
+                                    Util.showToastIfEnabled(getApplicationContext(),getResources().getString(R.string.update_study_toast_message));
+                                }
+                                finish();
+                            }
+                        }).execute();
+                    }catch (Exception e){
+                        showToast(getApplicationContext(),"The position field is required");
                     }
-                }).execute();
+                }
             }
         });
     }
