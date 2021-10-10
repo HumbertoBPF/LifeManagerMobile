@@ -96,4 +96,5 @@
         area accessible by clicking on the cog icon in the bar on the top of the screen)</string>
     <string name="settings_dialog_yes">Do it now</string>
     <string name="settings_dialog_no">Not now</string>
+    <string name="app_creator">Developed by Humberto Borges</string>
 </resources>

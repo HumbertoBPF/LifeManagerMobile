@@ -10,6 +10,16 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.LifeManager">
         <activity
+            android:name=".activities.SplashScreen"
+            android:exported="true"
+            android:theme="@style/Theme.AppCompat.DayNight.NoActionBar">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+        <activity
             android:name=".activities.tasks.DetailedTaskActivity"
             android:exported="true" />
         <activity
@@ -49,14 +59,8 @@
             android:name=".activities.AppSettingsActivity"
             android:exported="true" />
         <activity
-            android:name=".activities.MainActivity"
-            android:exported="true">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
-        </activity>
+            android:name=".activities.MainMenuActivity"
+            android:exported="true" />
     </application>
 
 </manifest>

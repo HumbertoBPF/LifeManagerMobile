@@ -37,7 +37,7 @@ import java.util.Arrays;
 import java.util.Calendar;
 import java.util.List;
 
-public class MainActivity extends AppCompatActivity {
+public class MainMenuActivity extends AppCompatActivity {
 
     private List<String> resourcesNames = new ArrayList<>();
     private ConstraintLayout root;
