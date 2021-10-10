@@ -82,7 +82,7 @@ public class AddFinanceActivity extends AddResourceActivity {
         Finance finance = (Finance) object;
         idToUpdate = finance.getId();
         financeFormName.setText(finance.getName());
-        financeFormDate.setText(getResources().getString(R.string.form_date_hint)+" "+formatter.format(finance.getDate().getTime()));
+        financeFormDate.setText(getResources().getString(R.string.form_date_label)+" "+formatter.format(finance.getDate().getTime()));
         financeFormValue.setText(finance.getValue()+"");
         financeFormType.check(R.id.finance_form_income);
         if (finance.getTypeFinance().equals(TypeFinance.EXPENSE)){

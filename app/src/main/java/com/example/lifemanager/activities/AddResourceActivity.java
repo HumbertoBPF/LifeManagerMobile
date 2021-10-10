@@ -57,8 +57,8 @@ public abstract class AddResourceActivity extends AppCompatActivity implements A
     protected RadioButton taskFormHigh;
     protected RadioButton taskFormMedium;
     protected RadioButton taskFormLow;
-    protected EditText taskFormDeadline;
-    protected EditText taskFormDueDate;
+    protected TextView taskFormDeadline;
+    protected TextView taskFormDueDate;
     protected Button taskFormButtonSubmit;
 
     protected String titleAppbar = null;

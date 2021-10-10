@@ -37,12 +37,14 @@
     <string name="form_link_course_hint">Link of the course</string>
     <string name="form_position_hint">Position</string>
     <string name="form_date_hint"><b>Date: touch to pick a date</b></string>
-    <string name="form_date_label">Date: </string>
+    <string name="form_date_label">Date:</string>
     <string name="form_value_hint">Value</string>
     <string name="form_subject_hint">Subject</string>
     <string name="form_description_hint">Description</string>
-    <string name="form_deadline_hint">Deadline</string>
-    <string name="form_due_date_hint">Due date</string>
+    <string name="form_deadline_hint"><b>Deadline: touch to pick a date</b></string>
+    <string name="form_deadline_label">Deadline:</string>
+    <string name="form_due_date_hint"><b>Due date: touch to pick a date</b></string>
+    <string name="form_due_date_label">Due date:</string>
     <string name="form_status_label">Status</string>
     <string name="form_status_radio_button_concluded">Concluded</string>
     <string name="form_status_radio_button_pending">Pending</string>

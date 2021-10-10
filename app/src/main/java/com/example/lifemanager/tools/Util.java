@@ -136,11 +136,10 @@ public class Util {
 
     @NonNull
     public static String getDateFromPicker(TextView datePickerInput, String label) {
-        String dateString = datePickerInput.getText().toString().replace("-","");
-        dateString = dateString.replace("-","");
-        dateString = dateString.replace(":","");
-        dateString = dateString.replace(" ","");
+        String dateString = datePickerInput.getText().toString();
         dateString = dateString.replace(label,"");
+        dateString = dateString.replace("-","");
+        dateString = dateString.replace(" ","");
         return dateString;
     }
 

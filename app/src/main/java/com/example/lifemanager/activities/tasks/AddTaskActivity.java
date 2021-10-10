@@ -1,9 +1,12 @@
 package com.example.lifemanager.activities.tasks;
 
 import static com.example.lifemanager.model.Constants.formatter;
+import static com.example.lifemanager.tools.Util.configureDatePicker;
 import static com.example.lifemanager.tools.Util.formatFromDateStringToCalendar;
+import static com.example.lifemanager.tools.Util.getDateFromPicker;
 
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 
 import com.example.lifemanager.R;
@@ -29,6 +32,11 @@ public class AddTaskActivity extends AddResourceActivity {
         colorAppbar = getResources().getColor(R.color.color_tasks_item);
         resourceType = getResources().getStringArray(R.array.categories)[2];
         super.onCreate(savedInstanceState);
+
+        configureDatePicker(getSupportFragmentManager(), taskFormDeadline, getResources().getString(R.string.form_deadline_label),
+                "taskDatePickerDeadline");
+        configureDatePicker(getSupportFragmentManager(), taskFormDueDate, getResources().getString(R.string.form_due_date_label),
+                "taskDatePickerDueDate");
     }
 
     protected void configureFormButton() {
@@ -45,8 +53,12 @@ public class AddTaskActivity extends AddResourceActivity {
                 }else if (taskFormLow.isChecked()){
                     priority = Priority.LOW;
                 }
-                Calendar deadline = formatFromDateStringToCalendar(taskFormDeadline.getText().toString());
-                Calendar dueDate = formatFromDateStringToCalendar(taskFormDueDate.getText().toString());
+                String deadlineString = getDateFromPicker(taskFormDeadline, getResources().getString(R.string.form_deadline_label));
+                String dueDateString = getDateFromPicker(taskFormDueDate, getResources().getString(R.string.form_due_date_label));
+                Log.i("deadlineString",deadlineString);
+                Log.i("dueDateString",dueDateString);
+                Calendar deadline = formatFromDateStringToCalendar(deadlineString);
+                Calendar dueDate = formatFromDateStringToCalendar(dueDateString);
                 Priority finalPriority = priority;
                 new AsyncTask(new AsyncTask.AsyncTaskInterface() {
                     @Override
@@ -90,8 +102,8 @@ public class AddTaskActivity extends AddResourceActivity {
         }else if (task.getPriority().equals(Priority.LOW)){
             taskFormPriority.check(R.id.task_form_status_low);
         }
-        taskFormDeadline.setText(formatter.format(task.getDeadline().getTime()).replace("-",""));
-        taskFormDueDate.setText(formatter.format(task.getDueDate().getTime()).replace("-",""));
+        taskFormDeadline.setText(getResources().getString(R.string.form_deadline_label)+" "+formatter.format(task.getDeadline().getTime()));
+        taskFormDueDate.setText(getResources().getString(R.string.form_due_date_label)+" "+formatter.format(task.getDueDate().getTime()));
     }
 
     protected void makeFormVisible() {
