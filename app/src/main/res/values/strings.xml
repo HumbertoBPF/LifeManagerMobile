@@ -99,6 +99,7 @@
         area accessible by clicking on the cog icon in the bar on the top of the screen)</string>
     <string name="settings_dialog_yes">Do it now</string>
     <string name="settings_dialog_no">Not now</string>
+    <string name="label_currency_type">Currency:</string>
     <string-array name="currency_types">
         <item>Euro</item>
         <item>Dollar</item>
