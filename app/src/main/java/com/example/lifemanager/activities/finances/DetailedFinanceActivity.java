@@ -1,6 +1,6 @@
 package com.example.lifemanager.activities.finances;
 
-import static com.example.lifemanager.activities.MainActivity.CURRENCY_FORMAT;
+import static com.example.lifemanager.activities.MainMenuActivity.CURRENCY_FORMAT;
 import static com.example.lifemanager.model.Constants.formatter;
 
 import android.os.Bundle;

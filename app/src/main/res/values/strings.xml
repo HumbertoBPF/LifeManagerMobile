@@ -104,4 +104,5 @@
         <item>Euro</item>
         <item>Dollar</item>
     </string-array>
+    <string name="app_creator">Developed by Humberto Borges</string>
 </resources>

@@ -1,6 +1,6 @@
 package com.example.lifemanager.recycler_view;
 
-import static com.example.lifemanager.activities.MainActivity.CURRENCY_FORMAT;
+import static com.example.lifemanager.activities.MainMenuActivity.CURRENCY_FORMAT;
 import static com.example.lifemanager.model.Constants.formatter;
 import static com.example.lifemanager.tools.Util.makeSelector;
 

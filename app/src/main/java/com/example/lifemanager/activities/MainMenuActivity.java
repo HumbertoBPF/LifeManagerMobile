@@ -43,7 +43,7 @@ import java.util.Calendar;
 import java.util.List;
 import java.util.Locale;
 
-public class MainActivity extends AppCompatActivity {
+public class MainMenuActivity extends AppCompatActivity {
 
     private List<String> resourcesNames = new ArrayList<>();
     private ConstraintLayout root;
@@ -166,7 +166,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void defaultSettings() {
-        ProgressDialog loadingDialog = loadingDialog(MainActivity.this);
+        ProgressDialog loadingDialog = loadingDialog(MainMenuActivity.this);
         loadingDialog.show();
         new AsyncTask(new AsyncTask.AsyncTaskInterface() {
             @Override

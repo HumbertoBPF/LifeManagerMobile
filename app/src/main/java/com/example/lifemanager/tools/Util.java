@@ -1,6 +1,6 @@
 package com.example.lifemanager.tools;
 
-import static com.example.lifemanager.activities.MainActivity.ARE_TOASTS_ENABLED;
+import static com.example.lifemanager.activities.MainMenuActivity.ARE_TOASTS_ENABLED;
 
 import android.app.Activity;
 import android.app.AlertDialog;
