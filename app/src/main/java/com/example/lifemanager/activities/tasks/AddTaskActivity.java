@@ -61,6 +61,7 @@ public class AddTaskActivity extends AddResourceActivity {
                     try {
                         Calendar deadline = formatFromDateStringToCalendar(deadlineString);
                         Calendar dueDate = formatFromDateStringToCalendar(dueDateString);
+                        loadingDialog.show();
                         new AsyncTask(new AsyncTask.AsyncTaskInterface() {
                             @Override
                             public List<Object> doInBackground() {
@@ -75,6 +76,7 @@ public class AddTaskActivity extends AddResourceActivity {
 
                             @Override
                             public void onPostExecute(List<Object> objects) {
+                                loadingDialog.dismiss();
                                 if (idToUpdate == null){
                                     Util.showToastIfEnabled(getApplicationContext(),getResources().getString(R.string.add_task_toast_message));
                                 }else{

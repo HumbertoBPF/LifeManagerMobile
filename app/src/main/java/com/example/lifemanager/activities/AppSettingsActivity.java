@@ -3,8 +3,10 @@ package com.example.lifemanager.activities;
 import static com.example.lifemanager.model.Constants.CURRENCY_TYPE;
 import static com.example.lifemanager.model.Constants.ENABLE_TOASTS;
 import static com.example.lifemanager.model.Constants.USERNAME_FOR_APP;
+import static com.example.lifemanager.tools.Util.loadingDialog;
 import static com.example.lifemanager.tools.Util.setActionBarTitle;
 
+import android.app.ProgressDialog;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -128,6 +130,8 @@ public class AppSettingsActivity extends AppCompatActivity implements AdapterVie
         buttonSaveSettings.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                ProgressDialog loadingDialog = loadingDialog(AppSettingsActivity.this);
+                loadingDialog.show();
                 new AsyncTask(new AsyncTask.AsyncTaskInterface() {
                     @Override
                     public List<Object> doInBackground() {
@@ -139,6 +143,7 @@ public class AppSettingsActivity extends AppCompatActivity implements AdapterVie
 
                     @Override
                     public void onPostExecute(List<Object> objects) {
+                        loadingDialog.dismiss();
                         finish();
                     }
                 }).execute();

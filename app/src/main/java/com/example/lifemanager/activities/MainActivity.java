@@ -3,9 +3,12 @@ package com.example.lifemanager.activities;
 import static com.example.lifemanager.model.Constants.CURRENCY_TYPE;
 import static com.example.lifemanager.model.Constants.ENABLE_TOASTS;
 import static com.example.lifemanager.model.Constants.USERNAME_FOR_APP;
+import static com.example.lifemanager.tools.Util.insertThreadDelay;
+import static com.example.lifemanager.tools.Util.loadingDialog;
 import static com.example.lifemanager.tools.Util.yesOrNoDialog;
 
 import android.app.AlertDialog;
+import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -163,6 +166,8 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void defaultSettings() {
+        ProgressDialog loadingDialog = loadingDialog(MainActivity.this);
+        loadingDialog.show();
         new AsyncTask(new AsyncTask.AsyncTaskInterface() {
             @Override
             public List<Object> doInBackground() {
@@ -176,6 +181,7 @@ public class MainActivity extends AppCompatActivity {
             public void onPostExecute(List<Object> objects) {
                 CURRENCY_FORMAT = NumberFormat.getCurrencyInstance(Locale.US);
                 ARE_TOASTS_ENABLED = true;
+                loadingDialog.dismiss();
             }
         }).execute();
     }

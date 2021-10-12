@@ -1,8 +1,10 @@
 package com.example.lifemanager.activities;
 
+import static com.example.lifemanager.tools.Util.loadingDialog;
 import static com.example.lifemanager.tools.Util.setActionBarColor;
 import static com.example.lifemanager.tools.Util.setActionBarTitle;
 
+import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
@@ -20,6 +22,8 @@ import androidx.appcompat.app.AppCompatActivity;
 import com.example.lifemanager.R;
 
 public abstract class AddResourceActivity extends AppCompatActivity implements AdapterView.OnItemSelectedListener{
+
+    protected ProgressDialog loadingDialog;
 
     protected String spinnerValue;
 
@@ -87,6 +91,8 @@ public abstract class AddResourceActivity extends AppCompatActivity implements A
         if (object != null){
             fillForm(object);
         }
+
+        loadingDialog = loadingDialog(this);
     }
 
     protected abstract void configureFormButton();

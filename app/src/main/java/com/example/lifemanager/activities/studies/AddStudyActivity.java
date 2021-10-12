@@ -73,6 +73,7 @@ public class AddStudyActivity extends AddResourceActivity {
                 }else{
                     try{
                         Integer positionInteger = Integer.parseInt(position);
+                        loadingDialog.show();
                         new AsyncTask(new AsyncTask.AsyncTaskInterface() {
                             @Override
                             public List<Object> doInBackground() {
@@ -86,6 +87,7 @@ public class AddStudyActivity extends AddResourceActivity {
 
                             @Override
                             public void onPostExecute(List<Object> objects) {
+                                loadingDialog.dismiss();
                                 if (idToUpdate == null){
                                     Util.showToastIfEnabled(getApplicationContext(),getResources().getString(R.string.add_study_toast_message));
                                 }else{

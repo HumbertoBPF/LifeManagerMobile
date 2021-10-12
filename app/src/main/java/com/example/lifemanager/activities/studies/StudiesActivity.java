@@ -41,6 +41,7 @@ public class StudiesActivity extends CategoryActivity {
     @Override
     public boolean onContextItemSelected(@NonNull MenuItem item) {
         Long chosenId = adapter.getChosenId();
+        loadingDialog.show();
         new AsyncTask(new AsyncTask.AsyncTaskInterface() {
             @Override
             public List<Object> doInBackground() {
@@ -52,6 +53,7 @@ public class StudiesActivity extends CategoryActivity {
             @Override
             public void onPostExecute(List<Object> objects) {
                 Studies study = (Studies) objects.get(0);
+                loadingDialog.dismiss();
                 if (item.getTitle().equals(getResources().getString(R.string.context_menu_delete_option))){
                     AlertDialog deletionDialog = deletionDialog(context, new DialogInterface.OnClickListener() {
                         @Override
@@ -71,6 +73,7 @@ public class StudiesActivity extends CategoryActivity {
     }
 
     private void deleteItemFromRecyclerView(Studies study) {
+        loadingDialog.show();
         new AsyncTask(new AsyncTask.AsyncTaskInterface() {
             @Override
             public List<Object> doInBackground() {
@@ -82,11 +85,13 @@ public class StudiesActivity extends CategoryActivity {
             public void onPostExecute(List<Object> objects) {
                 showToastIfEnabled(getApplicationContext(),getResources().getString(R.string.delete_study_toast_message));
                 configureAdapter();
+                loadingDialog.dismiss();
             }
         }).execute();
     }
 
     protected void configureAdapter() {
+        loadingDialog.show();
         new AsyncTask(new AsyncTask.AsyncTaskInterface() {
             @Override
             public List<Object> doInBackground() {
@@ -111,6 +116,7 @@ public class StudiesActivity extends CategoryActivity {
                 });
                 recyclerViewResources.setAdapter(adapter);
                 registerForContextMenu(recyclerViewResources);
+                loadingDialog.dismiss();
             }
         }).execute();
     }
