@@ -15,7 +15,6 @@ import androidx.cardview.widget.CardView;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.lifemanager.R;
-import com.example.lifemanager.enums.TypeFinance;
 import com.example.lifemanager.model.Studies;
 
 import java.util.List;

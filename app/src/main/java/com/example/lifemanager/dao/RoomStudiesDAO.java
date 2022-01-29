@@ -1,34 +1,22 @@
 package com.example.lifemanager.dao;
 
 import androidx.room.Dao;
-import androidx.room.Delete;
-import androidx.room.Insert;
 import androidx.room.Query;
-import androidx.room.Update;
 
 import com.example.lifemanager.model.Studies;
 
 import java.util.List;
 
 @Dao
-public interface RoomStudiesDAO {
+public abstract class RoomStudiesDAO extends BaseDAO<Studies>{
 
     @Query("SELECT * FROM studies WHERE id = :id")
-    Studies getStudyById(Long id);
+    public abstract Studies getStudyById(Long id);
 
     @Query("SELECT * FROM studies ORDER BY position ASC")
-    List<Studies> getAllStudies();
+    public abstract List<Studies> getAllStudies();
 
     @Query("SELECT MAX(position) FROM studies")
-    Integer getMaxPosition();
-
-    @Insert
-    void save(Studies study);
-
-    @Delete
-    void delete(Studies study);
-
-    @Update
-    void update(Studies study);
+    public abstract Integer getMaxPosition();
 
 }

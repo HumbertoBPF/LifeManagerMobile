@@ -120,7 +120,7 @@ public class Util {
                 datePickerFragment.setOnDateSetListener(new DatePickerFragment.OnDateSetListener() {
                     @Override
                     public void OnDateSetListener(int year, int month, int day) {
-                        String monthString = month+"";
+                        String monthString = (month+1)+"";
                         String dayString = day+"";
                         if (month<10){
                             monthString = "0" + monthString;

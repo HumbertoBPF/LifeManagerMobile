@@ -3,7 +3,6 @@ package com.example.lifemanager.activities;
 import static com.example.lifemanager.model.Constants.CURRENCY_TYPE;
 import static com.example.lifemanager.model.Constants.ENABLE_TOASTS;
 import static com.example.lifemanager.model.Constants.USERNAME_FOR_APP;
-import static com.example.lifemanager.tools.Util.insertThreadDelay;
 import static com.example.lifemanager.tools.Util.loadingDialog;
 import static com.example.lifemanager.tools.Util.yesOrNoDialog;
 
@@ -128,8 +127,7 @@ public class MainMenuActivity extends AppCompatActivity {
 
             @Override
             public void onPostExecute(List<Object> objects) {
-                Setting setting = (Setting) objects.get(0);
-                if (setting == null){
+                if (objects == null || objects.isEmpty()){
                     Log.i("settingsDialog","Launch settings dialog");
                     AlertDialog settingsDialog = yesOrNoDialog(context, getResources().getString(R.string.settings_dialog_title),
                             getResources().getString(R.string.settings_dialog_message),

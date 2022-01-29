@@ -11,21 +11,21 @@ import com.example.lifemanager.model.Finance;
 import java.util.List;
 
 @Dao
-public interface RoomFinanceDAO {
+public abstract class RoomFinanceDAO extends BaseDAO<Finance>{
 
     @Query("SELECT * FROM finance WHERE id = :id;")
-    Finance getFinanceById(Long id);
+    public abstract Finance getFinanceById(Long id);
 
     @Query("SELECT * FROM finance ORDER BY date DESC;")
-    List<Finance> getAllFinances();
+    public abstract List<Finance> getAllFinances();
 
     @Insert
-    void save(Finance finance);
+    public abstract void save(Finance finance);
 
     @Update
-    void update(Finance finance);
+    public abstract void update(Finance finance);
 
     @Delete
-    void delete(Finance finance);
+    public abstract void delete(Finance finance);
 
 }

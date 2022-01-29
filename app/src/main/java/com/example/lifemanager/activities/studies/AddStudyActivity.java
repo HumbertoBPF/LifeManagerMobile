@@ -11,6 +11,7 @@ import static com.example.lifemanager.enums.Category.OTHER;
 import static com.example.lifemanager.tools.Util.showToast;
 
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 
 import com.example.lifemanager.R;
@@ -54,7 +55,10 @@ public class AddStudyActivity extends AddResourceActivity {
 
             @Override
             public void onPostExecute(List<Object> objects) {
-                studiesFormPosition.setText((((Integer) objects.get(0)) + 1)+"");
+                Integer maxPosition = (Integer) objects.get(0);
+                if (maxPosition != null){
+                    studiesFormPosition.setText(((maxPosition) + 1)+"");
+                }
             }
         }).execute();
     }
