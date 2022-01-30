@@ -11,7 +11,6 @@ import static com.example.lifemanager.enums.Category.OTHER;
 import static com.example.lifemanager.tools.Util.showToast;
 
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 
 import com.example.lifemanager.R;

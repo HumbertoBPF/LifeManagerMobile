@@ -3,6 +3,7 @@ package com.example.lifemanager.recycler_view;
 import static com.example.lifemanager.tools.Util.makeSelector;
 
 import android.content.Context;
+import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -13,19 +14,18 @@ import androidx.cardview.widget.CardView;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.lifemanager.R;
+import com.example.lifemanager.model.RoundedButton;
 
 import java.util.List;
 
 public class ListResourcesMenuAdapter extends RecyclerView.Adapter<ListResourcesMenuAdapter.ResourceViewHolder> {
 
-    private List<String> resourcesNames;
+    private List<RoundedButton> roundedButtons;
     private Context context;
-    private OnClickListener onClickListener;
 
-    public ListResourcesMenuAdapter(Context context, List<String> resourcesNames, OnClickListener onClickListener) {
+    public ListResourcesMenuAdapter(Context context, List<RoundedButton> roundedButtons) {
         this.context = context;
-        this.resourcesNames = resourcesNames;
-        this.onClickListener = onClickListener;
+        this.roundedButtons = roundedButtons;
     }
 
     @NonNull
@@ -37,13 +37,13 @@ public class ListResourcesMenuAdapter extends RecyclerView.Adapter<ListResources
 
     @Override
     public void onBindViewHolder(@NonNull ListResourcesMenuAdapter.ResourceViewHolder holder, int position) {
-        String resourceNameString = resourcesNames.get(position);
-        holder.bind(resourceNameString);
+        RoundedButton roundedButton = roundedButtons.get(position);
+        holder.bind(roundedButton);
     }
 
     @Override
     public int getItemCount() {
-        return resourcesNames.size();
+        return roundedButtons.size();
     }
 
     class ResourceViewHolder extends RecyclerView.ViewHolder{
@@ -55,26 +55,20 @@ public class ListResourcesMenuAdapter extends RecyclerView.Adapter<ListResources
             super(itemView);
             resourceName = itemView.findViewById(R.id.resource_name);
             backgroundCardView = itemView.findViewById(R.id.background_card_view);
+        }
+
+        public void bind(RoundedButton roundedButton) {
+            resourceName.setText(roundedButton.getName());
+            int color = context.getResources().getColor(roundedButton.getColorId());
+            backgroundCardView.setBackground(makeSelector(color,0.8f));
             itemView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    onClickListener.onItemClickListener(resourceName.getText().toString());
+                    context.startActivity(new Intent(context,roundedButton.getNextActivity()));
                 }
             });
         }
 
-        public void bind(String resourceNameString) {
-            resourceName.setText(resourceNameString);
-            int idColorResource = context.getResources().getIdentifier("color_"+
-                    resourceNameString.toLowerCase()+"_item","color", context.getPackageName());
-            int color = context.getResources().getColor(idColorResource);
-            backgroundCardView.setBackground(makeSelector(color,0.8f));
-        }
-
-    }
-
-    public interface OnClickListener{
-        void onItemClickListener(String category);
     }
 
 }
