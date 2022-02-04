@@ -12,7 +12,7 @@ import android.view.View;
 import com.example.lifemanager.R;
 import com.example.lifemanager.activities.AddResourceActivity;
 import com.example.lifemanager.async_tasks.AsyncTask;
-import com.example.lifemanager.dao.RoomFinanceDAO;
+import com.example.lifemanager.dao.FinanceDAO;
 import com.example.lifemanager.enums.Sector;
 import com.example.lifemanager.enums.TypeFinance;
 import com.example.lifemanager.model.Finance;
@@ -26,11 +26,11 @@ import java.util.List;
 
 public class AddFinanceActivity extends AddResourceActivity {
 
-    private RoomFinanceDAO roomFinanceDAO;
+    private FinanceDAO financeDAO;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        roomFinanceDAO = LifeManagerDatabase.getInstance(this).getRoomFinanceDAO();
+        financeDAO = LifeManagerDatabase.getInstance(this).getRoomFinanceDAO();
         titleAppbar = getResources().getString(R.string.title_appbar_finance_form);
         colorAppbar = getResources().getColor(R.color.color_finances_item);
         resourceType = getResources().getStringArray(R.array.categories)[0];
@@ -61,9 +61,9 @@ public class AddFinanceActivity extends AddResourceActivity {
                             @Override
                             public List<Object> doInBackground() {
                                 if (idToUpdate == null) {
-                                    roomFinanceDAO.save(new Finance(name, dateCalendar, month, year, valueBigDecimal, sector, typeFinance));
+                                    financeDAO.save(new Finance(name, dateCalendar, month, year, valueBigDecimal, sector, typeFinance));
                                 } else {
-                                    roomFinanceDAO.update(
+                                    financeDAO.update(
                                             new Finance(idToUpdate, name, dateCalendar, month, year, valueBigDecimal, sector, typeFinance));
                                 }
                                 return null;

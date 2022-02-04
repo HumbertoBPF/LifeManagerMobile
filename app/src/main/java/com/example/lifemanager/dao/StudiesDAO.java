@@ -8,7 +8,7 @@ import com.example.lifemanager.model.Studies;
 import java.util.List;
 
 @Dao
-public abstract class RoomStudiesDAO extends BaseDAO<Studies>{
+public abstract class StudiesDAO extends BaseDAO<Studies>{
 
     @Query("SELECT * FROM studies WHERE id = :id")
     public abstract Studies getStudyById(Long id);

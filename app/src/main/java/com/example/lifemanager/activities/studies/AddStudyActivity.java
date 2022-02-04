@@ -16,7 +16,7 @@ import android.view.View;
 import com.example.lifemanager.R;
 import com.example.lifemanager.activities.AddResourceActivity;
 import com.example.lifemanager.async_tasks.AsyncTask;
-import com.example.lifemanager.dao.RoomStudiesDAO;
+import com.example.lifemanager.dao.StudiesDAO;
 import com.example.lifemanager.enums.Category;
 import com.example.lifemanager.model.Studies;
 import com.example.lifemanager.roomConfig.LifeManagerDatabase;
@@ -28,11 +28,11 @@ import java.util.List;
 
 public class AddStudyActivity extends AddResourceActivity {
 
-    private RoomStudiesDAO roomStudiesDAO;
+    private StudiesDAO studiesDAO;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        roomStudiesDAO = LifeManagerDatabase.getInstance(this).getRoomStudiesDAO();
+        studiesDAO = LifeManagerDatabase.getInstance(this).getRoomStudiesDAO();
         titleAppbar = getResources().getString(R.string.title_appbar_studies_form);
         colorAppbar = getResources().getColor(R.color.color_studies_item);
         resourceType = getResources().getStringArray(R.array.categories)[1];
@@ -48,7 +48,7 @@ public class AddStudyActivity extends AddResourceActivity {
             @Override
             public List<Object> doInBackground() {
                 List<Object> objects = new ArrayList<>();
-                objects.add(roomStudiesDAO.getMaxPosition());
+                objects.add(studiesDAO.getMaxPosition());
                 return objects;
             }
 
@@ -81,9 +81,9 @@ public class AddStudyActivity extends AddResourceActivity {
                             @Override
                             public List<Object> doInBackground() {
                                 if (idToUpdate == null){
-                                    roomStudiesDAO.save(new Studies(name,linkCourse,category,positionInteger,status));
+                                    studiesDAO.save(new Studies(name,linkCourse,category,positionInteger,status));
                                 }else{
-                                    roomStudiesDAO.update(new Studies(idToUpdate,name,linkCourse,category,positionInteger,status));
+                                    studiesDAO.update(new Studies(idToUpdate,name,linkCourse,category,positionInteger,status));
                                 }
                                 return null;
                             }

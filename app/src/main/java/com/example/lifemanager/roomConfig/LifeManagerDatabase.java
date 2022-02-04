@@ -7,9 +7,9 @@ import androidx.room.Room;
 import androidx.room.RoomDatabase;
 import androidx.room.TypeConverters;
 
-import com.example.lifemanager.dao.RoomFinanceDAO;
-import com.example.lifemanager.dao.RoomStudiesDAO;
-import com.example.lifemanager.dao.RoomTaskDAO;
+import com.example.lifemanager.dao.FinanceDAO;
+import com.example.lifemanager.dao.StudiesDAO;
+import com.example.lifemanager.dao.TaskDAO;
 import com.example.lifemanager.model.Finance;
 import com.example.lifemanager.model.Studies;
 import com.example.lifemanager.model.Task;
@@ -22,9 +22,9 @@ public abstract class LifeManagerDatabase extends RoomDatabase {
 
     private static final String NAME_DATABASE = "lifeManager.db";
 
-    public abstract RoomStudiesDAO getRoomStudiesDAO();
-    public abstract RoomFinanceDAO getRoomFinanceDAO();
-    public abstract RoomTaskDAO getRoomTaskDAO();
+    public abstract StudiesDAO getRoomStudiesDAO();
+    public abstract FinanceDAO getRoomFinanceDAO();
+    public abstract TaskDAO getRoomTaskDAO();
 
     public static LifeManagerDatabase getInstance(Context context){
         return Room

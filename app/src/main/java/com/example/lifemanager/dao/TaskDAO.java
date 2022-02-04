@@ -8,7 +8,7 @@ import com.example.lifemanager.model.Task;
 import java.util.List;
 
 @Dao
-public abstract class RoomTaskDAO extends BaseDAO<Task>{
+public abstract class TaskDAO extends BaseDAO<Task>{
 
     @Query("SELECT * FROM task WHERE id = :id;")
     public abstract Task getTaskById(Long id);

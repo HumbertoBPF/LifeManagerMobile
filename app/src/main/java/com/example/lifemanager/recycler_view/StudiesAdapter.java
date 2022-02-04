@@ -1,11 +1,19 @@
 package com.example.lifemanager.recycler_view;
 
+import static com.example.lifemanager.tools.Util.deletionDialog;
+import static com.example.lifemanager.tools.Util.loadingDialog;
 import static com.example.lifemanager.tools.Util.makeSelector;
+import static com.example.lifemanager.tools.Util.showToastIfEnabled;
 
+import android.app.AlertDialog;
+import android.app.ProgressDialog;
 import android.content.Context;
+import android.content.DialogInterface;
+import android.content.Intent;
 import android.graphics.Color;
 import android.view.ContextMenu;
 import android.view.LayoutInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
@@ -15,26 +23,20 @@ import androidx.cardview.widget.CardView;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.lifemanager.R;
+import com.example.lifemanager.activities.studies.AddStudyActivity;
+import com.example.lifemanager.async_tasks.AsyncTask;
 import com.example.lifemanager.model.Studies;
+import com.example.lifemanager.roomConfig.LifeManagerDatabase;
 
 import java.util.List;
 
-public class ListStudiesAdapter extends RecyclerView.Adapter<ListStudiesAdapter.StudyViewHolder> {
+public class StudiesAdapter extends RecyclerView.Adapter<StudiesAdapter.StudyViewHolder> {
 
     private Context context;
     private List<Studies> studies;
     private OnClickListener onClickListener;
-    private Long chosenId;
 
-    public Long getChosenId() {
-        return chosenId;
-    }
-
-    public void setChosenId(Long chosenId) {
-        this.chosenId = chosenId;
-    }
-
-    public ListStudiesAdapter(Context context, List<Studies> studies, OnClickListener onClickListener){
+    public StudiesAdapter(Context context, List<Studies> studies, OnClickListener onClickListener){
         this.context = context;
         this.studies = studies;
         this.onClickListener = onClickListener;
@@ -44,7 +46,7 @@ public class ListStudiesAdapter extends RecyclerView.Adapter<ListStudiesAdapter.
     @Override
     public StudyViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(context).inflate(R.layout.item_resource_list, parent,false);
-        return new ListStudiesAdapter.StudyViewHolder(view);
+        return new StudiesAdapter.StudyViewHolder(view);
     }
 
     @Override
@@ -72,13 +74,6 @@ public class ListStudiesAdapter extends RecyclerView.Adapter<ListStudiesAdapter.
             studyItemName = itemView.findViewById(R.id.text_view_2);
             studyItemStatus = itemView.findViewById(R.id.text_view_3);
             itemView.setOnCreateContextMenuListener(this);
-            itemView.setOnLongClickListener(new View.OnLongClickListener() {
-                @Override
-                public boolean onLongClick(View view) {
-                    setChosenId(studies.get(getPosition()).getId());
-                    return false;
-                }
-            });
             itemView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
@@ -110,8 +105,47 @@ public class ListStudiesAdapter extends RecyclerView.Adapter<ListStudiesAdapter.
 
         @Override
         public void onCreateContextMenu(ContextMenu contextMenu, View view, ContextMenu.ContextMenuInfo contextMenuInfo) {
-            contextMenu.add(context.getResources().getString(R.string.context_menu_update_option));
-            contextMenu.add(context.getResources().getString(R.string.context_menu_delete_option));
+            MenuItem update = contextMenu.add(context.getResources().getString(R.string.context_menu_update_option));
+            update.setOnMenuItemClickListener(new MenuItem.OnMenuItemClickListener() {
+                @Override
+                public boolean onMenuItemClick(MenuItem item) {
+                    Intent intent = new Intent(context, AddStudyActivity.class);
+                    intent.putExtra("Studies",studies.get(StudyViewHolder.this.getBindingAdapterPosition()));
+                    context.startActivity(intent);
+                    return false;
+                }
+            });
+            MenuItem delete = contextMenu.add(context.getResources().getString(R.string.context_menu_delete_option));
+            delete.setOnMenuItemClickListener(new MenuItem.OnMenuItemClickListener() {
+                @Override
+                public boolean onMenuItemClick(MenuItem item) {
+                    AlertDialog deletionDialog = deletionDialog(context, new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialogInterface, int i) {
+                            ProgressDialog loadingDialog = loadingDialog(context);
+                            loadingDialog.show();
+                            new AsyncTask(new AsyncTask.AsyncTaskInterface() {
+                                @Override
+                                public List<Object> doInBackground() {
+                                    LifeManagerDatabase.getInstance(context).getRoomStudiesDAO()
+                                            .delete(studies.get(StudyViewHolder.this.getBindingAdapterPosition()));
+                                    return null;
+                                }
+
+                                @Override
+                                public void onPostExecute(List<Object> objects) {
+                                    showToastIfEnabled(context, context.getString(R.string.delete_toast_message));
+                                    studies.remove(StudyViewHolder.this.getBindingAdapterPosition());
+                                    notifyItemRemoved(StudyViewHolder.this.getBindingAdapterPosition());
+                                    loadingDialog.dismiss();
+                                }
+                            }).execute();
+                        }
+                    });
+                    deletionDialog.show();
+                    return false;
+                }
+            });
         }
     }
 

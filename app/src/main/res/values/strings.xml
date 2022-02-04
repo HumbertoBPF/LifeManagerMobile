@@ -81,13 +81,11 @@
     <string name="explicative_messages_label">Explicative messages</string>
     <string name="add_task_toast_message">Task successfully added</string>
     <string name="update_task_toast_message">Task successfully updated</string>
-    <string name="delete_task_toast_message">Task successfully deleted</string>
     <string name="add_study_toast_message">Study successfully added</string>
     <string name="update_study_toast_message">Study successfully updated</string>
-    <string name="delete_study_toast_message">Study successfully deleted</string>
     <string name="add_finance_toast_message">Finance successfully added</string>
     <string name="update_finance_toast_message">Finance successfully updated</string>
-    <string name="delete_finance_toast_message">Finance successfully deleted</string>
+    <string name="delete_toast_message">Item successfully deleted</string>
     <string name="deletion_dialog_title">Confirm deletion</string>
     <string name="deletion_dialog_message">The item will be permanently deleted. Confirm ?</string>
     <string name="deletion_dialog_yes">Yes</string>

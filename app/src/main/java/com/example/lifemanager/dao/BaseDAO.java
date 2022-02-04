@@ -2,12 +2,7 @@ package com.example.lifemanager.dao;
 
 import androidx.room.Delete;
 import androidx.room.Insert;
-import androidx.room.Query;
 import androidx.room.Update;
-
-import com.example.lifemanager.model.Task;
-
-import java.util.List;
 
 public abstract class BaseDAO<E> {
 

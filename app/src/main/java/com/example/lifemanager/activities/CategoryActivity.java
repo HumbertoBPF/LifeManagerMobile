@@ -5,7 +5,6 @@ import static com.example.lifemanager.tools.Util.setActionBarColor;
 import static com.example.lifemanager.tools.Util.setActionBarTitle;
 
 import android.app.ProgressDialog;
-import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.Menu;
@@ -16,16 +15,20 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.lifemanager.R;
+import com.example.lifemanager.dao.BaseDAO;
 
-public abstract class CategoryActivity extends AppCompatActivity {
+public abstract class CategoryActivity<E> extends AppCompatActivity {
 
     protected String titleAppbar = null;
     protected Integer colorAppbar = null;
     protected String titleIconAppbar = null;
     protected String resourceType = null;
+
     private MenuItem addItem;
-    protected Context context;
     protected Class<?> formAddClass;
+    protected BaseDAO<E> categoryDAO;
+    protected RecyclerView.Adapter adapter;
+
     protected RecyclerView recyclerViewResources;
     protected ProgressDialog loadingDialog;
 
@@ -35,7 +38,6 @@ public abstract class CategoryActivity extends AppCompatActivity {
         setActionBarTitle(this, titleAppbar);
         setActionBarColor(this, colorAppbar);
         setContentView(R.layout.activity_category);
-        context = this;
         recyclerViewResources = findViewById(R.id.recycler_view_resources);
         loadingDialog = loadingDialog(this);
     }

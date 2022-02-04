@@ -14,7 +14,7 @@ import androidx.annotation.NonNull;
 import com.example.lifemanager.R;
 import com.example.lifemanager.activities.AddResourceActivity;
 import com.example.lifemanager.async_tasks.AsyncTask;
-import com.example.lifemanager.dao.RoomTaskDAO;
+import com.example.lifemanager.dao.TaskDAO;
 import com.example.lifemanager.enums.Priority;
 import com.example.lifemanager.model.Task;
 import com.example.lifemanager.roomConfig.LifeManagerDatabase;
@@ -25,11 +25,11 @@ import java.util.List;
 
 public class AddTaskActivity extends AddResourceActivity {
 
-    private RoomTaskDAO roomTaskDAO;
+    private TaskDAO taskDAO;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        roomTaskDAO = LifeManagerDatabase.getInstance(this).getRoomTaskDAO();
+        taskDAO = LifeManagerDatabase.getInstance(this).getRoomTaskDAO();
         titleAppbar = getResources().getString(R.string.title_appbar_task_form);
         colorAppbar = getResources().getColor(R.color.color_tasks_item);
         resourceType = getResources().getStringArray(R.array.categories)[2];
@@ -66,9 +66,9 @@ public class AddTaskActivity extends AddResourceActivity {
                             @Override
                             public List<Object> doInBackground() {
                                 if (idToUpdate == null){
-                                    roomTaskDAO.save(new Task(subject,name,description,status, finalPriority,deadline,dueDate));
+                                    taskDAO.save(new Task(subject,name,description,status, finalPriority,deadline,dueDate));
                                 }else{
-                                    roomTaskDAO.update(
+                                    taskDAO.update(
                                             new Task(idToUpdate,subject,name,description,status, finalPriority,deadline,dueDate));
                                 }
                                 return null;
