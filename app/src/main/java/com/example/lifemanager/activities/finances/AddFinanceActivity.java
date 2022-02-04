@@ -1,14 +1,14 @@
 package com.example.lifemanager.activities.finances;
 
 import static com.example.lifemanager.model.Constants.formatter;
-import static com.example.lifemanager.tools.Util.configureDatePicker;
-import static com.example.lifemanager.tools.Util.formatFromDateStringToCalendar;
-import static com.example.lifemanager.tools.Util.getDateFromPicker;
-import static com.example.lifemanager.tools.Util.showToast;
+import static com.example.lifemanager.util.Tools.configureDatePicker;
+import static com.example.lifemanager.util.Tools.formatFromDateStringToCalendar;
+import static com.example.lifemanager.util.Tools.getDateFromPicker;
+import static com.example.lifemanager.util.Tools.onViewDrawn;
+import static com.example.lifemanager.util.Tools.showToast;
 
 import android.os.Bundle;
 import android.view.View;
-import android.view.ViewTreeObserver;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.RadioButton;
@@ -21,6 +21,7 @@ import com.example.lifemanager.activities.AddResourceActivity;
 import com.example.lifemanager.async_tasks.AsyncTask;
 import com.example.lifemanager.enums.Sector;
 import com.example.lifemanager.enums.TypeFinance;
+import com.example.lifemanager.interfaces.OnTaskListener;
 import com.example.lifemanager.model.Finance;
 import com.example.lifemanager.roomConfig.LifeManagerDatabase;
 
@@ -43,7 +44,7 @@ public class AddFinanceActivity extends AddResourceActivity<Finance> {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         categoryDAO = LifeManagerDatabase.getInstance(this).getRoomFinanceDAO();
-        titleAppbar = getResources().getString(R.string.title_appbar_finance_form);
+        titleAppbar = getString(R.string.title_appbar_finance_form);
         colorAppbar = getResources().getColor(R.color.color_finances_item);
         resourceType = getResources().getStringArray(R.array.categories)[0];
         layoutId = R.layout.activity_add_finance;
@@ -111,14 +112,14 @@ public class AddFinanceActivity extends AddResourceActivity<Finance> {
         if (finance.getTypeFinance().equals(TypeFinance.EXPENSE)){
             financeFormType.check(R.id.finance_form_expense);
         }
-        financeFormSectorSpinner.getViewTreeObserver().addOnGlobalLayoutListener(new ViewTreeObserver.OnGlobalLayoutListener() {
+        onViewDrawn(financeFormSectorSpinner, new OnTaskListener() {
             @Override
-            public void onGlobalLayout() {
-                financeFormSectorSpinner.getViewTreeObserver().removeOnGlobalLayoutListener(this);
+            public void onTask() {
                 List<String> sectors = Arrays.asList(getResources().getStringArray(R.array.sector_finance));
                 financeFormSectorSpinner.setSelection(sectors.indexOf(finance.getSector().getValue()));
             }
         });
+
     }
 
     private Sector getSector() {

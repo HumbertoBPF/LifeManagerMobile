@@ -3,14 +3,14 @@ package com.example.lifemanager.activities;
 import static com.example.lifemanager.model.Constants.CURRENCY_TYPE;
 import static com.example.lifemanager.model.Constants.ENABLE_TOASTS;
 import static com.example.lifemanager.model.Constants.USERNAME_FOR_APP;
-import static com.example.lifemanager.tools.Util.getSettingFromSharedPref;
-import static com.example.lifemanager.tools.Util.saveSettingOnSharedPref;
-import static com.example.lifemanager.tools.Util.setActionBarTitle;
+import static com.example.lifemanager.util.Tools.getSettingFromSharedPref;
+import static com.example.lifemanager.util.Tools.onViewDrawn;
+import static com.example.lifemanager.util.Tools.saveSettingOnSharedPref;
+import static com.example.lifemanager.util.Tools.setActionBarTitle;
 
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
-import android.view.ViewTreeObserver;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
@@ -21,6 +21,7 @@ import android.widget.Spinner;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.lifemanager.R;
+import com.example.lifemanager.interfaces.OnTaskListener;
 
 import java.util.Arrays;
 import java.util.List;
@@ -58,10 +59,9 @@ public class AppSettingsActivity extends AppCompatActivity implements AdapterVie
         enableToasts.setChecked(getSettingFromSharedPref(this,ENABLE_TOASTS).equals("true"));
         String currencyTypeSetting = getSettingFromSharedPref(this,CURRENCY_TYPE);
         Log.i("HELLO","currencyType = "+currencyTypeSetting);
-        currencyTypeSpinner.getViewTreeObserver().addOnGlobalLayoutListener (new ViewTreeObserver.OnGlobalLayoutListener() {
+        onViewDrawn(currencyTypeSpinner, new OnTaskListener() {
             @Override
-            public void onGlobalLayout() {
-                currencyTypeSpinner.getViewTreeObserver().removeOnGlobalLayoutListener(this);
+            public void onTask() {
                 if (!currencyTypeSetting.isEmpty()){
                     List<String> currencyTypes = Arrays.asList(getResources().getStringArray(R.array.currency_types));
                     Log.i("HELLO",currencyTypes.indexOf(currencyTypeSetting)+"");

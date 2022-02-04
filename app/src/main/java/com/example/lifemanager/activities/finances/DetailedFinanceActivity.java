@@ -22,7 +22,7 @@ public class DetailedFinanceActivity extends DetailedResourceActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        titleAppBar = getResources().getString(R.string.title_appbar_details_finance);
+        titleAppBar = getString(R.string.title_appbar_details_finance);
         colorAppBar = getResources().getColor(R.color.color_finances_item);
         resourceType = getResources().getStringArray(R.array.categories)[0];
         layoutId = R.layout.activity_detailed_finance;

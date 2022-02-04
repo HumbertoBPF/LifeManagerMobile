@@ -5,10 +5,11 @@ import android.os.Bundle;
 
 import com.example.lifemanager.R;
 import com.example.lifemanager.activities.CategoryActivity;
+import com.example.lifemanager.adapters.FinancesAdapter;
 import com.example.lifemanager.async_tasks.AsyncTask;
 import com.example.lifemanager.dao.FinanceDAO;
+import com.example.lifemanager.interfaces.OnItemClickListener;
 import com.example.lifemanager.model.Finance;
-import com.example.lifemanager.recycler_view.FinancesAdapter;
 import com.example.lifemanager.roomConfig.LifeManagerDatabase;
 
 import java.util.ArrayList;
@@ -43,9 +44,9 @@ public class FinancesActivity extends CategoryActivity<Finance> {
                 for (Object object : objects){
                     finances.add((Finance) object);
                 }
-                adapter = new FinancesAdapter(FinancesActivity.this, finances, new FinancesAdapter.OnClickListener() {
+                adapter = new FinancesAdapter(FinancesActivity.this, finances, new OnItemClickListener<Finance>() {
                     @Override
-                    public void onItemClickListener(Finance finance) {
+                    public void onItemClick(Finance finance) {
                         Intent intent = new Intent(getApplicationContext(), DetailedFinanceActivity.class);
                         intent.putExtra(resourceType,finance);
                         startActivity(intent);

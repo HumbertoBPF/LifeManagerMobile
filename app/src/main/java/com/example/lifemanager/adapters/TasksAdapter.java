@@ -1,10 +1,10 @@
-package com.example.lifemanager.recycler_view;
+package com.example.lifemanager.adapters;
 
 import static com.example.lifemanager.model.Constants.formatter;
-import static com.example.lifemanager.tools.Util.deletionDialog;
-import static com.example.lifemanager.tools.Util.loadingDialog;
-import static com.example.lifemanager.tools.Util.makeSelector;
-import static com.example.lifemanager.tools.Util.showToastIfEnabled;
+import static com.example.lifemanager.util.Tools.deletionDialog;
+import static com.example.lifemanager.util.Tools.loadingDialog;
+import static com.example.lifemanager.util.Tools.makeSelector;
+import static com.example.lifemanager.util.Tools.showToastIfEnabled;
 
 import android.app.AlertDialog;
 import android.app.ProgressDialog;
@@ -26,6 +26,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.example.lifemanager.R;
 import com.example.lifemanager.activities.tasks.AddTaskActivity;
 import com.example.lifemanager.async_tasks.AsyncTask;
+import com.example.lifemanager.interfaces.OnItemClickListener;
 import com.example.lifemanager.model.Task;
 import com.example.lifemanager.roomConfig.LifeManagerDatabase;
 
@@ -35,12 +36,12 @@ public class TasksAdapter extends RecyclerView.Adapter<TasksAdapter.TaskViewHold
 
     private Context context;
     private List<Task> tasks;
-    private OnClickListener onClickListener;
+    private OnItemClickListener<Task> onItemClickListener;
 
-    public TasksAdapter(Context context, List<Task> tasks, OnClickListener onClickListener) {
+    public TasksAdapter(Context context, List<Task> tasks, OnItemClickListener<Task> onItemClickListener) {
         this.context = context;
         this.tasks = tasks;
-        this.onClickListener = onClickListener;
+        this.onItemClickListener = onItemClickListener;
     }
 
     @NonNull
@@ -79,7 +80,7 @@ public class TasksAdapter extends RecyclerView.Adapter<TasksAdapter.TaskViewHold
                 @Override
                 public void onClick(View view) {
                     Task task = tasks.get(getPosition());
-                    onClickListener.onItemClickListener(task);
+                    onItemClickListener.onItemClick(task);
                 }
             });
         }
@@ -143,9 +144,4 @@ public class TasksAdapter extends RecyclerView.Adapter<TasksAdapter.TaskViewHold
         }
 
     }
-
-    public interface OnClickListener{
-        void onItemClickListener(Task task);
-    }
-
 }

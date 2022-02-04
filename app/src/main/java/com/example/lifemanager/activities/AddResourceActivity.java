@@ -1,8 +1,8 @@
 package com.example.lifemanager.activities;
 
-import static com.example.lifemanager.tools.Util.loadingDialog;
-import static com.example.lifemanager.tools.Util.setActionBarColor;
-import static com.example.lifemanager.tools.Util.setActionBarTitle;
+import static com.example.lifemanager.util.Tools.loadingDialog;
+import static com.example.lifemanager.util.Tools.setActionBarColor;
+import static com.example.lifemanager.util.Tools.setActionBarTitle;
 
 import android.app.ProgressDialog;
 import android.content.Intent;
@@ -10,12 +10,10 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
-import android.widget.Button;
 import android.widget.Spinner;
 
 import androidx.appcompat.app.AppCompatActivity;
 
-import com.example.lifemanager.R;
 import com.example.lifemanager.dao.BaseDAO;
 
 public abstract class AddResourceActivity<E> extends AppCompatActivity implements AdapterView.OnItemSelectedListener{

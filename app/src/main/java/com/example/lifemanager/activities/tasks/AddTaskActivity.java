@@ -1,10 +1,10 @@
 package com.example.lifemanager.activities.tasks;
 
 import static com.example.lifemanager.model.Constants.formatter;
-import static com.example.lifemanager.tools.Util.configureDatePicker;
-import static com.example.lifemanager.tools.Util.formatFromDateStringToCalendar;
-import static com.example.lifemanager.tools.Util.getDateFromPicker;
-import static com.example.lifemanager.tools.Util.showToast;
+import static com.example.lifemanager.util.Tools.configureDatePicker;
+import static com.example.lifemanager.util.Tools.formatFromDateStringToCalendar;
+import static com.example.lifemanager.util.Tools.getDateFromPicker;
+import static com.example.lifemanager.util.Tools.showToast;
 
 import android.os.Bundle;
 import android.view.View;
@@ -22,7 +22,7 @@ import com.example.lifemanager.async_tasks.AsyncTask;
 import com.example.lifemanager.enums.Priority;
 import com.example.lifemanager.model.Task;
 import com.example.lifemanager.roomConfig.LifeManagerDatabase;
-import com.example.lifemanager.tools.Util;
+import com.example.lifemanager.util.Tools;
 
 import java.util.Calendar;
 import java.util.List;
@@ -44,7 +44,7 @@ public class AddTaskActivity extends AddResourceActivity<Task> {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         categoryDAO = LifeManagerDatabase.getInstance(this).getRoomTaskDAO();
-        titleAppbar = getResources().getString(R.string.title_appbar_task_form);
+        titleAppbar = getString(R.string.title_appbar_task_form);
         colorAppbar = getResources().getColor(R.color.color_tasks_item);
         resourceType = getResources().getStringArray(R.array.categories)[2];
         layoutId = R.layout.activity_add_task;
@@ -93,9 +93,9 @@ public class AddTaskActivity extends AddResourceActivity<Task> {
                             public void onPostExecute(List<Object> objects) {
                                 loadingDialog.dismiss();
                                 if (idToUpdate == null){
-                                    Util.showToastIfEnabled(getApplicationContext(),getResources().getString(R.string.add_task_toast_message));
+                                    Tools.showToastIfEnabled(getApplicationContext(),getResources().getString(R.string.add_task_toast_message));
                                 }else{
-                                    Util.showToastIfEnabled(getApplicationContext(),getResources().getString(R.string.update_task_toast_message));
+                                    Tools.showToastIfEnabled(getApplicationContext(),getResources().getString(R.string.update_task_toast_message));
                                 }
                                 finish();
                             }

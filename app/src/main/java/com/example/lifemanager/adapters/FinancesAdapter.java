@@ -1,11 +1,11 @@
-package com.example.lifemanager.recycler_view;
+package com.example.lifemanager.adapters;
 
 import static com.example.lifemanager.activities.MainMenuActivity.CURRENCY_FORMAT;
 import static com.example.lifemanager.model.Constants.formatter;
-import static com.example.lifemanager.tools.Util.deletionDialog;
-import static com.example.lifemanager.tools.Util.loadingDialog;
-import static com.example.lifemanager.tools.Util.makeSelector;
-import static com.example.lifemanager.tools.Util.showToastIfEnabled;
+import static com.example.lifemanager.util.Tools.deletionDialog;
+import static com.example.lifemanager.util.Tools.loadingDialog;
+import static com.example.lifemanager.util.Tools.makeSelector;
+import static com.example.lifemanager.util.Tools.showToastIfEnabled;
 
 import android.app.AlertDialog;
 import android.app.ProgressDialog;
@@ -28,6 +28,7 @@ import com.example.lifemanager.R;
 import com.example.lifemanager.activities.finances.AddFinanceActivity;
 import com.example.lifemanager.async_tasks.AsyncTask;
 import com.example.lifemanager.enums.TypeFinance;
+import com.example.lifemanager.interfaces.OnItemClickListener;
 import com.example.lifemanager.model.Finance;
 import com.example.lifemanager.roomConfig.LifeManagerDatabase;
 
@@ -37,12 +38,12 @@ public class FinancesAdapter extends RecyclerView.Adapter<FinancesAdapter.Financ
 
     private Context context;
     private List<Finance> finances;
-    private OnClickListener onClickListener;
+    private OnItemClickListener<Finance> onItemClickListener;
 
-    public FinancesAdapter(Context context, List<Finance> finances, OnClickListener onClickListener) {
+    public FinancesAdapter(Context context, List<Finance> finances, OnItemClickListener<Finance> onItemClickListener) {
         this.context = context;
         this.finances = finances;
-        this.onClickListener = onClickListener;
+        this.onItemClickListener = onItemClickListener;
     }
 
     @NonNull
@@ -79,7 +80,7 @@ public class FinancesAdapter extends RecyclerView.Adapter<FinancesAdapter.Financ
                 @Override
                 public void onClick(View view) {
                     Finance finance = finances.get(getPosition());
-                    onClickListener.onItemClickListener(finance);
+                    onItemClickListener.onItemClick(finance);
                 }
             });
         }
@@ -142,10 +143,6 @@ public class FinancesAdapter extends RecyclerView.Adapter<FinancesAdapter.Financ
             });
         }
 
-    }
-
-    public interface OnClickListener{
-        void onItemClickListener(Finance finance);
     }
 
 }

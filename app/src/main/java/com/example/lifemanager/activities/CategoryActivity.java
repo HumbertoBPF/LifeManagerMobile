@@ -1,8 +1,8 @@
 package com.example.lifemanager.activities;
 
-import static com.example.lifemanager.tools.Util.loadingDialog;
-import static com.example.lifemanager.tools.Util.setActionBarColor;
-import static com.example.lifemanager.tools.Util.setActionBarTitle;
+import static com.example.lifemanager.util.Tools.loadingDialog;
+import static com.example.lifemanager.util.Tools.setActionBarColor;
+import static com.example.lifemanager.util.Tools.setActionBarTitle;
 
 import android.app.ProgressDialog;
 import android.content.Intent;

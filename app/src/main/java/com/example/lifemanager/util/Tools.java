@@ -1,4 +1,4 @@
-package com.example.lifemanager.tools;
+package com.example.lifemanager.util;
 
 import static android.content.Context.MODE_PRIVATE;
 import static com.example.lifemanager.activities.MainMenuActivity.ARE_TOASTS_ENABLED;
@@ -14,6 +14,8 @@ import android.graphics.drawable.ColorDrawable;
 import android.graphics.drawable.GradientDrawable;
 import android.graphics.drawable.StateListDrawable;
 import android.view.View;
+import android.view.ViewGroup;
+import android.view.ViewTreeObserver;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -23,10 +25,11 @@ import androidx.fragment.app.FragmentManager;
 
 import com.example.lifemanager.R;
 import com.example.lifemanager.fragments.DatePickerFragment;
+import com.example.lifemanager.interfaces.OnTaskListener;
 
 import java.util.Calendar;
 
-public class Util {
+public class Tools {
 
     public static void showToast(Context context, String message) {
         Toast.makeText(context, message, Toast.LENGTH_SHORT).show();
@@ -106,14 +109,6 @@ public class Util {
         return progressDialog;
     }
 
-    public static void insertThreadDelay(long timeDelay){
-        try {
-            Thread.sleep(timeDelay);
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        }
-    }
-
     public static void configureDatePicker(FragmentManager fragmentManager, TextView datePickerInput, String label, String tagName) {
         datePickerInput.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -157,6 +152,16 @@ public class Util {
     public static String getSettingFromSharedPref(Context context, String key){
         SharedPreferences sh = context.getSharedPreferences("MySharedPref", MODE_PRIVATE);
         return sh.getString(key, "");
+    }
+
+    public static void onViewDrawn(ViewGroup viewGroup, OnTaskListener onTaskListener){
+        viewGroup.getViewTreeObserver().addOnGlobalLayoutListener(new ViewTreeObserver.OnGlobalLayoutListener() {
+            @Override
+            public void onGlobalLayout() {
+                viewGroup.getViewTreeObserver().removeOnGlobalLayoutListener(this);
+                onTaskListener.onTask();
+            }
+        });
     }
 
 }

@@ -1,6 +1,6 @@
-package com.example.lifemanager.recycler_view;
+package com.example.lifemanager.adapters;
 
-import static com.example.lifemanager.tools.Util.makeSelector;
+import static com.example.lifemanager.util.Tools.makeSelector;
 
 import android.content.Context;
 import android.content.Intent;

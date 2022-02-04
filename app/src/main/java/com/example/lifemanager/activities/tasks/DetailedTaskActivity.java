@@ -21,7 +21,7 @@ public class DetailedTaskActivity extends DetailedResourceActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        titleAppBar = getResources().getString(R.string.title_appbar_details_task);
+        titleAppBar = getString(R.string.title_appbar_details_task);
         colorAppBar = getResources().getColor(R.color.color_tasks_item);
         resourceType = getResources().getStringArray(R.array.categories)[2];
         layoutId = R.layout.activity_detailed_task;

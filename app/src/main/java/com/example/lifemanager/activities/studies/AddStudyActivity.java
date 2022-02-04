@@ -8,11 +8,11 @@ import static com.example.lifemanager.enums.Category.GENERAL_PROGRAMMING;
 import static com.example.lifemanager.enums.Category.LANGUAGES;
 import static com.example.lifemanager.enums.Category.MOBILE;
 import static com.example.lifemanager.enums.Category.OTHER;
-import static com.example.lifemanager.tools.Util.showToast;
+import static com.example.lifemanager.util.Tools.onViewDrawn;
+import static com.example.lifemanager.util.Tools.showToast;
 
 import android.os.Bundle;
 import android.view.View;
-import android.view.ViewTreeObserver;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.RadioButton;
@@ -24,9 +24,10 @@ import com.example.lifemanager.activities.AddResourceActivity;
 import com.example.lifemanager.async_tasks.AsyncTask;
 import com.example.lifemanager.dao.StudiesDAO;
 import com.example.lifemanager.enums.Category;
+import com.example.lifemanager.interfaces.OnTaskListener;
 import com.example.lifemanager.model.Studies;
 import com.example.lifemanager.roomConfig.LifeManagerDatabase;
-import com.example.lifemanager.tools.Util;
+import com.example.lifemanager.util.Tools;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -45,7 +46,7 @@ public class AddStudyActivity extends AddResourceActivity<Studies> {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         categoryDAO = LifeManagerDatabase.getInstance(this).getRoomStudiesDAO();
-        titleAppbar = getResources().getString(R.string.title_appbar_studies_form);
+        titleAppbar = getString(R.string.title_appbar_studies_form);
         colorAppbar = getResources().getColor(R.color.color_studies_item);
         resourceType = getResources().getStringArray(R.array.categories)[1];
         layoutId = R.layout.activity_add_study;
@@ -105,9 +106,9 @@ public class AddStudyActivity extends AddResourceActivity<Studies> {
                             public void onPostExecute(List<Object> objects) {
                                 loadingDialog.dismiss();
                                 if (idToUpdate == null){
-                                    Util.showToastIfEnabled(getApplicationContext(),getResources().getString(R.string.add_study_toast_message));
+                                    Tools.showToastIfEnabled(getApplicationContext(),getResources().getString(R.string.add_study_toast_message));
                                 }else{
-                                    Util.showToastIfEnabled(getApplicationContext(),getResources().getString(R.string.update_study_toast_message));
+                                    Tools.showToastIfEnabled(getApplicationContext(),getResources().getString(R.string.update_study_toast_message));
                                 }
                                 finish();
                             }
@@ -130,10 +131,9 @@ public class AddStudyActivity extends AddResourceActivity<Studies> {
         if (study.getStatus()){
             studiesFormStatus.check(R.id.studies_form_status_concluded);
         }
-        studiesFormCategorySpinner.getViewTreeObserver().addOnGlobalLayoutListener(new ViewTreeObserver.OnGlobalLayoutListener() {
+        onViewDrawn(studiesFormCategorySpinner, new OnTaskListener() {
             @Override
-            public void onGlobalLayout() {
-                studiesFormCategorySpinner.getViewTreeObserver().removeOnGlobalLayoutListener(this);
+            public void onTask() {
                 List<String> categories = Arrays.asList(getResources().getStringArray(R.array.categories_study));
                 studiesFormCategorySpinner.setSelection(categories.indexOf(study.getCategory().getValue()));
             }

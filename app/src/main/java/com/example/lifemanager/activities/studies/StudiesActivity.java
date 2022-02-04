@@ -5,10 +5,11 @@ import android.os.Bundle;
 
 import com.example.lifemanager.R;
 import com.example.lifemanager.activities.CategoryActivity;
+import com.example.lifemanager.adapters.StudiesAdapter;
 import com.example.lifemanager.async_tasks.AsyncTask;
 import com.example.lifemanager.dao.StudiesDAO;
+import com.example.lifemanager.interfaces.OnItemClickListener;
 import com.example.lifemanager.model.Studies;
-import com.example.lifemanager.recycler_view.StudiesAdapter;
 import com.example.lifemanager.roomConfig.LifeManagerDatabase;
 
 import java.util.ArrayList;
@@ -43,9 +44,9 @@ public class StudiesActivity extends CategoryActivity<Studies> {
                 for (Object object : objects){
                     studies.add((Studies) object);
                 }
-                adapter = new StudiesAdapter(StudiesActivity.this, studies, new StudiesAdapter.OnClickListener() {
+                adapter = new StudiesAdapter(StudiesActivity.this, studies, new OnItemClickListener<Studies>() {
                     @Override
-                    public void onItemClickListener(Studies study) {
+                    public void onItemClick(Studies study) {
                         Intent intent = new Intent(getApplicationContext(), DetailedStudyActivity.class);
                         intent.putExtra(resourceType,study);
                         startActivity(intent);

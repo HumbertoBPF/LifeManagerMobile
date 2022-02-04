@@ -3,9 +3,9 @@ package com.example.lifemanager.activities;
 import static com.example.lifemanager.model.Constants.CURRENCY_TYPE;
 import static com.example.lifemanager.model.Constants.ENABLE_TOASTS;
 import static com.example.lifemanager.model.Constants.USERNAME_FOR_APP;
-import static com.example.lifemanager.tools.Util.getSettingFromSharedPref;
-import static com.example.lifemanager.tools.Util.saveSettingOnSharedPref;
-import static com.example.lifemanager.tools.Util.yesOrNoDialog;
+import static com.example.lifemanager.util.Tools.getSettingFromSharedPref;
+import static com.example.lifemanager.util.Tools.saveSettingOnSharedPref;
+import static com.example.lifemanager.util.Tools.yesOrNoDialog;
 
 import android.app.AlertDialog;
 import android.content.DialogInterface;
@@ -23,8 +23,8 @@ import com.example.lifemanager.R;
 import com.example.lifemanager.activities.finances.FinancesActivity;
 import com.example.lifemanager.activities.studies.StudiesActivity;
 import com.example.lifemanager.activities.tasks.TasksActivity;
+import com.example.lifemanager.adapters.ListResourcesMenuAdapter;
 import com.example.lifemanager.model.RoundedButton;
-import com.example.lifemanager.recycler_view.ListResourcesMenuAdapter;
 
 import java.text.NumberFormat;
 import java.text.SimpleDateFormat;

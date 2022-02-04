@@ -1,9 +1,9 @@
-package com.example.lifemanager.recycler_view;
+package com.example.lifemanager.adapters;
 
-import static com.example.lifemanager.tools.Util.deletionDialog;
-import static com.example.lifemanager.tools.Util.loadingDialog;
-import static com.example.lifemanager.tools.Util.makeSelector;
-import static com.example.lifemanager.tools.Util.showToastIfEnabled;
+import static com.example.lifemanager.util.Tools.deletionDialog;
+import static com.example.lifemanager.util.Tools.loadingDialog;
+import static com.example.lifemanager.util.Tools.makeSelector;
+import static com.example.lifemanager.util.Tools.showToastIfEnabled;
 
 import android.app.AlertDialog;
 import android.app.ProgressDialog;
@@ -25,6 +25,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.example.lifemanager.R;
 import com.example.lifemanager.activities.studies.AddStudyActivity;
 import com.example.lifemanager.async_tasks.AsyncTask;
+import com.example.lifemanager.interfaces.OnItemClickListener;
 import com.example.lifemanager.model.Studies;
 import com.example.lifemanager.roomConfig.LifeManagerDatabase;
 
@@ -34,12 +35,12 @@ public class StudiesAdapter extends RecyclerView.Adapter<StudiesAdapter.StudyVie
 
     private Context context;
     private List<Studies> studies;
-    private OnClickListener onClickListener;
+    private OnItemClickListener<Studies> onItemClickListener;
 
-    public StudiesAdapter(Context context, List<Studies> studies, OnClickListener onClickListener){
+    public StudiesAdapter(Context context, List<Studies> studies, OnItemClickListener<Studies> onItemClickListener){
         this.context = context;
         this.studies = studies;
-        this.onClickListener = onClickListener;
+        this.onItemClickListener = onItemClickListener;
     }
 
     @NonNull
@@ -78,7 +79,7 @@ public class StudiesAdapter extends RecyclerView.Adapter<StudiesAdapter.StudyVie
                 @Override
                 public void onClick(View view) {
                     Studies study = studies.get(getPosition());
-                    onClickListener.onItemClickListener(study);
+                    onItemClickListener.onItemClick(study);
                 }
             });
         }
@@ -147,10 +148,6 @@ public class StudiesAdapter extends RecyclerView.Adapter<StudiesAdapter.StudyVie
                 }
             });
         }
-    }
-
-    public interface OnClickListener{
-        void onItemClickListener(Studies study);
     }
 
 }

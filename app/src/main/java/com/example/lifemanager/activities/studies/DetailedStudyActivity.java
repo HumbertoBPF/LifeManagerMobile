@@ -17,7 +17,7 @@ public class DetailedStudyActivity extends DetailedResourceActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        titleAppBar = getResources().getString(R.string.title_appbar_details_study);
+        titleAppBar = getString(R.string.title_appbar_details_study);
         colorAppBar = getResources().getColor(R.color.color_studies_item);
         resourceType = getResources().getStringArray(R.array.categories)[1];
         layoutId = R.layout.activity_detailed_study;

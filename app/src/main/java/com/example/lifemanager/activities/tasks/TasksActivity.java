@@ -5,10 +5,11 @@ import android.os.Bundle;
 
 import com.example.lifemanager.R;
 import com.example.lifemanager.activities.CategoryActivity;
+import com.example.lifemanager.adapters.TasksAdapter;
 import com.example.lifemanager.async_tasks.AsyncTask;
 import com.example.lifemanager.dao.TaskDAO;
+import com.example.lifemanager.interfaces.OnItemClickListener;
 import com.example.lifemanager.model.Task;
-import com.example.lifemanager.recycler_view.TasksAdapter;
 import com.example.lifemanager.roomConfig.LifeManagerDatabase;
 
 import java.util.ArrayList;
@@ -43,9 +44,9 @@ public class TasksActivity extends CategoryActivity<Task> {
                 for (Object object : objects){
                     tasks.add((Task) object);
                 }
-                adapter = new TasksAdapter(TasksActivity.this, tasks, new TasksAdapter.OnClickListener() {
+                adapter = new TasksAdapter(TasksActivity.this, tasks, new OnItemClickListener<Task>() {
                     @Override
-                    public void onItemClickListener(Task task) {
+                    public void onItemClick(Task task) {
                         Intent intent = new Intent(getApplicationContext(),DetailedTaskActivity.class);
                         intent.putExtra(resourceType,task);
                         startActivity(intent);
