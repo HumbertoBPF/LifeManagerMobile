@@ -26,9 +26,9 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.lifemanager.R;
 import com.example.lifemanager.activities.finances.AddFinanceActivity;
-import com.example.lifemanager.async_tasks.AsyncTask;
 import com.example.lifemanager.enums.TypeFinance;
 import com.example.lifemanager.interfaces.OnItemClickListener;
+import com.example.lifemanager.interfaces.OnTaskListener;
 import com.example.lifemanager.model.Finance;
 import com.example.lifemanager.roomConfig.LifeManagerDatabase;
 
@@ -119,22 +119,18 @@ public class FinancesAdapter extends RecyclerView.Adapter<FinancesAdapter.Financ
                         public void onClick(DialogInterface dialogInterface, int i) {
                             ProgressDialog loadingDialog = loadingDialog(context);
                             loadingDialog.show();
-                            new AsyncTask(new AsyncTask.AsyncTaskInterface() {
-                                @Override
-                                public List<Object> doInBackground() {
-                                    LifeManagerDatabase.getInstance(context).getRoomFinanceDAO()
-                                            .delete(finances.get(FinanceViewHolder.this.getBindingAdapterPosition()));
-                                    return null;
-                                }
-
-                                @Override
-                                public void onPostExecute(List<Object> objects) {
-                                    showToastIfEnabled(context, context.getString(R.string.delete_toast_message));
-                                    finances.remove(FinanceViewHolder.this.getBindingAdapterPosition());
-                                    notifyItemRemoved(FinanceViewHolder.this.getBindingAdapterPosition());
-                                    loadingDialog.dismiss();
-                                }
-                            }).execute();
+                            LifeManagerDatabase.getInstance(context).getRoomFinanceDAO().getDeleteAsyncTask(
+                                    finances.get(FinanceViewHolder.this.getBindingAdapterPosition()),
+                                    new OnTaskListener() {
+                                        @Override
+                                        public void onTask() {
+                                            showToastIfEnabled(context, context.getString(R.string.delete_toast_message));
+                                            finances.remove(FinanceViewHolder.this.getBindingAdapterPosition());
+                                            notifyItemRemoved(FinanceViewHolder.this.getBindingAdapterPosition());
+                                            loadingDialog.dismiss();
+                                        }
+                                    }
+                            ).execute();
                         }
                     });
                     deletionDialog.show();

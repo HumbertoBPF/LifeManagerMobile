@@ -24,8 +24,8 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.lifemanager.R;
 import com.example.lifemanager.activities.studies.AddStudyActivity;
-import com.example.lifemanager.async_tasks.AsyncTask;
 import com.example.lifemanager.interfaces.OnItemClickListener;
+import com.example.lifemanager.interfaces.OnTaskListener;
 import com.example.lifemanager.model.Studies;
 import com.example.lifemanager.roomConfig.LifeManagerDatabase;
 
@@ -125,22 +125,18 @@ public class StudiesAdapter extends RecyclerView.Adapter<StudiesAdapter.StudyVie
                         public void onClick(DialogInterface dialogInterface, int i) {
                             ProgressDialog loadingDialog = loadingDialog(context);
                             loadingDialog.show();
-                            new AsyncTask(new AsyncTask.AsyncTaskInterface() {
-                                @Override
-                                public List<Object> doInBackground() {
-                                    LifeManagerDatabase.getInstance(context).getRoomStudiesDAO()
-                                            .delete(studies.get(StudyViewHolder.this.getBindingAdapterPosition()));
-                                    return null;
-                                }
-
-                                @Override
-                                public void onPostExecute(List<Object> objects) {
-                                    showToastIfEnabled(context, context.getString(R.string.delete_toast_message));
-                                    studies.remove(StudyViewHolder.this.getBindingAdapterPosition());
-                                    notifyItemRemoved(StudyViewHolder.this.getBindingAdapterPosition());
-                                    loadingDialog.dismiss();
-                                }
-                            }).execute();
+                            LifeManagerDatabase.getInstance(context).getRoomStudiesDAO().getDeleteAsyncTask(
+                                    studies.get(StudyViewHolder.this.getBindingAdapterPosition()),
+                                    new OnTaskListener() {
+                                        @Override
+                                        public void onTask() {
+                                            showToastIfEnabled(context, context.getString(R.string.delete_toast_message));
+                                            studies.remove(StudyViewHolder.this.getBindingAdapterPosition());
+                                            notifyItemRemoved(StudyViewHolder.this.getBindingAdapterPosition());
+                                            loadingDialog.dismiss();
+                                        }
+                                    }
+                            ).execute();
                         }
                     });
                     deletionDialog.show();

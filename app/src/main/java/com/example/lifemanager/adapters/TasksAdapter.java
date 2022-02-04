@@ -25,8 +25,8 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.lifemanager.R;
 import com.example.lifemanager.activities.tasks.AddTaskActivity;
-import com.example.lifemanager.async_tasks.AsyncTask;
 import com.example.lifemanager.interfaces.OnItemClickListener;
+import com.example.lifemanager.interfaces.OnTaskListener;
 import com.example.lifemanager.model.Task;
 import com.example.lifemanager.roomConfig.LifeManagerDatabase;
 
@@ -119,22 +119,18 @@ public class TasksAdapter extends RecyclerView.Adapter<TasksAdapter.TaskViewHold
                         public void onClick(DialogInterface dialogInterface, int i) {
                             ProgressDialog loadingDialog = loadingDialog(context);
                             loadingDialog.show();
-                            new AsyncTask(new AsyncTask.AsyncTaskInterface() {
-                                @Override
-                                public List<Object> doInBackground() {
-                                    LifeManagerDatabase.getInstance(context).getRoomTaskDAO()
-                                            .delete(tasks.get(TaskViewHolder.this.getBindingAdapterPosition()));
-                                    return null;
-                                }
-
-                                @Override
-                                public void onPostExecute(List<Object> objects) {
-                                    showToastIfEnabled(context, context.getString(R.string.delete_toast_message));
-                                    tasks.remove(TaskViewHolder.this.getBindingAdapterPosition());
-                                    notifyItemRemoved(TaskViewHolder.this.getBindingAdapterPosition());
-                                    loadingDialog.dismiss();
-                                }
-                            }).execute();
+                            LifeManagerDatabase.getInstance(context).getRoomTaskDAO().getDeleteAsyncTask(
+                                    tasks.get(TaskViewHolder.this.getBindingAdapterPosition()),
+                                    new OnTaskListener() {
+                                        @Override
+                                        public void onTask() {
+                                            showToastIfEnabled(context, context.getString(R.string.delete_toast_message));
+                                            tasks.remove(TaskViewHolder.this.getBindingAdapterPosition());
+                                            notifyItemRemoved(TaskViewHolder.this.getBindingAdapterPosition());
+                                            loadingDialog.dismiss();
+                                        }
+                                    }
+                            ).execute();
                         }
                     });
                     deletionDialog.show();

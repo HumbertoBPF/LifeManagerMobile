@@ -6,13 +6,12 @@ import android.os.Bundle;
 import com.example.lifemanager.R;
 import com.example.lifemanager.activities.CategoryActivity;
 import com.example.lifemanager.adapters.StudiesAdapter;
-import com.example.lifemanager.async_tasks.AsyncTask;
 import com.example.lifemanager.dao.StudiesDAO;
 import com.example.lifemanager.interfaces.OnItemClickListener;
+import com.example.lifemanager.interfaces.OnResultListener;
 import com.example.lifemanager.model.Studies;
 import com.example.lifemanager.roomConfig.LifeManagerDatabase;
 
-import java.util.ArrayList;
 import java.util.List;
 
 public class StudiesActivity extends CategoryActivity<Studies> {
@@ -30,21 +29,10 @@ public class StudiesActivity extends CategoryActivity<Studies> {
 
     protected void configureAdapter() {
         loadingDialog.show();
-        new AsyncTask(new AsyncTask.AsyncTaskInterface() {
+        ((StudiesDAO) categoryDAO).getAllStudiesAsyncTask(new OnResultListener<List<Studies>>() {
             @Override
-            public List<Object> doInBackground() {
-                List<Object> objects = new ArrayList<>();
-                objects.addAll(((StudiesDAO) categoryDAO).getAllStudies());
-                return objects;
-            }
-
-            @Override
-            public void onPostExecute(List<Object> objects) {
-                List<Studies> studies = new ArrayList<>();
-                for (Object object : objects){
-                    studies.add((Studies) object);
-                }
-                adapter = new StudiesAdapter(StudiesActivity.this, studies, new OnItemClickListener<Studies>() {
+            public void onResult(List<Studies> result) {
+                adapter = new StudiesAdapter(StudiesActivity.this, result, new OnItemClickListener<Studies>() {
                     @Override
                     public void onItemClick(Studies study) {
                         Intent intent = new Intent(getApplicationContext(), DetailedStudyActivity.class);

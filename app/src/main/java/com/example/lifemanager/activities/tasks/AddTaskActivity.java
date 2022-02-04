@@ -18,14 +18,13 @@ import androidx.annotation.NonNull;
 
 import com.example.lifemanager.R;
 import com.example.lifemanager.activities.AddResourceActivity;
-import com.example.lifemanager.async_tasks.AsyncTask;
 import com.example.lifemanager.enums.Priority;
+import com.example.lifemanager.interfaces.OnTaskListener;
 import com.example.lifemanager.model.Task;
 import com.example.lifemanager.roomConfig.LifeManagerDatabase;
 import com.example.lifemanager.util.Tools;
 
 import java.util.Calendar;
-import java.util.List;
 
 public class AddTaskActivity extends AddResourceActivity<Task> {
 
@@ -77,20 +76,15 @@ public class AddTaskActivity extends AddResourceActivity<Task> {
                         Calendar deadline = formatFromDateStringToCalendar(deadlineString);
                         Calendar dueDate = formatFromDateStringToCalendar(dueDateString);
                         loadingDialog.show();
-                        new AsyncTask(new AsyncTask.AsyncTaskInterface() {
+                        Task task;
+                        if (idToUpdate == null){
+                            task = new Task(subject,name,description,status, finalPriority,deadline,dueDate);
+                        }else{
+                            task = new Task(idToUpdate,subject,name,description,status, finalPriority,deadline,dueDate);
+                        }
+                        categoryDAO.getSaveAsyncTask(task, new OnTaskListener() {
                             @Override
-                            public List<Object> doInBackground() {
-                                if (idToUpdate == null){
-                                    categoryDAO.save(new Task(subject,name,description,status, finalPriority,deadline,dueDate));
-                                }else{
-                                    categoryDAO.update(
-                                            new Task(idToUpdate,subject,name,description,status, finalPriority,deadline,dueDate));
-                                }
-                                return null;
-                            }
-
-                            @Override
-                            public void onPostExecute(List<Object> objects) {
+                            public void onTask() {
                                 loadingDialog.dismiss();
                                 if (idToUpdate == null){
                                     Tools.showToastIfEnabled(getApplicationContext(),getResources().getString(R.string.add_task_toast_message));

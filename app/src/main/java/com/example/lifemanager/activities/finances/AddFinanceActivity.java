@@ -18,7 +18,6 @@ import android.widget.TextView;
 
 import com.example.lifemanager.R;
 import com.example.lifemanager.activities.AddResourceActivity;
-import com.example.lifemanager.async_tasks.AsyncTask;
 import com.example.lifemanager.enums.Sector;
 import com.example.lifemanager.enums.TypeFinance;
 import com.example.lifemanager.interfaces.OnTaskListener;
@@ -71,20 +70,15 @@ public class AddFinanceActivity extends AddResourceActivity<Finance> {
                         Calendar dateCalendar = formatFromDateStringToCalendar(dateString);
                         BigDecimal valueBigDecimal = getBigDecimalValue();
                         loadingDialog.show();
-                        new AsyncTask(new AsyncTask.AsyncTaskInterface() {
+                        Finance finance;
+                        if (idToUpdate == null) {
+                            finance = new Finance(name, dateCalendar, month, year, valueBigDecimal, sector, typeFinance);
+                        } else {
+                            finance = new Finance(idToUpdate, name, dateCalendar, month, year, valueBigDecimal, sector, typeFinance);
+                        }
+                        categoryDAO.getSaveAsyncTask(finance, new OnTaskListener() {
                             @Override
-                            public List<Object> doInBackground() {
-                                if (idToUpdate == null) {
-                                    categoryDAO.save(new Finance(name, dateCalendar, month, year, valueBigDecimal, sector, typeFinance));
-                                } else {
-                                    categoryDAO.update(
-                                            new Finance(idToUpdate, name, dateCalendar, month, year, valueBigDecimal, sector, typeFinance));
-                                }
-                                return null;
-                            }
-
-                            @Override
-                            public void onPostExecute(List<Object> objects) {
+                            public void onTask() {
                                 loadingDialog.dismiss();
                                 if (idToUpdate == null) {
                                     showToast(getApplicationContext(), getResources().getString(R.string.add_finance_toast_message));

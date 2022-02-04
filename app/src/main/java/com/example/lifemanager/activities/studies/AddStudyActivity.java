@@ -21,15 +21,14 @@ import android.widget.Spinner;
 
 import com.example.lifemanager.R;
 import com.example.lifemanager.activities.AddResourceActivity;
-import com.example.lifemanager.async_tasks.AsyncTask;
 import com.example.lifemanager.dao.StudiesDAO;
 import com.example.lifemanager.enums.Category;
+import com.example.lifemanager.interfaces.OnResultListener;
 import com.example.lifemanager.interfaces.OnTaskListener;
 import com.example.lifemanager.model.Studies;
 import com.example.lifemanager.roomConfig.LifeManagerDatabase;
 import com.example.lifemanager.util.Tools;
 
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
@@ -58,19 +57,11 @@ public class AddStudyActivity extends AddResourceActivity<Studies> {
     }
 
     private void fillWithNextPosition() {
-        new AsyncTask(new AsyncTask.AsyncTaskInterface() {
+        ((StudiesDAO) categoryDAO).getMaxPositionAsyncTask(new OnResultListener<Integer>() {
             @Override
-            public List<Object> doInBackground() {
-                List<Object> objects = new ArrayList<>();
-                objects.add(((StudiesDAO) categoryDAO).getMaxPosition());
-                return objects;
-            }
-
-            @Override
-            public void onPostExecute(List<Object> objects) {
-                Integer maxPosition = (Integer) objects.get(0);
-                if (maxPosition != null){
-                    studiesFormPosition.setText(((maxPosition) + 1)+"");
+            public void onResult(Integer result) {
+                if (result != null){
+                    studiesFormPosition.setText(((result) + 1)+"");
                 }
             }
         }).execute();
@@ -91,19 +82,15 @@ public class AddStudyActivity extends AddResourceActivity<Studies> {
                     try{
                         Integer positionInteger = Integer.parseInt(position);
                         loadingDialog.show();
-                        new AsyncTask(new AsyncTask.AsyncTaskInterface() {
+                        Studies study;
+                        if (idToUpdate == null){
+                            study = new Studies(name,linkCourse,category,positionInteger,status);
+                        }else{
+                            study = new Studies(idToUpdate,name,linkCourse,category,positionInteger,status);
+                        }
+                        categoryDAO.getSaveAsyncTask(study, new OnTaskListener() {
                             @Override
-                            public List<Object> doInBackground() {
-                                if (idToUpdate == null){
-                                    categoryDAO.save(new Studies(name,linkCourse,category,positionInteger,status));
-                                }else{
-                                    categoryDAO.update(new Studies(idToUpdate,name,linkCourse,category,positionInteger,status));
-                                }
-                                return null;
-                            }
-
-                            @Override
-                            public void onPostExecute(List<Object> objects) {
+                            public void onTask() {
                                 loadingDialog.dismiss();
                                 if (idToUpdate == null){
                                     Tools.showToastIfEnabled(getApplicationContext(),getResources().getString(R.string.add_study_toast_message));

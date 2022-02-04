@@ -6,13 +6,12 @@ import android.os.Bundle;
 import com.example.lifemanager.R;
 import com.example.lifemanager.activities.CategoryActivity;
 import com.example.lifemanager.adapters.FinancesAdapter;
-import com.example.lifemanager.async_tasks.AsyncTask;
 import com.example.lifemanager.dao.FinanceDAO;
 import com.example.lifemanager.interfaces.OnItemClickListener;
+import com.example.lifemanager.interfaces.OnResultListener;
 import com.example.lifemanager.model.Finance;
 import com.example.lifemanager.roomConfig.LifeManagerDatabase;
 
-import java.util.ArrayList;
 import java.util.List;
 
 public class FinancesActivity extends CategoryActivity<Finance> {
@@ -30,21 +29,10 @@ public class FinancesActivity extends CategoryActivity<Finance> {
 
     protected void configureAdapter() {
         loadingDialog.show();
-        new AsyncTask(new AsyncTask.AsyncTaskInterface() {
+        ((FinanceDAO) categoryDAO).getAllFinancesAsyncTask(new OnResultListener<List<Finance>>() {
             @Override
-            public List<Object> doInBackground() {
-                List<Object> objects = new ArrayList<>();
-                objects.addAll(((FinanceDAO) categoryDAO).getAllFinances());
-                return objects;
-            }
-
-            @Override
-            public void onPostExecute(List<Object> objects) {
-                List<Finance> finances = new ArrayList<>();
-                for (Object object : objects){
-                    finances.add((Finance) object);
-                }
-                adapter = new FinancesAdapter(FinancesActivity.this, finances, new OnItemClickListener<Finance>() {
+            public void onResult(List<Finance> result) {
+                adapter = new FinancesAdapter(FinancesActivity.this, result, new OnItemClickListener<Finance>() {
                     @Override
                     public void onItemClick(Finance finance) {
                         Intent intent = new Intent(getApplicationContext(), DetailedFinanceActivity.class);

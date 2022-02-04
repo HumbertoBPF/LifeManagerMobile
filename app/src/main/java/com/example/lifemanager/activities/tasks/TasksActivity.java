@@ -6,13 +6,12 @@ import android.os.Bundle;
 import com.example.lifemanager.R;
 import com.example.lifemanager.activities.CategoryActivity;
 import com.example.lifemanager.adapters.TasksAdapter;
-import com.example.lifemanager.async_tasks.AsyncTask;
 import com.example.lifemanager.dao.TaskDAO;
 import com.example.lifemanager.interfaces.OnItemClickListener;
+import com.example.lifemanager.interfaces.OnResultListener;
 import com.example.lifemanager.model.Task;
 import com.example.lifemanager.roomConfig.LifeManagerDatabase;
 
-import java.util.ArrayList;
 import java.util.List;
 
 public class TasksActivity extends CategoryActivity<Task> {
@@ -30,21 +29,10 @@ public class TasksActivity extends CategoryActivity<Task> {
 
     protected void configureAdapter() {
         loadingDialog.show();
-        new AsyncTask(new AsyncTask.AsyncTaskInterface() {
+        ((TaskDAO) categoryDAO).getAllTasksAsyncTask(new OnResultListener<List<Task>>() {
             @Override
-            public List<Object> doInBackground() {
-                List<Object> objects = new ArrayList<>();
-                objects.addAll(((TaskDAO) categoryDAO).getAllTasks());
-                return objects;
-            }
-
-            @Override
-            public void onPostExecute(List<Object> objects) {
-                List<Task> tasks = new ArrayList<>();
-                for (Object object : objects){
-                    tasks.add((Task) object);
-                }
-                adapter = new TasksAdapter(TasksActivity.this, tasks, new OnItemClickListener<Task>() {
+            public void onResult(List<Task> result) {
+                adapter = new TasksAdapter(TasksActivity.this, result, new OnItemClickListener<Task>() {
                     @Override
                     public void onItemClick(Task task) {
                         Intent intent = new Intent(getApplicationContext(),DetailedTaskActivity.class);
