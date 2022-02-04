@@ -8,11 +8,17 @@ import static com.example.lifemanager.tools.Util.showToast;
 
 import android.os.Bundle;
 import android.view.View;
+import android.view.ViewTreeObserver;
+import android.widget.Button;
+import android.widget.EditText;
+import android.widget.RadioButton;
+import android.widget.RadioGroup;
+import android.widget.Spinner;
+import android.widget.TextView;
 
 import com.example.lifemanager.R;
 import com.example.lifemanager.activities.AddResourceActivity;
 import com.example.lifemanager.async_tasks.AsyncTask;
-import com.example.lifemanager.dao.FinanceDAO;
 import com.example.lifemanager.enums.Sector;
 import com.example.lifemanager.enums.TypeFinance;
 import com.example.lifemanager.model.Finance;
@@ -24,18 +30,25 @@ import java.util.Arrays;
 import java.util.Calendar;
 import java.util.List;
 
-public class AddFinanceActivity extends AddResourceActivity {
+public class AddFinanceActivity extends AddResourceActivity<Finance> {
 
-    private FinanceDAO financeDAO;
+    private EditText financeFormName;
+    private TextView financeFormDate;
+    private EditText financeFormValue;
+    private RadioGroup financeFormType;
+    private RadioButton financeFormTypeIncome;
+    private Spinner financeFormSectorSpinner;
+    private Button financeFormButtonSubmit;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        financeDAO = LifeManagerDatabase.getInstance(this).getRoomFinanceDAO();
+        categoryDAO = LifeManagerDatabase.getInstance(this).getRoomFinanceDAO();
         titleAppbar = getResources().getString(R.string.title_appbar_finance_form);
         colorAppbar = getResources().getColor(R.color.color_finances_item);
         resourceType = getResources().getStringArray(R.array.categories)[0];
+        layoutId = R.layout.activity_add_finance;
         super.onCreate(savedInstanceState);
-
+        configureSpinner(R.array.sector_finance, financeFormSectorSpinner);
         configureDatePicker(getSupportFragmentManager(), financeFormDate, getResources().getString(R.string.form_date_label),
                 "financeDatePicker");
     }
@@ -61,9 +74,9 @@ public class AddFinanceActivity extends AddResourceActivity {
                             @Override
                             public List<Object> doInBackground() {
                                 if (idToUpdate == null) {
-                                    financeDAO.save(new Finance(name, dateCalendar, month, year, valueBigDecimal, sector, typeFinance));
+                                    categoryDAO.save(new Finance(name, dateCalendar, month, year, valueBigDecimal, sector, typeFinance));
                                 } else {
-                                    financeDAO.update(
+                                    categoryDAO.update(
                                             new Finance(idToUpdate, name, dateCalendar, month, year, valueBigDecimal, sector, typeFinance));
                                 }
                                 return null;
@@ -98,8 +111,14 @@ public class AddFinanceActivity extends AddResourceActivity {
         if (finance.getTypeFinance().equals(TypeFinance.EXPENSE)){
             financeFormType.check(R.id.finance_form_expense);
         }
-        List<String> sectors = Arrays.asList(getResources().getStringArray(R.array.sector_finance));
-        financeFormSectorSpinner.setSelection(sectors.indexOf(finance.getSector().getValue()));
+        financeFormSectorSpinner.getViewTreeObserver().addOnGlobalLayoutListener(new ViewTreeObserver.OnGlobalLayoutListener() {
+            @Override
+            public void onGlobalLayout() {
+                financeFormSectorSpinner.getViewTreeObserver().removeOnGlobalLayoutListener(this);
+                List<String> sectors = Arrays.asList(getResources().getStringArray(R.array.sector_finance));
+                financeFormSectorSpinner.setSelection(sectors.indexOf(finance.getSector().getValue()));
+            }
+        });
     }
 
     private Sector getSector() {
@@ -129,17 +148,14 @@ public class AddFinanceActivity extends AddResourceActivity {
                 .setScale(2, RoundingMode.HALF_UP);
     }
 
-    protected void makeFormVisible() {
-        financeFormName.setVisibility(View.VISIBLE);
-        financeFormDate.setVisibility(View.VISIBLE);
-        financeFormValue.setVisibility(View.VISIBLE);
-        financeFormTypeLabel.setVisibility(View.VISIBLE);
-        financeFormType.setVisibility(View.VISIBLE);
-        financeFormTypeIncome.setVisibility(View.VISIBLE);
-        financeFormTypeExpense.setVisibility(View.VISIBLE);
-        financeFormSectorSpinnerLabel.setVisibility(View.VISIBLE);
-        financeFormSectorSpinner.setVisibility(View.VISIBLE);
-        financeFormButtonSubmit.setVisibility(View.VISIBLE);
+    protected void getLayoutViews() {
+        financeFormName = findViewById(R.id.finance_form_name);
+        financeFormDate = findViewById(R.id.finance_form_date);
+        financeFormValue = findViewById(R.id.finance_form_value);
+        financeFormType = findViewById(R.id.finance_form_type);
+        financeFormTypeIncome = findViewById(R.id.finance_form_income);
+        financeFormSectorSpinner = findViewById(R.id.finance_form_sector);
+        financeFormButtonSubmit = findViewById(R.id.finance_form_button_submit);
     }
 
 }

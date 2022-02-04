@@ -1,0 +1,129 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        tools:context=".activities.AddResourceActivity">
+
+        <EditText
+            android:id="@+id/finance_form_name"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:inputType="text"
+            android:textSize="18sp"
+            android:hint="@string/form_name_hint"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            android:layout_margin="5dp"/>
+
+        <TextView
+            android:id="@+id/finance_form_date"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:text="@string/form_date_hint"
+            android:textSize="18sp"
+            app:layout_constraintTop_toBottomOf="@id/finance_form_name"
+            app:layout_constraintStart_toStartOf="@id/finance_form_name"
+            app:layout_constraintEnd_toEndOf="@id/finance_form_name"
+            android:layout_marginVertical="5dp"/>
+
+        <EditText
+            android:id="@+id/finance_form_value"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:inputType="numberDecimal"
+            android:textSize="18sp"
+            android:hint="@string/form_value_hint"
+            app:layout_constraintTop_toBottomOf="@id/finance_form_date"
+            app:layout_constraintStart_toStartOf="@id/finance_form_date"
+            app:layout_constraintEnd_toEndOf="@id/finance_form_date"
+            android:layout_marginVertical="5dp"/>
+
+        <TextView
+            android:id="@+id/finance_form_type_label"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintTop_toBottomOf="@id/finance_form_value"
+            app:layout_constraintStart_toStartOf="@id/finance_form_date"
+            app:layout_constraintEnd_toEndOf="@id/finance_form_date"
+            app:layout_constraintHorizontal_bias="0.0"
+            android:textSize="18sp"
+            android:textStyle="bold"
+            android:text="@string/form_type_label"/>
+
+        <RadioGroup
+            android:id="@+id/finance_form_type"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:textSize="18sp"
+            app:layout_constraintTop_toBottomOf="@id/finance_form_type_label"
+            app:layout_constraintStart_toStartOf="@id/finance_form_date"
+            app:layout_constraintEnd_toEndOf="@id/finance_form_date"
+            android:layout_marginVertical="5dp">
+
+            <RadioButton
+                android:id="@+id/finance_form_income"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:checked="false"
+                android:textSize="18sp"
+                android:text="@string/form_type_radio_button_income"/>
+
+            <RadioButton
+                android:id="@+id/finance_form_expense"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:checked="true"
+                android:textSize="18sp"
+                android:text="@string/form_type_radio_button_expense"/>
+
+        </RadioGroup>
+
+        <TextView
+            android:id="@+id/finance_form_sector_label"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintTop_toBottomOf="@id/finance_form_type"
+            app:layout_constraintStart_toStartOf="@id/finance_form_date"
+            app:layout_constraintEnd_toEndOf="@id/finance_form_date"
+            app:layout_constraintHorizontal_bias="0.0"
+            android:textSize="18sp"
+            android:textStyle="bold"
+            android:text="@string/form_sector_label"/>
+
+        <Spinner
+            android:id="@+id/finance_form_sector"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:background="@drawable/border_spinner"
+            android:textSize="18sp"
+            app:layout_constraintTop_toBottomOf="@id/finance_form_sector_label"
+            app:layout_constraintStart_toStartOf="@id/finance_form_date"
+            app:layout_constraintEnd_toEndOf="@id/finance_form_date"
+            android:paddingVertical="7dp"
+            android:layout_marginVertical="5dp"/>
+
+        <Button
+            android:id="@+id/finance_form_button_submit"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="18sp"
+            android:text="@string/title_appbar_finance_form"
+            android:backgroundTint="@color/color_finances_item"
+            app:layout_constraintTop_toBottomOf="@id/finance_form_sector"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            android:layout_marginVertical="15dp"/>
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</ScrollView>

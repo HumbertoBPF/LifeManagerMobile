@@ -12,6 +12,12 @@ import static com.example.lifemanager.tools.Util.showToast;
 
 import android.os.Bundle;
 import android.view.View;
+import android.view.ViewTreeObserver;
+import android.widget.Button;
+import android.widget.EditText;
+import android.widget.RadioButton;
+import android.widget.RadioGroup;
+import android.widget.Spinner;
 
 import com.example.lifemanager.R;
 import com.example.lifemanager.activities.AddResourceActivity;
@@ -26,18 +32,25 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
-public class AddStudyActivity extends AddResourceActivity {
+public class AddStudyActivity extends AddResourceActivity<Studies> {
 
-    private StudiesDAO studiesDAO;
+    private EditText studiesFormName;
+    private EditText studiesFormLinkCourse;
+    private EditText studiesFormPosition;
+    private RadioGroup studiesFormStatus;
+    private RadioButton studiesFormConcluded;
+    private Spinner studiesFormCategorySpinner;
+    private Button studiesFormButtonSubmit;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        studiesDAO = LifeManagerDatabase.getInstance(this).getRoomStudiesDAO();
+        categoryDAO = LifeManagerDatabase.getInstance(this).getRoomStudiesDAO();
         titleAppbar = getResources().getString(R.string.title_appbar_studies_form);
         colorAppbar = getResources().getColor(R.color.color_studies_item);
         resourceType = getResources().getStringArray(R.array.categories)[1];
+        layoutId = R.layout.activity_add_study;
         super.onCreate(savedInstanceState);
-
+        configureSpinner(R.array.categories_study, studiesFormCategorySpinner);
         if (idToUpdate == null){
             fillWithNextPosition();
         }
@@ -48,7 +61,7 @@ public class AddStudyActivity extends AddResourceActivity {
             @Override
             public List<Object> doInBackground() {
                 List<Object> objects = new ArrayList<>();
-                objects.add(studiesDAO.getMaxPosition());
+                objects.add(((StudiesDAO) categoryDAO).getMaxPosition());
                 return objects;
             }
 
@@ -81,9 +94,9 @@ public class AddStudyActivity extends AddResourceActivity {
                             @Override
                             public List<Object> doInBackground() {
                                 if (idToUpdate == null){
-                                    studiesDAO.save(new Studies(name,linkCourse,category,positionInteger,status));
+                                    categoryDAO.save(new Studies(name,linkCourse,category,positionInteger,status));
                                 }else{
-                                    studiesDAO.update(new Studies(idToUpdate,name,linkCourse,category,positionInteger,status));
+                                    categoryDAO.update(new Studies(idToUpdate,name,linkCourse,category,positionInteger,status));
                                 }
                                 return null;
                             }
@@ -117,8 +130,14 @@ public class AddStudyActivity extends AddResourceActivity {
         if (study.getStatus()){
             studiesFormStatus.check(R.id.studies_form_status_concluded);
         }
-        List<String> categories = Arrays.asList(getResources().getStringArray(R.array.categories_study));
-        studiesFormCategorySpinner.setSelection(categories.indexOf(study.getCategory().getValue()));
+        studiesFormCategorySpinner.getViewTreeObserver().addOnGlobalLayoutListener(new ViewTreeObserver.OnGlobalLayoutListener() {
+            @Override
+            public void onGlobalLayout() {
+                studiesFormCategorySpinner.getViewTreeObserver().removeOnGlobalLayoutListener(this);
+                List<String> categories = Arrays.asList(getResources().getStringArray(R.array.categories_study));
+                studiesFormCategorySpinner.setSelection(categories.indexOf(study.getCategory().getValue()));
+            }
+        });
     }
 
     private Category getCategory(){
@@ -141,17 +160,14 @@ public class AddStudyActivity extends AddResourceActivity {
         return BACKEND;
     }
 
-    protected void makeFormVisible() {
-        studiesFormName.setVisibility(View.VISIBLE);
-        studiesFormLinkCourse.setVisibility(View.VISIBLE);
-        studiesFormPosition.setVisibility(View.VISIBLE);
-        studiesFormStatusLabel.setVisibility(View.VISIBLE);
-        studiesFormStatus.setVisibility(View.VISIBLE);
-        studiesFormConcluded.setVisibility(View.VISIBLE);
-        studiesFormPending.setVisibility(View.VISIBLE);
-        studiesFormCategorySpinnerLabel.setVisibility(View.VISIBLE);
-        studiesFormCategorySpinner.setVisibility(View.VISIBLE);
-        studiesFormButtonSubmit.setVisibility(View.VISIBLE);
+    protected void getLayoutViews() {
+        studiesFormName = findViewById(R.id.studies_form_name);
+        studiesFormLinkCourse = findViewById(R.id.studies_form_link_course);
+        studiesFormPosition = findViewById(R.id.studies_form_position);
+        studiesFormStatus = findViewById(R.id.studies_form_status);
+        studiesFormConcluded = findViewById(R.id.studies_form_status_concluded);
+        studiesFormCategorySpinner = findViewById(R.id.studies_form_category);
+        studiesFormButtonSubmit = findViewById(R.id.studies_form_button_submit);
     }
 
 }

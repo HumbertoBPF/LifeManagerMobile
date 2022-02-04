@@ -1,0 +1,165 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <EditText
+        android:id="@+id/task_form_subject"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:inputType="text"
+        android:textSize="18sp"
+        android:hint="@string/form_subject_hint"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:layout_margin="5dp"/>
+
+    <EditText
+        android:id="@+id/task_form_name"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:inputType="text"
+        android:textSize="18sp"
+        android:hint="@string/form_name_hint"
+        app:layout_constraintTop_toBottomOf="@id/task_form_subject"
+        app:layout_constraintStart_toStartOf="@id/task_form_subject"
+        app:layout_constraintEnd_toEndOf="@id/task_form_subject"
+        android:layout_marginVertical="5dp"/>
+
+    <EditText
+        android:id="@+id/task_form_description"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:inputType="text"
+        android:textSize="18sp"
+        android:hint="@string/form_description_hint"
+        app:layout_constraintTop_toBottomOf="@id/task_form_name"
+        app:layout_constraintStart_toStartOf="@id/task_form_subject"
+        app:layout_constraintEnd_toEndOf="@id/task_form_subject"
+        android:layout_marginVertical="5dp"/>
+
+    <TextView
+        android:id="@+id/task_form_status_label"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toBottomOf="@id/task_form_description"
+        app:layout_constraintStart_toStartOf="@id/task_form_subject"
+        app:layout_constraintEnd_toEndOf="@id/task_form_subject"
+        app:layout_constraintHorizontal_bias="0.0"
+        android:textSize="18sp"
+        android:textStyle="bold"
+        android:text="@string/form_status_label"/>
+
+    <RadioGroup
+        android:id="@+id/task_form_status"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        app:layout_constraintTop_toBottomOf="@id/task_form_status_label"
+        app:layout_constraintStart_toStartOf="@id/task_form_subject"
+        app:layout_constraintEnd_toEndOf="@id/task_form_subject"
+        android:layout_marginVertical="5dp">
+
+        <RadioButton
+            android:id="@+id/task_form_status_concluded"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:checked="false"
+            android:textSize="18sp"
+            android:text="@string/form_status_radio_button_concluded"/>
+
+        <RadioButton
+            android:id="@+id/task_form_status_pending"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:checked="true"
+            android:textSize="18sp"
+            android:text="@string/form_status_radio_button_pending"/>
+
+    </RadioGroup>
+
+    <TextView
+        android:id="@+id/task_form_priority_label"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toBottomOf="@id/task_form_status"
+        app:layout_constraintStart_toStartOf="@id/task_form_subject"
+        app:layout_constraintEnd_toEndOf="@id/task_form_subject"
+        app:layout_constraintHorizontal_bias="0.0"
+        android:textSize="18sp"
+        android:textStyle="bold"
+        android:text="@string/form_priority_label"/>
+
+    <RadioGroup
+        android:id="@+id/task_form_priority"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        app:layout_constraintTop_toBottomOf="@id/task_form_priority_label"
+        app:layout_constraintStart_toStartOf="@id/task_form_subject"
+        app:layout_constraintEnd_toEndOf="@id/task_form_subject"
+        android:layout_marginVertical="5dp">
+
+        <RadioButton
+            android:id="@+id/task_form_status_high"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:checked="false"
+            android:textSize="18sp"
+            android:text="@string/form_priority_radio_button_high"/>
+
+        <RadioButton
+            android:id="@+id/task_form_status_medium"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:checked="true"
+            android:textSize="18sp"
+            android:text="@string/form_priority_radio_button_medium"/>
+
+        <RadioButton
+            android:id="@+id/task_form_status_low"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:checked="false"
+            android:textSize="18sp"
+            android:text="@string/form_priority_radio_button_low"/>
+
+    </RadioGroup>
+
+    <TextView
+        android:id="@+id/task_form_deadline"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:textSize="18sp"
+        android:hint="@string/form_deadline_hint"
+        app:layout_constraintTop_toBottomOf="@id/task_form_priority"
+        app:layout_constraintStart_toStartOf="@id/task_form_subject"
+        app:layout_constraintEnd_toEndOf="@id/task_form_subject"
+        android:layout_marginVertical="5dp"/>
+
+    <TextView
+        android:id="@+id/task_form_due_date"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:textSize="18sp"
+        android:hint="@string/form_due_date_hint"
+        app:layout_constraintTop_toBottomOf="@id/task_form_deadline"
+        app:layout_constraintStart_toStartOf="@id/task_form_subject"
+        app:layout_constraintEnd_toEndOf="@id/task_form_subject"
+        android:layout_marginVertical="5dp"/>
+
+    <Button
+        android:id="@+id/task_form_button_submit"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textSize="18sp"
+        android:text="@string/title_appbar_task_form"
+        android:backgroundTint="@color/color_tasks_item"
+        app:layout_constraintTop_toBottomOf="@id/task_form_due_date"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:layout_marginVertical="15dp"/>
+
+</androidx.constraintlayout.widget.ConstraintLayout>
