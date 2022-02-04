@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".activities.DetailedResourceActivity">
+
+    <TextView
+        android:id="@+id/finance_detail_name"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:textSize="18sp"
+        tools:text="Name"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:layout_margin="5dp"/>
+
+    <TextView
+        android:id="@+id/finance_detail_date"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:textSize="18sp"
+        tools:text="Date"
+        app:layout_constraintTop_toBottomOf="@id/finance_detail_name"
+        app:layout_constraintStart_toStartOf="@id/finance_detail_name"
+        app:layout_constraintEnd_toEndOf="@id/finance_detail_name"
+        android:layout_marginVertical="5dp"/>
+
+    <TextView
+        android:id="@+id/finance_detail_month"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:textSize="18sp"
+        tools:text="Month"
+        app:layout_constraintTop_toBottomOf="@id/finance_detail_date"
+        app:layout_constraintStart_toStartOf="@id/finance_detail_name"
+        app:layout_constraintEnd_toEndOf="@id/finance_detail_name"
+        android:layout_marginVertical="5dp"/>
+
+    <TextView
+        android:id="@+id/finance_detail_year"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:textSize="18sp"
+        tools:text="Year"
+        app:layout_constraintTop_toBottomOf="@id/finance_detail_month"
+        app:layout_constraintStart_toStartOf="@id/finance_detail_name"
+        app:layout_constraintEnd_toEndOf="@id/finance_detail_name"
+        android:layout_marginVertical="5dp"/>
+
+    <TextView
+        android:id="@+id/finance_detail_value"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:textSize="18sp"
+        tools:text="Value"
+        app:layout_constraintTop_toBottomOf="@id/finance_detail_year"
+        app:layout_constraintStart_toStartOf="@id/finance_detail_name"
+        app:layout_constraintEnd_toEndOf="@id/finance_detail_name"
+        android:layout_marginVertical="5dp"/>
+
+    <TextView
+        android:id="@+id/finance_detail_sector"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:textSize="18sp"
+        tools:text="Sector"
+        app:layout_constraintTop_toBottomOf="@id/finance_detail_value"
+        app:layout_constraintStart_toStartOf="@id/finance_detail_name"
+        app:layout_constraintEnd_toEndOf="@id/finance_detail_name"
+        android:layout_marginVertical="5dp"/>
+
+    <TextView
+        android:id="@+id/finance_detail_type_finance"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:textSize="18sp"
+        tools:text="Type"
+        app:layout_constraintTop_toBottomOf="@id/finance_detail_sector"
+        app:layout_constraintStart_toStartOf="@id/finance_detail_name"
+        app:layout_constraintEnd_toEndOf="@id/finance_detail_name"
+        android:layout_marginVertical="5dp"/>
+
+</androidx.constraintlayout.widget.ConstraintLayout>

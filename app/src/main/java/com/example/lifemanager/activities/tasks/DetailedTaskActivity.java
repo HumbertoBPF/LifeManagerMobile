@@ -3,7 +3,7 @@ package com.example.lifemanager.activities.tasks;
 import static com.example.lifemanager.model.Constants.formatter;
 
 import android.os.Bundle;
-import android.view.View;
+import android.widget.TextView;
 
 import com.example.lifemanager.R;
 import com.example.lifemanager.activities.DetailedResourceActivity;
@@ -11,22 +11,31 @@ import com.example.lifemanager.model.Task;
 
 public class DetailedTaskActivity extends DetailedResourceActivity {
 
+    private TextView taskDetailSubject;
+    private TextView taskDetailName;
+    private TextView taskDetailDescription;
+    private TextView taskDetailStatus;
+    private TextView taskDetailPriority;
+    private TextView taskDetailDeadline;
+    private TextView taskDetailDueDate;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         titleAppBar = getResources().getString(R.string.title_appbar_details_task);
         colorAppBar = getResources().getColor(R.color.color_tasks_item);
         resourceType = getResources().getStringArray(R.array.categories)[2];
+        layoutId = R.layout.activity_detailed_task;
         super.onCreate(savedInstanceState);
     }
 
-    protected void makeViewsVisible() {
-        taskDetailSubject.setVisibility(View.VISIBLE);
-        taskDetailName.setVisibility(View.VISIBLE);
-        taskDetailDescription.setVisibility(View.VISIBLE);
-        taskDetailStatus.setVisibility(View.VISIBLE);
-        taskDetailPriority.setVisibility(View.VISIBLE);
-        taskDetailDeadline.setVisibility(View.VISIBLE);
-        taskDetailDueDate.setVisibility(View.VISIBLE);
+    protected void getLayoutViews() {
+        taskDetailSubject = findViewById(R.id.task_detail_subject);
+        taskDetailName = findViewById(R.id.task_detail_name);
+        taskDetailDescription = findViewById(R.id.task_detail_description);
+        taskDetailStatus = findViewById(R.id.task_detail_status);
+        taskDetailPriority = findViewById(R.id.task_detail_priority);
+        taskDetailDeadline = findViewById(R.id.task_detail_deadline);
+        taskDetailDueDate = findViewById(R.id.task_detail_due_date);
     }
 
     protected void bind(Object object){
