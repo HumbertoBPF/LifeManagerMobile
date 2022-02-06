@@ -25,8 +25,8 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.lifemanager.R;
 import com.example.lifemanager.activities.finances.AddFinanceActivity;
+import com.example.lifemanager.activities.finances.DetailedFinanceActivity;
 import com.example.lifemanager.enums.TypeFinance;
-import com.example.lifemanager.interfaces.OnItemClickListener;
 import com.example.lifemanager.model.Finance;
 import com.example.lifemanager.roomConfig.LifeManagerDatabase;
 
@@ -36,12 +36,10 @@ public class FinancesAdapter extends RecyclerView.Adapter<FinancesAdapter.Financ
 
     private Context context;
     private List<Finance> finances;
-    private OnItemClickListener<Finance> onItemClickListener;
 
-    public FinancesAdapter(Context context, List<Finance> finances, OnItemClickListener<Finance> onItemClickListener) {
+    public FinancesAdapter(Context context, List<Finance> finances) {
         this.context = context;
         this.finances = finances;
-        this.onItemClickListener = onItemClickListener;
     }
 
     @NonNull
@@ -74,10 +72,6 @@ public class FinancesAdapter extends RecyclerView.Adapter<FinancesAdapter.Financ
             financeItemValue = itemView.findViewById(R.id.text_view_2);
             financeItemDate = itemView.findViewById(R.id.text_view_3);
             itemView.setOnCreateContextMenuListener(this);
-            itemView.setOnClickListener(view -> {
-                Finance finance = finances.get(getPosition());
-                onItemClickListener.onItemClick(finance);
-            });
         }
 
         public void bind(Finance finance){
@@ -91,6 +85,12 @@ public class FinancesAdapter extends RecyclerView.Adapter<FinancesAdapter.Financ
             financeItemValue.setText(CURRENCY_FORMAT.format(finance.getValue())+"");
             financeItemDate.setText(formatter.format(finance.getDate().getTime()));
             rootCardView.setBackground(makeSelector(Color.parseColor("#FFFFFF"),0.95f));
+
+            itemView.setOnClickListener(view -> {
+                Intent intent = new Intent(context, DetailedFinanceActivity.class);
+                intent.putExtra("Finances",finance);
+                context.startActivity(intent);
+            });
         }
 
         @Override

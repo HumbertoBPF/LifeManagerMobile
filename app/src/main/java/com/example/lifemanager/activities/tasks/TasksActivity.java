@@ -1,6 +1,5 @@
 package com.example.lifemanager.activities.tasks;
 
-import android.content.Intent;
 import android.os.Bundle;
 
 import androidx.recyclerview.widget.RecyclerView;
@@ -20,7 +19,6 @@ public class TasksActivity extends CategoryActivity<Task> {
         titleAppbar = getResources().getStringArray(R.array.categories)[2];
         colorAppbar = getResources().getColor(R.color.color_tasks_item);
         titleIconAppbar = getString(R.string.title_appbar_task_form);
-        resourceType = getResources().getStringArray(R.array.categories)[2];
         formAddClass = AddTaskActivity.class;
         super.onCreate(savedInstanceState);
         categoryDAO = LifeManagerDatabase.getInstance(this).getRoomTaskDAO();
@@ -28,11 +26,7 @@ public class TasksActivity extends CategoryActivity<Task> {
 
     @Override
     protected RecyclerView.Adapter initializeAdapter(List<Task> list) {
-        return new TasksAdapter(TasksActivity.this, list, task -> {
-            Intent intent = new Intent(getApplicationContext(),DetailedTaskActivity.class);
-            intent.putExtra(resourceType,task);
-            startActivity(intent);
-        });
+        return new TasksAdapter(TasksActivity.this, list);
     }
 
 }

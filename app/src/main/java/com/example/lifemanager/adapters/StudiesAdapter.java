@@ -23,7 +23,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.lifemanager.R;
 import com.example.lifemanager.activities.studies.AddStudyActivity;
-import com.example.lifemanager.interfaces.OnItemClickListener;
+import com.example.lifemanager.activities.studies.DetailedStudyActivity;
 import com.example.lifemanager.model.Studies;
 import com.example.lifemanager.roomConfig.LifeManagerDatabase;
 
@@ -33,12 +33,10 @@ public class StudiesAdapter extends RecyclerView.Adapter<StudiesAdapter.StudyVie
 
     private Context context;
     private List<Studies> studies;
-    private OnItemClickListener<Studies> onItemClickListener;
 
-    public StudiesAdapter(Context context, List<Studies> studies, OnItemClickListener<Studies> onItemClickListener){
+    public StudiesAdapter(Context context, List<Studies> studies){
         this.context = context;
         this.studies = studies;
-        this.onItemClickListener = onItemClickListener;
     }
 
     @NonNull
@@ -73,10 +71,6 @@ public class StudiesAdapter extends RecyclerView.Adapter<StudiesAdapter.StudyVie
             studyItemName = itemView.findViewById(R.id.text_view_2);
             studyItemStatus = itemView.findViewById(R.id.text_view_3);
             itemView.setOnCreateContextMenuListener(this);
-            itemView.setOnClickListener(view -> {
-                Studies study = studies.get(getPosition());
-                onItemClickListener.onItemClick(study);
-            });
         }
 
         public void bind(Studies study){
@@ -90,6 +84,11 @@ public class StudiesAdapter extends RecyclerView.Adapter<StudiesAdapter.StudyVie
             studyItemName.setText(study.getName());
             studyItemStatus.setText(getStatusString(study.getStatus()));
             rootCardView.setBackground(makeSelector(Color.parseColor("#FFFFFF"),0.95f));
+            itemView.setOnClickListener(view -> {
+                Intent intent = new Intent(context, DetailedStudyActivity.class);
+                intent.putExtra("Studies",study);
+                context.startActivity(intent);
+            });
         }
 
         private String getStatusString(Boolean status){

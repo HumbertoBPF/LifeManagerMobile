@@ -1,6 +1,5 @@
 package com.example.lifemanager.activities.finances;
 
-import android.content.Intent;
 import android.os.Bundle;
 
 import androidx.recyclerview.widget.RecyclerView;
@@ -20,7 +19,6 @@ public class FinancesActivity extends CategoryActivity<Finance> {
         titleAppbar = getResources().getStringArray(R.array.categories)[0];
         colorAppbar = getResources().getColor(R.color.color_finances_item);
         titleIconAppbar = getString(R.string.title_appbar_finance_form);
-        resourceType = getResources().getStringArray(R.array.categories)[0];
         formAddClass = AddFinanceActivity.class;
         super.onCreate(savedInstanceState);
         categoryDAO = LifeManagerDatabase.getInstance(this).getRoomFinanceDAO();
@@ -28,11 +26,7 @@ public class FinancesActivity extends CategoryActivity<Finance> {
 
     @Override
     protected RecyclerView.Adapter initializeAdapter(List<Finance> list) {
-        return new FinancesAdapter(FinancesActivity.this, list, finance -> {
-            Intent intent = new Intent(getApplicationContext(), DetailedFinanceActivity.class);
-            intent.putExtra(resourceType,finance);
-            startActivity(intent);
-        });
+        return new FinancesAdapter(FinancesActivity.this, list);
     }
 
 }

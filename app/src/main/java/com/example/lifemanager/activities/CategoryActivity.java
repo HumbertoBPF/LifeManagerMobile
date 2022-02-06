@@ -24,7 +24,6 @@ public abstract class CategoryActivity<E> extends AppCompatActivity {
     protected String titleAppbar = null;
     protected Integer colorAppbar = null;
     protected String titleIconAppbar = null;
-    protected String resourceType = null;
 
     protected Class<?> formAddClass;
     protected BaseDAO<E> categoryDAO;

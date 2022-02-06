@@ -24,7 +24,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.lifemanager.R;
 import com.example.lifemanager.activities.tasks.AddTaskActivity;
-import com.example.lifemanager.interfaces.OnItemClickListener;
+import com.example.lifemanager.activities.tasks.DetailedTaskActivity;
 import com.example.lifemanager.model.Task;
 import com.example.lifemanager.roomConfig.LifeManagerDatabase;
 
@@ -34,12 +34,10 @@ public class TasksAdapter extends RecyclerView.Adapter<TasksAdapter.TaskViewHold
 
     private Context context;
     private List<Task> tasks;
-    private OnItemClickListener<Task> onItemClickListener;
 
-    public TasksAdapter(Context context, List<Task> tasks, OnItemClickListener<Task> onItemClickListener) {
+    public TasksAdapter(Context context, List<Task> tasks) {
         this.context = context;
         this.tasks = tasks;
-        this.onItemClickListener = onItemClickListener;
     }
 
     @NonNull
@@ -74,10 +72,6 @@ public class TasksAdapter extends RecyclerView.Adapter<TasksAdapter.TaskViewHold
             taskItemName = itemView.findViewById(R.id.text_view_2);
             taskItemDueDate = itemView.findViewById(R.id.text_view_3);
             itemView.setOnCreateContextMenuListener(this);
-            itemView.setOnClickListener(view -> {
-                Task task = tasks.get(getPosition());
-                onItemClickListener.onItemClick(task);
-            });
         }
 
         public void bind(Task task){
@@ -91,6 +85,11 @@ public class TasksAdapter extends RecyclerView.Adapter<TasksAdapter.TaskViewHold
             taskItemName.setText(task.getName());
             taskItemDueDate.setText(formatter.format(task.getDueDate().getTime()));
             rootCardView.setBackground(makeSelector(Color.parseColor("#FFFFFF"),0.95f));
+            itemView.setOnClickListener(view -> {
+                Intent intent = new Intent(context, DetailedTaskActivity.class);
+                intent.putExtra("Tasks",task);
+                context.startActivity(intent);
+            });
         }
 
         @Override
