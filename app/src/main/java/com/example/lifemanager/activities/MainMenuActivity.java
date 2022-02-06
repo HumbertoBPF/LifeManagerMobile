@@ -1,10 +1,5 @@
 package com.example.lifemanager.activities;
 
-import static com.example.lifemanager.model.Constants.CURRENCY_TYPE;
-import static com.example.lifemanager.model.Constants.ENABLE_TOASTS;
-import static com.example.lifemanager.model.Constants.USERNAME_FOR_APP;
-import static com.example.lifemanager.util.Tools.getSettingFromSharedPref;
-import static com.example.lifemanager.util.Tools.saveSettingOnSharedPref;
 import static com.example.lifemanager.util.Tools.yesOrNoDialog;
 
 import android.app.AlertDialog;
@@ -19,18 +14,17 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.lifemanager.R;
+import com.example.lifemanager.Settings;
 import com.example.lifemanager.activities.finances.FinancesActivity;
 import com.example.lifemanager.activities.studies.StudiesActivity;
 import com.example.lifemanager.activities.tasks.TasksActivity;
 import com.example.lifemanager.adapters.ListResourcesMenuAdapter;
 import com.example.lifemanager.model.RoundedButton;
 
-import java.text.NumberFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
-import java.util.Locale;
 
 public class MainMenuActivity extends AppCompatActivity {
 
@@ -38,8 +32,7 @@ public class MainMenuActivity extends AppCompatActivity {
     private RecyclerView resourcesList;
     private TextView dateTextView;
     private AlertDialog settingsDialog;
-    public static boolean ARE_TOASTS_ENABLED;
-    public static NumberFormat CURRENCY_FORMAT;
+    private Settings settings;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -73,50 +66,28 @@ public class MainMenuActivity extends AppCompatActivity {
         SimpleDateFormat formatter = new SimpleDateFormat("H");
         String currentHourString =formatter.format(Calendar.getInstance().getTime());
         int currentHour = Integer.parseInt(currentHourString);
-        String username = getSettingFromSharedPref(this,USERNAME_FOR_APP);
         if (currentHour < 12) {
-            dateTextView.setText(getString(R.string.greeting_morning)+username);
+            dateTextView.setText(getString(R.string.greeting_morning)+settings.getUsername());
         }else if (currentHour < 18) {
-            dateTextView.setText(getString(R.string.greeting_afternoon)+username);
+            dateTextView.setText(getString(R.string.greeting_afternoon)+settings.getUsername());
         }else {
-            dateTextView.setText(getString(R.string.greeting_evening)+username);
+            dateTextView.setText(getString(R.string.greeting_evening)+settings.getUsername());
         }
     }
 
     private void askForSettings() {
-        String enableToastsSetting = getSettingFromSharedPref(this,ENABLE_TOASTS);
-        String currencyTypeSetting = getSettingFromSharedPref(this,CURRENCY_TYPE);
-        if (enableToastsSetting.isEmpty()||currencyTypeSetting.isEmpty()){
+        if (settings.getCurrencyFormat() == null||settings.getToastsEnabled() == null){
             settingsDialog = yesOrNoDialog(this, getString(R.string.settings_dialog_title),
                     getString(R.string.settings_dialog_message), getString(R.string.settings_dialog_yes),
                     getString(R.string.settings_dialog_no),
                     (dialogInterface, i) -> startActivity(new Intent(getApplicationContext(), AppSettingsActivity.class)),
                     (dialogInterface, i) -> {
-                        defaultSettings();
+                        settings.defaultSettings();
                         settingsDialog.dismiss();
                     });
             settingsDialog.setCanceledOnTouchOutside(false);
             settingsDialog.show();
-        }else{
-            CURRENCY_FORMAT = getCurrencyFormat(currencyTypeSetting);
-            ARE_TOASTS_ENABLED = enableToastsSetting.equals("true");
         }
-    }
-
-    private NumberFormat getCurrencyFormat(String currencyTypeSetting) {
-        String[] currencyTypes = getResources().getStringArray(R.array.currency_types);
-        if (currencyTypeSetting.equals(currencyTypes[0])){
-            return NumberFormat.getCurrencyInstance(Locale.FRANCE);
-        }
-        return NumberFormat.getCurrencyInstance(Locale.US);
-    }
-
-    private void defaultSettings() {
-        saveSettingOnSharedPref(this,USERNAME_FOR_APP,"");
-        saveSettingOnSharedPref(this,ENABLE_TOASTS,"true");
-        saveSettingOnSharedPref(this,CURRENCY_TYPE,getResources().getStringArray(R.array.currency_types)[0]);
-        CURRENCY_FORMAT = NumberFormat.getCurrencyInstance(Locale.US);
-        ARE_TOASTS_ENABLED = true;
     }
 
     private void configureAdapter() {
@@ -134,6 +105,7 @@ public class MainMenuActivity extends AppCompatActivity {
 
     @Override
     protected void onResume() {
+        settings = new Settings(this);
         askForSettings();
         configureGreeting();
         super.onResume();

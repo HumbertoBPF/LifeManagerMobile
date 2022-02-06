@@ -1,6 +1,5 @@
 package com.example.lifemanager.adapters;
 
-import static com.example.lifemanager.activities.MainMenuActivity.CURRENCY_FORMAT;
 import static com.example.lifemanager.model.Constants.formatter;
 import static com.example.lifemanager.util.Tools.deletionDialog;
 import static com.example.lifemanager.util.Tools.loadingDialog;
@@ -24,6 +23,7 @@ import androidx.cardview.widget.CardView;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.lifemanager.R;
+import com.example.lifemanager.Settings;
 import com.example.lifemanager.activities.finances.AddFinanceActivity;
 import com.example.lifemanager.activities.finances.DetailedFinanceActivity;
 import com.example.lifemanager.enums.TypeFinance;
@@ -82,7 +82,7 @@ public class FinancesAdapter extends RecyclerView.Adapter<FinancesAdapter.Financ
                 financeItemDate.setTextColor(greenTextColor);
             }
             financeItemName.setText(finance.getName());
-            financeItemValue.setText(CURRENCY_FORMAT.format(finance.getValue())+"");
+            financeItemValue.setText(new Settings(context).getCurrencyFormat().format(finance.getValue())+"");
             financeItemDate.setText(formatter.format(finance.getDate().getTime()));
             rootCardView.setBackground(makeSelector(Color.parseColor("#FFFFFF"),0.95f));
 

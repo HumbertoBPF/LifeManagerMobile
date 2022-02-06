@@ -34,6 +34,12 @@ public abstract class BaseDAO<E> {
     @RawQuery
     protected abstract List<E> getAllRecords(SupportSQLiteQuery sqLiteQuery);
 
+    @Insert(onConflict = REPLACE)
+    protected abstract void save(E task);
+
+    @Delete
+    protected abstract void delete(E task);
+
     public AsyncTask<Void,Void,List<E>> getAllRecordsTask(OnResultListener<List<E>> onResultListener){
         return new AsyncTask<Void, Void, List<E>>() {
             @Override
@@ -52,12 +58,6 @@ public abstract class BaseDAO<E> {
             }
         };
     }
-
-    @Insert(onConflict = REPLACE)
-    protected abstract void save(E task);
-
-    @Delete
-    protected abstract void delete(E task);
 
     public AsyncTask<Void,Void,E> getSaveAsyncTask(E task, OnTaskListener onTaskListener){
         return new AsyncTask<Void, Void, E>() {

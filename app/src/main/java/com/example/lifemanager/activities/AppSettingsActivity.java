@@ -1,11 +1,6 @@
 package com.example.lifemanager.activities;
 
-import static com.example.lifemanager.model.Constants.CURRENCY_TYPE;
-import static com.example.lifemanager.model.Constants.ENABLE_TOASTS;
-import static com.example.lifemanager.model.Constants.USERNAME_FOR_APP;
-import static com.example.lifemanager.util.Tools.getSettingFromSharedPref;
 import static com.example.lifemanager.util.Tools.onViewDrawn;
-import static com.example.lifemanager.util.Tools.saveSettingOnSharedPref;
 import static com.example.lifemanager.util.Tools.setActionBarTitle;
 
 import android.os.Bundle;
@@ -21,9 +16,12 @@ import android.widget.Spinner;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.lifemanager.R;
+import com.example.lifemanager.Settings;
 
+import java.text.NumberFormat;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Locale;
 
 public class AppSettingsActivity extends AppCompatActivity implements AdapterView.OnItemSelectedListener {
 
@@ -32,6 +30,7 @@ public class AppSettingsActivity extends AppCompatActivity implements AdapterVie
     private CheckBox enableToasts;
     private Spinner currencyTypeSpinner;
     private Button buttonSaveSettings;
+    private Settings settings;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -40,6 +39,7 @@ public class AppSettingsActivity extends AppCompatActivity implements AdapterVie
         setContentView(R.layout.activity_app_settings);
 
         getLayoutViews();
+        settings = new Settings(this);
         fillSettings();
         configureButtonSaveSettings();
         configureSpinner();
@@ -54,10 +54,9 @@ public class AppSettingsActivity extends AppCompatActivity implements AdapterVie
     }
 
     private void fillSettings() {
-        inputUsername.setText(getSettingFromSharedPref(this,USERNAME_FOR_APP));
-        enableToasts.setChecked(getSettingFromSharedPref(this,ENABLE_TOASTS).equals("true"));
-        String currencyTypeSetting = getSettingFromSharedPref(this,CURRENCY_TYPE);
-        Log.i("HELLO","currencyType = "+currencyTypeSetting);
+        inputUsername.setText(settings.getUsername());
+        enableToasts.setChecked(settings.getToastsEnabled());
+        String currencyTypeSetting = settings.getCurrencyFormat().equals(NumberFormat.getCurrencyInstance(Locale.FRANCE))?"Euro":"Dollar";
         onViewDrawn(currencyTypeSpinner, () -> {
             if (!currencyTypeSetting.isEmpty()){
                 List<String> currencyTypes = Arrays.asList(getResources().getStringArray(R.array.currency_types));
@@ -69,9 +68,10 @@ public class AppSettingsActivity extends AppCompatActivity implements AdapterVie
 
     private void configureButtonSaveSettings() {
         buttonSaveSettings.setOnClickListener(view -> {
-            saveSettingOnSharedPref(getApplicationContext(),USERNAME_FOR_APP,inputUsername.getText().toString());
-            saveSettingOnSharedPref(getApplicationContext(),ENABLE_TOASTS,enableToasts.isChecked()?"true":"false");
-            saveSettingOnSharedPref(getApplicationContext(),CURRENCY_TYPE,spinnerValue);
+            settings.setUsername(inputUsername.getText().toString());
+            settings.setToastsEnabled(enableToasts.isChecked());
+            settings.setCurrencyFormat(spinnerValue.equals("Euro")?
+                    NumberFormat.getCurrencyInstance(Locale.FRANCE):NumberFormat.getCurrencyInstance(Locale.US));
             finish();
         });
     }

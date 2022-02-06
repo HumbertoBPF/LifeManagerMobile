@@ -1,14 +1,10 @@
 package com.example.lifemanager.util;
 
-import static android.content.Context.MODE_PRIVATE;
-import static com.example.lifemanager.activities.MainMenuActivity.ARE_TOASTS_ENABLED;
-
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.DialogInterface;
-import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.graphics.drawable.GradientDrawable;
@@ -23,6 +19,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.FragmentManager;
 
 import com.example.lifemanager.R;
+import com.example.lifemanager.Settings;
 import com.example.lifemanager.fragments.DatePickerFragment;
 import com.example.lifemanager.interfaces.OnTaskListener;
 
@@ -35,7 +32,7 @@ public class Tools {
     }
 
     public static void showToastIfEnabled(Context context, String text){
-        if (ARE_TOASTS_ENABLED){
+        if (new Settings(context).getToastsEnabled()){
             Toast.makeText(context, text, Toast.LENGTH_SHORT).show();
         }
     }
@@ -133,18 +130,6 @@ public class Tools {
         dateString = dateString.replace("-","");
         dateString = dateString.replace(" ","");
         return dateString;
-    }
-
-    public static void saveSettingOnSharedPref(Context context, String key, String value){
-        SharedPreferences sharedPreferences = context.getSharedPreferences("MySharedPref",MODE_PRIVATE);
-        SharedPreferences.Editor myEdit = sharedPreferences.edit();
-        myEdit.putString(key,value);
-        myEdit.apply();
-    }
-
-    public static String getSettingFromSharedPref(Context context, String key){
-        SharedPreferences sh = context.getSharedPreferences("MySharedPref", MODE_PRIVATE);
-        return sh.getString(key, "");
     }
 
     public static void onViewDrawn(ViewGroup viewGroup, OnTaskListener onTaskListener){
