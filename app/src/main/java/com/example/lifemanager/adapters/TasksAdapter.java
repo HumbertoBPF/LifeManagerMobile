@@ -9,7 +9,6 @@ import static com.example.lifemanager.util.Tools.showToastIfEnabled;
 import android.app.AlertDialog;
 import android.app.ProgressDialog;
 import android.content.Context;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Color;
 import android.view.ContextMenu;
@@ -26,7 +25,6 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.example.lifemanager.R;
 import com.example.lifemanager.activities.tasks.AddTaskActivity;
 import com.example.lifemanager.interfaces.OnItemClickListener;
-import com.example.lifemanager.interfaces.OnTaskListener;
 import com.example.lifemanager.model.Task;
 import com.example.lifemanager.roomConfig.LifeManagerDatabase;
 
@@ -76,12 +74,9 @@ public class TasksAdapter extends RecyclerView.Adapter<TasksAdapter.TaskViewHold
             taskItemName = itemView.findViewById(R.id.text_view_2);
             taskItemDueDate = itemView.findViewById(R.id.text_view_3);
             itemView.setOnCreateContextMenuListener(this);
-            itemView.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
-                    Task task = tasks.get(getPosition());
-                    onItemClickListener.onItemClick(task);
-                }
+            itemView.setOnClickListener(view -> {
+                Task task = tasks.get(getPosition());
+                onItemClickListener.onItemClick(task);
             });
         }
 
@@ -101,41 +96,29 @@ public class TasksAdapter extends RecyclerView.Adapter<TasksAdapter.TaskViewHold
         @Override
         public void onCreateContextMenu(ContextMenu contextMenu, View view, ContextMenu.ContextMenuInfo contextMenuInfo) {
             MenuItem update = contextMenu.add(context.getResources().getString(R.string.context_menu_update_option));
-            update.setOnMenuItemClickListener(new MenuItem.OnMenuItemClickListener() {
-                @Override
-                public boolean onMenuItemClick(MenuItem item) {
-                    Intent intent = new Intent(context, AddTaskActivity.class);
-                    intent.putExtra("Tasks",tasks.get(TaskViewHolder.this.getBindingAdapterPosition()));
-                    context.startActivity(intent);
-                    return false;
-                }
+            update.setOnMenuItemClickListener(item -> {
+                Intent intent = new Intent(context, AddTaskActivity.class);
+                intent.putExtra("Tasks",tasks.get(TaskViewHolder.this.getBindingAdapterPosition()));
+                context.startActivity(intent);
+                return false;
             });
             MenuItem delete = contextMenu.add(context.getResources().getString(R.string.context_menu_delete_option));
-            delete.setOnMenuItemClickListener(new MenuItem.OnMenuItemClickListener() {
-                @Override
-                public boolean onMenuItemClick(MenuItem item) {
-                    AlertDialog deletionDialog = deletionDialog(context, new DialogInterface.OnClickListener() {
-                        @Override
-                        public void onClick(DialogInterface dialogInterface, int i) {
-                            ProgressDialog loadingDialog = loadingDialog(context);
-                            loadingDialog.show();
-                            LifeManagerDatabase.getInstance(context).getRoomTaskDAO().getDeleteAsyncTask(
-                                    tasks.get(TaskViewHolder.this.getBindingAdapterPosition()),
-                                    new OnTaskListener() {
-                                        @Override
-                                        public void onTask() {
-                                            showToastIfEnabled(context, context.getString(R.string.delete_toast_message));
-                                            tasks.remove(TaskViewHolder.this.getBindingAdapterPosition());
-                                            notifyItemRemoved(TaskViewHolder.this.getBindingAdapterPosition());
-                                            loadingDialog.dismiss();
-                                        }
-                                    }
-                            ).execute();
-                        }
-                    });
-                    deletionDialog.show();
-                    return false;
-                }
+            delete.setOnMenuItemClickListener(item -> {
+                AlertDialog deletionDialog = deletionDialog(context, (dialogInterface, i) -> {
+                    ProgressDialog loadingDialog = loadingDialog(context);
+                    loadingDialog.show();
+                    LifeManagerDatabase.getInstance(context).getRoomTaskDAO().getDeleteAsyncTask(
+                            tasks.get(TaskViewHolder.this.getBindingAdapterPosition()),
+                            () -> {
+                                showToastIfEnabled(context, context.getString(R.string.delete_toast_message));
+                                tasks.remove(TaskViewHolder.this.getBindingAdapterPosition());
+                                notifyItemRemoved(TaskViewHolder.this.getBindingAdapterPosition());
+                                loadingDialog.dismiss();
+                            }
+                    ).execute();
+                });
+                deletionDialog.show();
+                return false;
             });
         }
 

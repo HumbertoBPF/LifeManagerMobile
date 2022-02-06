@@ -17,6 +17,8 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.example.lifemanager.R;
 import com.example.lifemanager.dao.BaseDAO;
 
+import java.util.List;
+
 public abstract class CategoryActivity<E> extends AppCompatActivity {
 
     protected String titleAppbar = null;
@@ -24,10 +26,8 @@ public abstract class CategoryActivity<E> extends AppCompatActivity {
     protected String titleIconAppbar = null;
     protected String resourceType = null;
 
-    private MenuItem addItem;
     protected Class<?> formAddClass;
     protected BaseDAO<E> categoryDAO;
-    protected RecyclerView.Adapter adapter;
 
     protected RecyclerView recyclerViewResources;
     protected ProgressDialog loadingDialog;
@@ -59,14 +59,22 @@ public abstract class CategoryActivity<E> extends AppCompatActivity {
 
     @Override
     public boolean onPrepareOptionsMenu(Menu menu) {
-        addItem = menu.findItem(R.id.action_add);
         if (titleIconAppbar != null){
-            addItem.setTitle(titleIconAppbar);
+            menu.findItem(R.id.action_add).setTitle(titleIconAppbar);
         }
         return super.onPrepareOptionsMenu(menu);
     }
 
-    abstract protected void configureAdapter();
+    private void configureAdapter() {
+        loadingDialog.show();
+        categoryDAO.getAllRecordsTask(result -> {
+            recyclerViewResources.setAdapter(initializeAdapter(result));
+            registerForContextMenu(recyclerViewResources);
+            loadingDialog.dismiss();
+        }).execute();
+    }
+
+    protected abstract RecyclerView.Adapter initializeAdapter(List<E> list);
 
     @Override
     protected void onResume() {

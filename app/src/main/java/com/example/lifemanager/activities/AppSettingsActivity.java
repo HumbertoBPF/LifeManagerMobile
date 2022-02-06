@@ -21,7 +21,6 @@ import android.widget.Spinner;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.lifemanager.R;
-import com.example.lifemanager.interfaces.OnTaskListener;
 
 import java.util.Arrays;
 import java.util.List;
@@ -59,27 +58,21 @@ public class AppSettingsActivity extends AppCompatActivity implements AdapterVie
         enableToasts.setChecked(getSettingFromSharedPref(this,ENABLE_TOASTS).equals("true"));
         String currencyTypeSetting = getSettingFromSharedPref(this,CURRENCY_TYPE);
         Log.i("HELLO","currencyType = "+currencyTypeSetting);
-        onViewDrawn(currencyTypeSpinner, new OnTaskListener() {
-            @Override
-            public void onTask() {
-                if (!currencyTypeSetting.isEmpty()){
-                    List<String> currencyTypes = Arrays.asList(getResources().getStringArray(R.array.currency_types));
-                    Log.i("HELLO",currencyTypes.indexOf(currencyTypeSetting)+"");
-                    currencyTypeSpinner.setSelection(currencyTypes.indexOf(currencyTypeSetting));
-                }
+        onViewDrawn(currencyTypeSpinner, () -> {
+            if (!currencyTypeSetting.isEmpty()){
+                List<String> currencyTypes = Arrays.asList(getResources().getStringArray(R.array.currency_types));
+                Log.i("HELLO",currencyTypes.indexOf(currencyTypeSetting)+"");
+                currencyTypeSpinner.setSelection(currencyTypes.indexOf(currencyTypeSetting));
             }
         });
     }
 
     private void configureButtonSaveSettings() {
-        buttonSaveSettings.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                saveSettingOnSharedPref(getApplicationContext(),USERNAME_FOR_APP,inputUsername.getText().toString());
-                saveSettingOnSharedPref(getApplicationContext(),ENABLE_TOASTS,enableToasts.isChecked()?"true":"false");
-                saveSettingOnSharedPref(getApplicationContext(),CURRENCY_TYPE,spinnerValue);
-                finish();
-            }
+        buttonSaveSettings.setOnClickListener(view -> {
+            saveSettingOnSharedPref(getApplicationContext(),USERNAME_FOR_APP,inputUsername.getText().toString());
+            saveSettingOnSharedPref(getApplicationContext(),ENABLE_TOASTS,enableToasts.isChecked()?"true":"false");
+            saveSettingOnSharedPref(getApplicationContext(),CURRENCY_TYPE,spinnerValue);
+            finish();
         });
     }
 

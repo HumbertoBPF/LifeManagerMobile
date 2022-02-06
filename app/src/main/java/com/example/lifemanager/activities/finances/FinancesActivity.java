@@ -3,12 +3,11 @@ package com.example.lifemanager.activities.finances;
 import android.content.Intent;
 import android.os.Bundle;
 
+import androidx.recyclerview.widget.RecyclerView;
+
 import com.example.lifemanager.R;
 import com.example.lifemanager.activities.CategoryActivity;
 import com.example.lifemanager.adapters.FinancesAdapter;
-import com.example.lifemanager.dao.FinanceDAO;
-import com.example.lifemanager.interfaces.OnItemClickListener;
-import com.example.lifemanager.interfaces.OnResultListener;
 import com.example.lifemanager.model.Finance;
 import com.example.lifemanager.roomConfig.LifeManagerDatabase;
 
@@ -27,24 +26,13 @@ public class FinancesActivity extends CategoryActivity<Finance> {
         categoryDAO = LifeManagerDatabase.getInstance(this).getRoomFinanceDAO();
     }
 
-    protected void configureAdapter() {
-        loadingDialog.show();
-        ((FinanceDAO) categoryDAO).getAllFinancesAsyncTask(new OnResultListener<List<Finance>>() {
-            @Override
-            public void onResult(List<Finance> result) {
-                adapter = new FinancesAdapter(FinancesActivity.this, result, new OnItemClickListener<Finance>() {
-                    @Override
-                    public void onItemClick(Finance finance) {
-                        Intent intent = new Intent(getApplicationContext(), DetailedFinanceActivity.class);
-                        intent.putExtra(resourceType,finance);
-                        startActivity(intent);
-                    }
-                });
-                recyclerViewResources.setAdapter(adapter);
-                registerForContextMenu(recyclerViewResources);
-                loadingDialog.dismiss();
-            }
-        }).execute();
+    @Override
+    protected RecyclerView.Adapter initializeAdapter(List<Finance> list) {
+        return new FinancesAdapter(FinancesActivity.this, list, finance -> {
+            Intent intent = new Intent(getApplicationContext(), DetailedFinanceActivity.class);
+            intent.putExtra(resourceType,finance);
+            startActivity(intent);
+        });
     }
 
 }

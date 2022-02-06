@@ -7,7 +7,6 @@ import static com.example.lifemanager.util.Tools.getDateFromPicker;
 import static com.example.lifemanager.util.Tools.showToast;
 
 import android.os.Bundle;
-import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.RadioButton;
@@ -19,7 +18,6 @@ import androidx.annotation.NonNull;
 import com.example.lifemanager.R;
 import com.example.lifemanager.activities.AddResourceActivity;
 import com.example.lifemanager.enums.Priority;
-import com.example.lifemanager.interfaces.OnTaskListener;
 import com.example.lifemanager.model.Task;
 import com.example.lifemanager.roomConfig.LifeManagerDatabase;
 import com.example.lifemanager.util.Tools;
@@ -56,47 +54,40 @@ public class AddTaskActivity extends AddResourceActivity<Task> {
     }
 
     protected void configureFormButton() {
-        taskFormButtonSubmit.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                String subject = taskFormSubject.getText().toString();
-                String name = taskFormName.getText().toString();
-                String description = taskFormDescription.getText().toString();
-                boolean status = taskFormConcluded.isChecked();
-                Priority priority = getPriority();
-                String deadlineString = getDateFromPicker(taskFormDeadline, getResources().getString(R.string.form_deadline_label));
-                String dueDateString = getDateFromPicker(taskFormDueDate, getResources().getString(R.string.form_due_date_label));
-                Priority finalPriority = priority;
-                if (subject.equals("")){
-                    showToast(getApplicationContext(),"The field subject is required");
-                }else if (name.equals("")){
-                    showToast(getApplicationContext(),"The field name is required");
-                }else {
-                    try {
-                        Calendar deadline = formatFromDateStringToCalendar(deadlineString);
-                        Calendar dueDate = formatFromDateStringToCalendar(dueDateString);
-                        loadingDialog.show();
-                        Task task;
-                        if (idToUpdate == null){
-                            task = new Task(subject,name,description,status, finalPriority,deadline,dueDate);
-                        }else{
-                            task = new Task(idToUpdate,subject,name,description,status, finalPriority,deadline,dueDate);
-                        }
-                        categoryDAO.getSaveAsyncTask(task, new OnTaskListener() {
-                            @Override
-                            public void onTask() {
-                                loadingDialog.dismiss();
-                                if (idToUpdate == null){
-                                    Tools.showToastIfEnabled(getApplicationContext(),getResources().getString(R.string.add_task_toast_message));
-                                }else{
-                                    Tools.showToastIfEnabled(getApplicationContext(),getResources().getString(R.string.update_task_toast_message));
-                                }
-                                finish();
-                            }
-                        }).execute();
-                    }catch (Exception e){
-                        showToast(getApplicationContext(),"The date fields are required");
+        taskFormButtonSubmit.setOnClickListener(view -> {
+            String subject = taskFormSubject.getText().toString();
+            String name = taskFormName.getText().toString();
+            String description = taskFormDescription.getText().toString();
+            boolean status = taskFormConcluded.isChecked();
+            Priority priority = getPriority();
+            String deadlineString = getDateFromPicker(taskFormDeadline, getResources().getString(R.string.form_deadline_label));
+            String dueDateString = getDateFromPicker(taskFormDueDate, getResources().getString(R.string.form_due_date_label));
+            if (subject.equals("")){
+                showToast(getApplicationContext(),"The field subject is required");
+            }else if (name.equals("")){
+                showToast(getApplicationContext(),"The field name is required");
+            }else {
+                try {
+                    Calendar deadline = formatFromDateStringToCalendar(deadlineString);
+                    Calendar dueDate = formatFromDateStringToCalendar(dueDateString);
+                    loadingDialog.show();
+                    Task task;
+                    if (idToUpdate == null){
+                        task = new Task(subject,name,description,status,priority,deadline,dueDate);
+                    }else{
+                        task = new Task(idToUpdate,subject,name,description,status,priority,deadline,dueDate);
                     }
+                    categoryDAO.getSaveAsyncTask(task, () -> {
+                        loadingDialog.dismiss();
+                        if (idToUpdate == null){
+                            Tools.showToastIfEnabled(getApplicationContext(),getResources().getString(R.string.add_task_toast_message));
+                        }else{
+                            Tools.showToastIfEnabled(getApplicationContext(),getResources().getString(R.string.update_task_toast_message));
+                        }
+                        finish();
+                    }).execute();
+                }catch (Exception e){
+                    showToast(getApplicationContext(),"The date fields are required");
                 }
             }
         });
@@ -112,24 +103,23 @@ public class AddTaskActivity extends AddResourceActivity<Task> {
         return Priority.HIGH;
     }
 
-    protected void fillForm(Object object) {
-        Task task = (Task) object;
-        idToUpdate = task.getId();
-        taskFormSubject.setText(task.getSubject());
-        taskFormName.setText(task.getName());
-        taskFormDescription.setText(task.getDescription());
+    protected void fillForm(Task entity) {
+        idToUpdate = entity.getId();
+        taskFormSubject.setText(entity.getSubject());
+        taskFormName.setText(entity.getName());
+        taskFormDescription.setText(entity.getDescription());
         taskFormStatus.check(R.id.task_form_status_pending);
-        if (task.isStatus()){
+        if (entity.isStatus()){
             taskFormStatus.check(R.id.task_form_status_concluded);
         }
         taskFormPriority.check(R.id.task_form_status_high);
-        if (task.getPriority().equals(Priority.MEDIUM)){
+        if (entity.getPriority().equals(Priority.MEDIUM)){
             taskFormPriority.check(R.id.task_form_status_medium);
-        }else if (task.getPriority().equals(Priority.LOW)){
+        }else if (entity.getPriority().equals(Priority.LOW)){
             taskFormPriority.check(R.id.task_form_status_low);
         }
-        taskFormDeadline.setText(getResources().getString(R.string.form_deadline_label)+" "+formatter.format(task.getDeadline().getTime()));
-        taskFormDueDate.setText(getResources().getString(R.string.form_due_date_label)+" "+formatter.format(task.getDueDate().getTime()));
+        taskFormDeadline.setText(getResources().getString(R.string.form_deadline_label)+" "+formatter.format(entity.getDeadline().getTime()));
+        taskFormDueDate.setText(getResources().getString(R.string.form_due_date_label)+" "+formatter.format(entity.getDueDate().getTime()));
     }
 
     protected void getLayoutViews() {

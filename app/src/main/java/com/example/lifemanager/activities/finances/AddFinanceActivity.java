@@ -8,7 +8,6 @@ import static com.example.lifemanager.util.Tools.onViewDrawn;
 import static com.example.lifemanager.util.Tools.showToast;
 
 import android.os.Bundle;
-import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.RadioButton;
@@ -20,7 +19,6 @@ import com.example.lifemanager.R;
 import com.example.lifemanager.activities.AddResourceActivity;
 import com.example.lifemanager.enums.Sector;
 import com.example.lifemanager.enums.TypeFinance;
-import com.example.lifemanager.interfaces.OnTaskListener;
 import com.example.lifemanager.model.Finance;
 import com.example.lifemanager.roomConfig.LifeManagerDatabase;
 
@@ -54,64 +52,54 @@ public class AddFinanceActivity extends AddResourceActivity<Finance> {
     }
 
     protected void configureFormButton() {
-        financeFormButtonSubmit.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                String name = financeFormName.getText().toString();
-                TypeFinance typeFinance = getTypeFinance();
-                Sector sector = getSector();
-                if (name.equals("")) {
-                    showToast(getApplicationContext(), "All fields are required");
-                } else {
-                    try {
-                        String dateString = getDateFromPicker(financeFormDate, getResources().getString(R.string.form_date_label));
-                        Integer year = Integer.parseInt(dateString.substring(0, 4));
-                        Integer month = Integer.parseInt(dateString.substring(4, 6)) - 1;
-                        Calendar dateCalendar = formatFromDateStringToCalendar(dateString);
-                        BigDecimal valueBigDecimal = getBigDecimalValue();
-                        loadingDialog.show();
-                        Finance finance;
-                        if (idToUpdate == null) {
-                            finance = new Finance(name, dateCalendar, month, year, valueBigDecimal, sector, typeFinance);
-                        } else {
-                            finance = new Finance(idToUpdate, name, dateCalendar, month, year, valueBigDecimal, sector, typeFinance);
-                        }
-                        categoryDAO.getSaveAsyncTask(finance, new OnTaskListener() {
-                            @Override
-                            public void onTask() {
-                                loadingDialog.dismiss();
-                                if (idToUpdate == null) {
-                                    showToast(getApplicationContext(), getResources().getString(R.string.add_finance_toast_message));
-                                } else {
-                                    showToast(getApplicationContext(), getResources().getString(R.string.update_finance_toast_message));
-                                }
-                                finish();
-                            }
-                        }).execute();
-                    } catch (Exception e) {
-                        showToast(getApplicationContext(), "All fields are required");
+        financeFormButtonSubmit.setOnClickListener(view -> {
+            String name = financeFormName.getText().toString();
+            TypeFinance typeFinance = getTypeFinance();
+            Sector sector = getSector();
+            if (name.equals("")) {
+                showToast(getApplicationContext(), "All fields are required");
+            } else {
+                try {
+                    String dateString = getDateFromPicker(financeFormDate, getResources().getString(R.string.form_date_label));
+                    Integer year = Integer.parseInt(dateString.substring(0, 4));
+                    Integer month = Integer.parseInt(dateString.substring(4, 6)) - 1;
+                    Calendar dateCalendar = formatFromDateStringToCalendar(dateString);
+                    BigDecimal valueBigDecimal = getBigDecimalValue();
+                    loadingDialog.show();
+                    Finance finance;
+                    if (idToUpdate == null) {
+                        finance = new Finance(name, dateCalendar, month, year, valueBigDecimal, sector, typeFinance);
+                    } else {
+                        finance = new Finance(idToUpdate, name, dateCalendar, month, year, valueBigDecimal, sector, typeFinance);
                     }
+                    categoryDAO.getSaveAsyncTask(finance, () -> {
+                        loadingDialog.dismiss();
+                        if (idToUpdate == null) {
+                            showToast(getApplicationContext(), getResources().getString(R.string.add_finance_toast_message));
+                        } else {
+                            showToast(getApplicationContext(), getResources().getString(R.string.update_finance_toast_message));
+                        }
+                        finish();
+                    }).execute();
+                } catch (Exception e) {
+                    showToast(getApplicationContext(), "All fields are required");
                 }
             }
         });
     }
 
-    protected void fillForm(Object object) {
-        Finance finance = (Finance) object;
-        idToUpdate = finance.getId();
-        financeFormName.setText(finance.getName());
-        financeFormDate.setText(getResources().getString(R.string.form_date_label)+" "+formatter.format(finance.getDate().getTime()));
-        financeFormValue.setText(finance.getValue()+"");
+    protected void fillForm(Finance entity) {
+        idToUpdate = entity.getId();
+        financeFormName.setText(entity.getName());
+        financeFormDate.setText(getResources().getString(R.string.form_date_label)+" "+formatter.format(entity.getDate().getTime()));
+        financeFormValue.setText(entity.getValue()+"");
         financeFormType.check(R.id.finance_form_income);
-        if (finance.getTypeFinance().equals(TypeFinance.EXPENSE)){
+        if (entity.getTypeFinance().equals(TypeFinance.EXPENSE)){
             financeFormType.check(R.id.finance_form_expense);
         }
-        onViewDrawn(financeFormSectorSpinner, new OnTaskListener() {
-            @Override
-            public void onTask() {
-                List<String> sectors = Arrays.asList(getResources().getStringArray(R.array.sector_finance));
-                financeFormSectorSpinner.setSelection(sectors.indexOf(finance.getSector().getValue()));
-            }
+        onViewDrawn(financeFormSectorSpinner, () -> {
+            List<String> sectors = Arrays.asList(getResources().getStringArray(R.array.sector_finance));
+            financeFormSectorSpinner.setSelection(sectors.indexOf(entity.getSector().getValue()));
         });
 
     }

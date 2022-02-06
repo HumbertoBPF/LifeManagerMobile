@@ -8,7 +8,6 @@ import static com.example.lifemanager.util.Tools.saveSettingOnSharedPref;
 import static com.example.lifemanager.util.Tools.yesOrNoDialog;
 
 import android.app.AlertDialog;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.Menu;
@@ -91,18 +90,10 @@ public class MainMenuActivity extends AppCompatActivity {
             settingsDialog = yesOrNoDialog(this, getString(R.string.settings_dialog_title),
                     getString(R.string.settings_dialog_message), getString(R.string.settings_dialog_yes),
                     getString(R.string.settings_dialog_no),
-                    new DialogInterface.OnClickListener() {
-                        @Override
-                        public void onClick(DialogInterface dialogInterface, int i) {
-                            startActivity(new Intent(getApplicationContext(), AppSettingsActivity.class));
-                        }
-                    },
-                    new DialogInterface.OnClickListener() {
-                        @Override
-                        public void onClick(DialogInterface dialogInterface, int i) {
-                            defaultSettings();
-                            settingsDialog.dismiss();
-                        }
+                    (dialogInterface, i) -> startActivity(new Intent(getApplicationContext(), AppSettingsActivity.class)),
+                    (dialogInterface, i) -> {
+                        defaultSettings();
+                        settingsDialog.dismiss();
                     });
             settingsDialog.setCanceledOnTouchOutside(false);
             settingsDialog.show();

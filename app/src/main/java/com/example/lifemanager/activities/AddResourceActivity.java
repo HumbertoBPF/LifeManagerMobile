@@ -46,7 +46,7 @@ public abstract class AddResourceActivity<E> extends AppCompatActivity implement
         Intent intent = getIntent();
         Object object = intent.getSerializableExtra(resourceType);
         if (object != null){
-            fillForm(object);
+            fillForm((E) object);
         }
 
         loadingDialog = loadingDialog(this);
@@ -54,7 +54,7 @@ public abstract class AddResourceActivity<E> extends AppCompatActivity implement
 
     protected abstract void getLayoutViews();
 
-    protected abstract void fillForm(Object object);
+    protected abstract void fillForm(E entity);
 
     protected abstract void configureFormButton();
 

@@ -13,7 +13,6 @@ import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.graphics.drawable.GradientDrawable;
 import android.graphics.drawable.StateListDrawable;
-import android.view.View;
 import android.view.ViewGroup;
 import android.view.ViewTreeObserver;
 import android.widget.TextView;
@@ -55,9 +54,9 @@ public class Tools {
     }
 
     public static Calendar formatFromDateStringToCalendar(String dateString){
-        Integer year = Integer.parseInt(dateString.substring(0,4));
-        Integer month = Integer.parseInt(dateString.substring(4,6))-1;
-        Integer day = Integer.parseInt(dateString.substring(6,8));
+        int year = Integer.parseInt(dateString.substring(0,4));
+        int month = Integer.parseInt(dateString.substring(4,6))-1;
+        int day = Integer.parseInt(dateString.substring(6,8));
         Calendar dateCalendar = Calendar.getInstance();
         dateCalendar.set(year,month,day);
         return dateCalendar;
@@ -110,26 +109,20 @@ public class Tools {
     }
 
     public static void configureDatePicker(FragmentManager fragmentManager, TextView datePickerInput, String label, String tagName) {
-        datePickerInput.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                DatePickerFragment datePickerFragment = new DatePickerFragment();
-                datePickerFragment.setOnDateSetListener(new DatePickerFragment.OnDateSetListener() {
-                    @Override
-                    public void OnDateSetListener(int year, int month, int day) {
-                        String monthString = (month+1)+"";
-                        String dayString = day+"";
-                        if (month<10){
-                            monthString = "0" + monthString;
-                        }
-                        if (day<10){
-                            dayString = "0" + dayString;
-                        }
-                        datePickerInput.setText(label+" "+year+"-"+monthString+"-"+dayString);
-                    }
-                });
-                datePickerFragment.show(fragmentManager,tagName);
-            }
+        datePickerInput.setOnClickListener(view -> {
+            DatePickerFragment datePickerFragment = new DatePickerFragment();
+            datePickerFragment.setOnDateSetListener((year, month, day) -> {
+                String monthString = (month+1)+"";
+                String dayString = day+"";
+                if (month<10){
+                    monthString = "0" + monthString;
+                }
+                if (day<10){
+                    dayString = "0" + dayString;
+                }
+                datePickerInput.setText(label+" "+year+"-"+monthString+"-"+dayString);
+            });
+            datePickerFragment.show(fragmentManager,tagName);
         });
     }
 

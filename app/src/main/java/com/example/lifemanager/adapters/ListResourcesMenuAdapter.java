@@ -61,12 +61,7 @@ public class ListResourcesMenuAdapter extends RecyclerView.Adapter<ListResources
             resourceName.setText(roundedButton.getName());
             int color = context.getResources().getColor(roundedButton.getColorId());
             backgroundCardView.setBackground(makeSelector(color,0.8f));
-            itemView.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
-                    context.startActivity(new Intent(context,roundedButton.getNextActivity()));
-                }
-            });
+            itemView.setOnClickListener(view -> context.startActivity(new Intent(context,roundedButton.getNextActivity())));
         }
 
     }

@@ -3,12 +3,11 @@ package com.example.lifemanager.activities.studies;
 import android.content.Intent;
 import android.os.Bundle;
 
+import androidx.recyclerview.widget.RecyclerView;
+
 import com.example.lifemanager.R;
 import com.example.lifemanager.activities.CategoryActivity;
 import com.example.lifemanager.adapters.StudiesAdapter;
-import com.example.lifemanager.dao.StudiesDAO;
-import com.example.lifemanager.interfaces.OnItemClickListener;
-import com.example.lifemanager.interfaces.OnResultListener;
 import com.example.lifemanager.model.Studies;
 import com.example.lifemanager.roomConfig.LifeManagerDatabase;
 
@@ -27,24 +26,13 @@ public class StudiesActivity extends CategoryActivity<Studies> {
         categoryDAO = LifeManagerDatabase.getInstance(this).getRoomStudiesDAO();
     }
 
-    protected void configureAdapter() {
-        loadingDialog.show();
-        ((StudiesDAO) categoryDAO).getAllStudiesAsyncTask(new OnResultListener<List<Studies>>() {
-            @Override
-            public void onResult(List<Studies> result) {
-                adapter = new StudiesAdapter(StudiesActivity.this, result, new OnItemClickListener<Studies>() {
-                    @Override
-                    public void onItemClick(Studies study) {
-                        Intent intent = new Intent(getApplicationContext(), DetailedStudyActivity.class);
-                        intent.putExtra(resourceType,study);
-                        startActivity(intent);
-                    }
-                });
-                recyclerViewResources.setAdapter(adapter);
-                registerForContextMenu(recyclerViewResources);
-                loadingDialog.dismiss();
-            }
-        }).execute();
+    @Override
+    protected RecyclerView.Adapter initializeAdapter(List<Studies> list) {
+        return new StudiesAdapter(StudiesActivity.this, list, study -> {
+            Intent intent = new Intent(getApplicationContext(), DetailedStudyActivity.class);
+            intent.putExtra(resourceType,study);
+            startActivity(intent);
+        });
     }
 
 }

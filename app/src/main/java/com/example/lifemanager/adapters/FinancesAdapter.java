@@ -10,7 +10,6 @@ import static com.example.lifemanager.util.Tools.showToastIfEnabled;
 import android.app.AlertDialog;
 import android.app.ProgressDialog;
 import android.content.Context;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Color;
 import android.view.ContextMenu;
@@ -28,7 +27,6 @@ import com.example.lifemanager.R;
 import com.example.lifemanager.activities.finances.AddFinanceActivity;
 import com.example.lifemanager.enums.TypeFinance;
 import com.example.lifemanager.interfaces.OnItemClickListener;
-import com.example.lifemanager.interfaces.OnTaskListener;
 import com.example.lifemanager.model.Finance;
 import com.example.lifemanager.roomConfig.LifeManagerDatabase;
 
@@ -76,12 +74,9 @@ public class FinancesAdapter extends RecyclerView.Adapter<FinancesAdapter.Financ
             financeItemValue = itemView.findViewById(R.id.text_view_2);
             financeItemDate = itemView.findViewById(R.id.text_view_3);
             itemView.setOnCreateContextMenuListener(this);
-            itemView.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
-                    Finance finance = finances.get(getPosition());
-                    onItemClickListener.onItemClick(finance);
-                }
+            itemView.setOnClickListener(view -> {
+                Finance finance = finances.get(getPosition());
+                onItemClickListener.onItemClick(finance);
             });
         }
 
@@ -101,41 +96,29 @@ public class FinancesAdapter extends RecyclerView.Adapter<FinancesAdapter.Financ
         @Override
         public void onCreateContextMenu(ContextMenu contextMenu, View view, ContextMenu.ContextMenuInfo contextMenuInfo) {
             MenuItem update = contextMenu.add(context.getResources().getString(R.string.context_menu_update_option));
-            update.setOnMenuItemClickListener(new MenuItem.OnMenuItemClickListener() {
-                @Override
-                public boolean onMenuItemClick(MenuItem item) {
-                    Intent intent = new Intent(context, AddFinanceActivity.class);
-                    intent.putExtra("Finances",finances.get(FinanceViewHolder.this.getBindingAdapterPosition()));
-                    context.startActivity(intent);
-                    return false;
-                }
+            update.setOnMenuItemClickListener(item -> {
+                Intent intent = new Intent(context, AddFinanceActivity.class);
+                intent.putExtra("Finances",finances.get(FinanceViewHolder.this.getBindingAdapterPosition()));
+                context.startActivity(intent);
+                return false;
             });
             MenuItem delete = contextMenu.add(context.getResources().getString(R.string.context_menu_delete_option));
-            delete.setOnMenuItemClickListener(new MenuItem.OnMenuItemClickListener() {
-                @Override
-                public boolean onMenuItemClick(MenuItem item) {
-                    AlertDialog deletionDialog = deletionDialog(context, new DialogInterface.OnClickListener() {
-                        @Override
-                        public void onClick(DialogInterface dialogInterface, int i) {
-                            ProgressDialog loadingDialog = loadingDialog(context);
-                            loadingDialog.show();
-                            LifeManagerDatabase.getInstance(context).getRoomFinanceDAO().getDeleteAsyncTask(
-                                    finances.get(FinanceViewHolder.this.getBindingAdapterPosition()),
-                                    new OnTaskListener() {
-                                        @Override
-                                        public void onTask() {
-                                            showToastIfEnabled(context, context.getString(R.string.delete_toast_message));
-                                            finances.remove(FinanceViewHolder.this.getBindingAdapterPosition());
-                                            notifyItemRemoved(FinanceViewHolder.this.getBindingAdapterPosition());
-                                            loadingDialog.dismiss();
-                                        }
-                                    }
-                            ).execute();
-                        }
-                    });
-                    deletionDialog.show();
-                    return false;
-                }
+            delete.setOnMenuItemClickListener(item -> {
+                AlertDialog deletionDialog = deletionDialog(context, (dialogInterface, i) -> {
+                    ProgressDialog loadingDialog = loadingDialog(context);
+                    loadingDialog.show();
+                    LifeManagerDatabase.getInstance(context).getRoomFinanceDAO().getDeleteAsyncTask(
+                            finances.get(FinanceViewHolder.this.getBindingAdapterPosition()),
+                            () -> {
+                                showToastIfEnabled(context, context.getString(R.string.delete_toast_message));
+                                finances.remove(FinanceViewHolder.this.getBindingAdapterPosition());
+                                notifyItemRemoved(FinanceViewHolder.this.getBindingAdapterPosition());
+                                loadingDialog.dismiss();
+                            }
+                    ).execute();
+                });
+                deletionDialog.show();
+                return false;
             });
         }
 
